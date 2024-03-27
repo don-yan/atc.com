@@ -1,3 +1,5 @@
+import {defineNuxtConfig} from 'nuxt/config'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     devtools: {enabled: true},
@@ -6,8 +8,12 @@ export default defineNuxtConfig({
         cssLayerOrder: "tailwind-base, primevue, tailwind-utilities, primeflex",
         components: {
             exclude: ["Editor", "Chart"]
-        }
+        },
+        ripple: true
     },
     // scss: ["primeflex/primeflex.scss"],
-    css: ["primeflex/primeflex.css", "primeicons/primeicons.css", "primevue/resources/themes/lara-light-purple/theme.css"]
+    css: ["primeflex/primeflex.css", "primeicons/primeicons.css", "primevue/resources/themes/lara-light-purple/theme.css"],
+
+    srcDir: 'src/'
+
 });

@@ -1,4 +1,18 @@
-# Nuxt 3 Minimal Starter
+# Acquired Taste Comedy - Website
+
+Based on template from [Primevue Starter](https://github.com/primefaces/primevue-examples)
+
+
+### Technologies Used
+
+- [Nuxt 3](https://nuxt.com/docs/getting-started/introduction) 
+- [PrimeVue](https://primevue.org/nuxt)
+- [PrimeBlocks](https://blocks.primevue.org/free)
+- [PrimeIcons](https://blocks.primevue.org/free)
+- [Tailwind CSS](https://tailwind.primevue.org/nuxt/)
+
+
+===============
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 

@@ -10,12 +10,16 @@ const isChild = computed(() => (name: string) => {
   }).includes(name);
 });
 
+const props = defineProps({
+  hideNav: Boolean
+})
+
 </script>
 <template>
   <div class="py-4 px-4 mx-0 md:mx-6 lg:mx-8 lg:px-8 flex align-items-center justify-content-between relative lg:static mb-3">
     <NuxtLink class="flex align-items-center" to="/">
-      <img src="~assets/images/logo/atc-logo-full-transparent.png" alt="Acquired Taste Comedy Logo" class="mr-0 lg:mr-2  max-h-12"/>
-      <!--      <span class="text-900 font-medium text-2xl line-height-3 mr-8">SAKAI</span>-->
+      <img src="~assets/images/logo/atc-logo-full-transparent.png" alt="Acquired Taste Comedy Logo" class="mr-0 lg:mr-2 max-w-[75px] w-full"/>
+<!--      <span class="text-900 font-medium text-2xl line-height-3 mr-8">{{ props.hideNav }}</span>-->
     </NuxtLink>
     <a
         v-ripple
@@ -54,7 +58,8 @@ const isChild = computed(() => (name: string) => {
       </ul>
       <div class="flex justify-content-between lg:block border-top-1 lg:border-top-none surface-border py-3 lg:py-0 mt-3 lg:mt-0">
         <a href="https://www.tickettailor.com/events/acquiredtastecomedy?" target="_blank">
-          <Button label="Buy Tickets" class="p-button-rounded border-none ml-5 font-light text-white line-height-2 bg-red-500 hover:bg-red-100"></Button>
+<!--          <Button label="Buy Tickets" class="p-button-rounded border-none ml-5 font-light text-white line-height-2 bg-primary hover:bg-red-400"></Button>-->
+          <Button label="Buy Tickets" class="p-button-rounded border-none ml-5 font-light text-white line-height-2"></Button>
         </a>
       </div>
     </div>
@@ -63,8 +68,17 @@ const isChild = computed(() => (name: string) => {
 
 <style lang="scss" scoped>
 
-a.router-link-active {
-  text-decoration: underline;
+a.router-link-active span{
+  //text-decoration: underline;
+  //text-decoration-color: red;
+
+  /* Increase this as per requirement */
+  padding-bottom: 1px;
+  border-bottom-style: solid;
+  border-bottom-width: 3.1px;
+  width: fit-content;
+  border-color: red;
 }
+
 
 </style>

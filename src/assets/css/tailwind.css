@@ -1,8 +1,36 @@
+@import './fonts.css';
+
 @layer tailwind-base {
-  @tailwind base;
+    @tailwind base;
 }
 
 @layer tailwind-utilities {
-  @tailwind utilities;
-  @tailwind variants;
-} 
+    @tailwind utilities;
+    @tailwind variants;
+}
+
+@layer base {
+    :root {
+        --color-primary: 0 160 175;
+        --color-secondary: 0 85 184;
+        --color-turqoise: 0 160 175;
+        --color-blue: 0 85 184;
+        --color-lightblue: 172 218 224;
+        --color-lighterblue: 237 244 247;
+        --color-paleblue: 234 246 247;
+        --color-yellow: 218 227 67;
+        --color-gray: 84 86 90;
+        --color-lightgray: 178 179 181;
+        --color-palegray: 246 249 250;
+
+    }
+
+    :root {
+        font-family: 'Quicksand', 'SansSerif';
+    }
+
+    .text-donyan {
+        font-family: 'DonYan';
+    }
+
+}

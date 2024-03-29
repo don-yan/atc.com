@@ -5,9 +5,9 @@
 
 definePageMeta({
   title: 'Shows',
-  layout: 'alt'
+  // layout: 'alt'
 })
-
+/*
 useHead({
   script: [
     // {
@@ -36,7 +36,7 @@ useHead({
       defer: true
     },
   ]
-})
+})*/
 
 </script>
 

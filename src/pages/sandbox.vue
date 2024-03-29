@@ -11,18 +11,21 @@ import Hero from '~/components/content/Hero.vue'
 
 
 definePageMeta({
-  layout: 'alt'
+  // layout: 'alt'
 })
 </script>
 
 <template>
 
 
-  <div class="wrapper">
+  <section class="md:container md:mx-auto">
+
 
     <Banner class="mb-1"/>
+  </section>
+  <section>
 
-    <!--    <Image src="/images/hero-1.png" alt="Image" width="250" preview/>-->
+    <Image src="/images/hero-1.png" alt="Image" width="250" preview/>
     <!--    <hr/>-->
     <!--    <Image alt="Image" width="250"-->
     <!--           preview-->
@@ -38,8 +41,7 @@ definePageMeta({
 
     <PricingBlocks/>
 
-
-  </div>
+  </section>
 
 
 </template>

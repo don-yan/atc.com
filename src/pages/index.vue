@@ -19,6 +19,8 @@ import Hero from '~/components/content/HeroV2.vue'
   </div>
 
 
+
+
 </template>
 <style lang="scss">
 </style>

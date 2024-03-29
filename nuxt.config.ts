@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     },
     // scss: ["~assets/scss/primevue-sass-theme-3.50.0/themes/mytheme/theme.scss"],
     css: [
-        "primeflex/primeflex.css",
+        // "primeflex/primeflex.css",
         "primeicons/primeicons.css",
         "assets/scss/primevue-sass-theme-3.50.0/themes/atc-theme/theme.scss"
         // "primevue/resources/themes/lara-light-purple/theme.css"

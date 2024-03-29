@@ -11,6 +11,8 @@ Based on template from [Primevue Starter](https://github.com/primefaces/primevue
 - [PrimeIcons](https://blocks.primevue.org/free)
 - [Tailwind CSS](https://tailwind.primevue.org/nuxt/)
 
+- [PrimeFlex to Tailwind Converter](https://primeflex2tailwind.netlify.app/)
+
 
 ===============
 

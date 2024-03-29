@@ -10,7 +10,7 @@ const currentYear = new Date().getFullYear()
         <img src="~assets/images/logo/atc-logo-abbreviated-transparent.png" alt="Acquired Taste Comedy Logo" height="50" class="lg:mr-2  max-h-12"/>
       </span>
       <div class="flex flex-col items-center gap-6 mb-8">
-        <div class="flex md:flex-wrap md:flex-row items-center sm:flex-col sm:flex-column justify-center gap-5 lg:gap-12 gap-y-3 lg:flex-nowrap text-dark-grey-900">
+        <div class="flex flex-col md:flex-wrap md:flex-row items-center justify-center gap-5 lg:gap-12 gap-y-3 lg:flex-nowrap text-dark-grey-900">
 
 <!--           <div class="flex md:flex-wrap items-center justify-center gap-5 lg:gap-12 gap-y-3 sm:flex-col lg:flex-wrap text-dark-grey-900">-->
 

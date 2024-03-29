@@ -12,16 +12,16 @@ module.exports = {
     theme: {
         colors: {
             primary: '#FF0000'
-            //            transparent: 'transparent',
-            //            current: 'currentColor',
-            //            black: colors.black,
-            //            white: colors.white,
-            //            gray: colors.trueGray,
-            //            indigo: colors.indigo,
-            //            red: colors.red,
-            //
-            //
-            //            yellow: colors.amber
+                        transparent: 'transparent',
+                        current: 'currentColor',
+                        black: colors.black,
+                        white: colors.white,
+                        gray: colors.trueGray,
+                        indigo: colors.indigo,
+//                        red: colors.red,
+
+
+                        yellow: colors.amber
         },
         extend: {
             colors: {
@@ -41,6 +41,13 @@ module.exports = {
                 }
 
             }
+        },
+        screens: {
+//            xs: '415px',
+            sm: '576px',
+            md: '768px',
+            lg: '992px',
+            xl: '1200px'
         }
     },
     plugins: []

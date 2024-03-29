@@ -1,0 +1,23 @@
+// Configuration for the font-face of the theme, defaults to the system font so left as blank
+
+//@font-face {
+//    font-family: Quicksand;
+//    src: url('../fonts/quicksand/Quicksand-VariableFont_wght.ttf') format("truetype-variations");
+//    font-weight: 1 999;
+//}
+//
+//@font-face {
+//    font-family: DonYan;
+//    src: url('../fonts/donyan/DonYanBlock-Regular.ttf');
+//    font-weight: 1 999;
+//}
+//
+
+
+    :root {
+        font-family: 'Quicksand', 'SansSerif', 'system-ui';
+    }
+
+    .text-donyan {
+        font-family: 'DonYan', 'system-ui';
+    }

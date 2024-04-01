@@ -10,9 +10,9 @@ const currentYear = new Date().getFullYear()
         <img src="~assets/images/logo/atc-logo-abbreviated-transparent.png" alt="Acquired Taste Comedy Logo" height="50" class="lg:mr-2  max-h-12"/>
       </span>
       <div class="flex flex-col items-center gap-6 mb-8">
-        <div class="flex flex-col md:flex-wrap md:flex-row items-center justify-center gap-5 lg:gap-12 gap-y-3 lg:flex-nowrap text-dark-grey-900">
+        <div class="flex flex-col sm:flex-row sm:flex-wrap md:flex-row items-center justify-center gap-5 lg:gap-12 gap-y-3 lg:flex-nowrap text-dark-grey-900">
 
-<!--           <div class="flex md:flex-wrap items-center justify-center gap-5 lg:gap-12 gap-y-3 sm:flex-col lg:flex-wrap text-dark-grey-900">-->
+          <!--           <div class="flex md:flex-wrap items-center justify-center gap-5 lg:gap-12 gap-y-3 sm:flex-col lg:flex-wrap text-dark-grey-900">-->
 
           <NuxtLink to="/shows" class="text-gray-600 hover:text-gray-900">
             <span>Shows</span>
@@ -95,8 +95,13 @@ const currentYear = new Date().getFullYear()
         </div>
       </div>
       <div class="flex items-center">
-        <p class="text-base font-normal leading-7 text-center text-grey-700">
-          &copy; {{ currentYear }} Acquired Taste Comedy. All rights reserved.
+        <p class="text-base font-normal leading-7 text-center text-grey-700 f">
+          <span>
+            &copy; {{ currentYear }} Acquired Taste Comedy.
+          </span>
+          <span class="block sm:inline">
+            All rights reserved.
+          </span>
         </p>
       </div>
     </div>
@@ -111,7 +116,7 @@ a.router-link-active span {
   //text-decoration-color: red;
 
   /* Increase this as per requirement */
-  padding-bottom: 15px;
+  padding-bottom: 5px;
   border-bottom-style: solid;
   border-bottom-width: 3.1px;
   width: fit-content;

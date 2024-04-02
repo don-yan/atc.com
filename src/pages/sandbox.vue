@@ -7,7 +7,7 @@ import FeatureBlocks from '~/components/content/FeatureBlocks.vue'
 import PricingBlocks from '~/components/content/PricingBlocks.vue'
 import Image from 'primevue/image'
 
-import Hero from '~/components/content/Hero.vue'
+import Hero from '~/components/content/hero/Hero.vue'
 
 
 definePageMeta({

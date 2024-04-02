@@ -12,5 +12,4 @@
 
 </template>
 <style lang="scss">
-//@import "~primeflex/primeflex.css";
 </style>

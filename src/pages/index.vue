@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import Banner from '~/components/content/Banner.vue'
 
-// import Hero from '~/components/content/Hero.vue'
-import Hero from '~/components/content/HeroV2.vue'
+import Hero from '~/components/content/hero/HeroV2.vue'
 </script>
 
 <template>

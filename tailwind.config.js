@@ -1,29 +1,21 @@
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-    content: [
-        './components/**/*.{js,vue,ts}',
-        './layouts/**/*.vue',
-        './pages/**/*.vue',
-        './plugins/**/*.{js,ts}',
-        './nuxt.config.{js,ts}'
+    content: ['./components/**/*.{js,vue,ts}', './layouts/**/*.vue', './pages/**/*.vue', './plugins/**/*.{js,ts}', './nuxt.config.{js,ts}'
 
-    ],
-    theme: {
+    ], theme: {
         colors: {
-            primary: '#FF0000'
-                        transparent: 'transparent',
-                        current: 'currentColor',
-                        black: colors.black,
-                        white: colors.white,
-                        gray: colors.trueGray,
-                        indigo: colors.indigo,
-//                        red: colors.red,
+            primary: '#FF0000',
+            transparent: 'transparent',
+            current: 'currentColor',
+            black: colors.black,
+            white: colors.white,
+            gray: colors.neutral,
+            indigo: colors.indigo, //                        red: colors.red,
 
 
-                        yellow: colors.amber
-        },
-        extend: {
+            yellow: colors.amber
+        }, extend: {
             colors: {
                 // NOTE: Generated with https://uicolors.app/create
                 'red': {
@@ -41,14 +33,9 @@ module.exports = {
                 }
 
             }
-        },
-        screens: {
+        }, screens: {
 //            xs: '415px',
-            sm: '576px',
-            md: '768px',
-            lg: '992px',
-            xl: '1200px'
+            sm: '576px', md: '768px', lg: '992px', xl: '1200px'
         }
-    },
-    plugins: []
+    }, plugins: []
 };

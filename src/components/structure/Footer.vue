@@ -1,50 +1,62 @@
 <script lang="ts" setup>
 
+import {consola, createConsola} from "consola";
+
+import {LinkService} from "~/service/NavService";
+
+const currentYear = new Date().getFullYear()
+
+console.log('footer');
+
+const navLinks = LinkService.getNavLinks();
+const socialLinks = LinkService.getSocialLinks();
+
+consola.info("foo bar");
+
+
 </script>
 <template>
+  <div class="container flex flex-col mx-auto">
+    <div class="flex flex-col items-center w-full my-20">
+      <span class="mb-8 sm:mb-3">
+        <img src="~assets/images/logo/atc-logo-abbreviated-transparent.png" alt="Acquired Taste Comedy Logo" height="50"
+             class="lg:mr-2  max-h-12"/>
+      </span>
+      <div class="flex flex-col items-center gap-6 mb-8">
+        <div
+            class="flex flex-col sm:flex-row sm:flex-wrap md:flex-row items-center justify-center gap-5 lg:gap-12 gap-y-3 lg:flex-nowrap text-dark-grey-900">
 
-  <div class="py-4 px-4 mx-0 mt-8 lg:mx-8">
-    <div class="grid justify-content-between">
-      <div class="col-12 md:col-2" style="margin-top: -1.5rem">
-        <NuxtLink to="/" class="flex flex-wrap align-items-center justify-content-center md:justify-content-start md:mb-0 mb-3 cursor-pointer">
-          <!--          <img :src="logoUrl" alt="footer sections" width="50" height="50" class="mr-2"/>-->
+          <!--           <div class="flex md:flex-wrap items-center justify-center gap-5 lg:gap-12 gap-y-3 sm:flex-col lg:flex-wrap text-dark-grey-900">-->
 
-          <img src="~assets/images/logo/atc-logo-abbreviated-transparent.png" alt="Acquired Taste Comedy Logo" height="50" class="lg:mr-2  max-h-9"/>
-
-          <!--          <h4 class="font-medium text-3xl text-900">Acquired Taste Comedy</h4>-->
-        </NuxtLink>
-      </div>
-
-      <div class="col-12 md:col-10 lg:col-7">
-        <div class="grid text-center md:text-left">
-          <div class="col-12 md:col-3">
-            <h4 class="font-medium text-2xl line-height-3 mb-3 text-900">Info</h4>
-            <NuxtLink to="/shows" class="line-height-3 text-xl block cursor-pointer mb-2 text-700">
-              <span>Shows</span>
-            </NuxtLink>
-            <NuxtLink to="/about" class="line-height-3 text-xl block cursor-pointer mb-2 text-700">
-              <span>About Us</span>
-            </NuxtLink>
-            <NuxtLink to="/links" class="line-height-3 text-xl block cursor-pointer mb-2 text-700">
-              <span>Links</span>
-            </NuxtLink>
-          </div>
-
-          <div class="col-12 md:col-3 mt-4 md:mt-0">
-            <h4 class="font-medium text-2xl line-height-3 mb-3 text-900">Resources</h4>
-            <NuxtLink to="/media" class="line-height-3 text-xl block cursor-pointer mb-2 text-700">
-              <span>Media</span>
-            </NuxtLink>
-            <NuxtLink to="/contact" class="line-height-3 text-xl block cursor-pointer mb-2 text-700">
-              <span>Contact</span>
-            </NuxtLink>
-            <NuxtLink to="/sandbox" class="line-height-3 text-xl block cursor-pointer mb-2 text-700">
-              <span>Sandbox</span>
-            </NuxtLink>
-
-          </div>
+          <NuxtLink v-for="link in navLinks" :to="link.slug" class="text-gray-600 hover:text-gray-900">
+            <span>{{ link.title }}</span>
+          </NuxtLink>
 
         </div>
+        <div class="flex items-center gap-1">
+
+
+          <a v-for="link in socialLinks" :href="link.slug" target="_blank">
+            <Button
+                class="button"
+                text
+                rounded
+                :title="link.title"
+            >
+              <i class="icon pi" :class="link.icon"></i>
+            </Button>
+          </a>
+        </div>
+      </div>
+      <div class="flex items-center">
+        <p class="text-base font-normal leading-7 text-center text-grey-700 f">
+          <span>
+            &copy; {{ currentYear }} Acquired Taste Comedy.
+          </span>
+          <span class="block sm:inline">
+            All rights reserved.
+          </span>
+        </p>
       </div>
     </div>
   </div>

@@ -11,7 +11,7 @@ console.log('footer');
 const navLinks = LinkService.getNavLinks();
 const socialLinks = LinkService.getSocialLinks();
 
-consola.info("foo bar");
+consola.info("foo what");
 
 
 </script>

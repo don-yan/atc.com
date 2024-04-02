@@ -1,7 +1,12 @@
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-    content: ['./components/**/*.{js,vue,ts}', './layouts/**/*.vue', './pages/**/*.vue', './plugins/**/*.{js,ts}', './nuxt.config.{js,ts}'
+    content: ['./src/components/**/*.{js,vue,ts}',
+        './src/layouts/**/*.vue',
+        './src/pages/**/*.vue',
+        './src/plugins/**/*.{js,ts}',
+        './nuxt.config.{js,ts}',
+        "./node_modules/flowbite/**/*.{js,ts}"
 
     ], theme: {
         colors: {
@@ -37,5 +42,7 @@ module.exports = {
 //            xs: '415px',
             sm: '576px', md: '768px', lg: '992px', xl: '1200px'
         }
-    }, plugins: []
+    }, plugins: [
+        require('flowbite/plugin')
+    ]
 };

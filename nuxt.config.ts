@@ -36,5 +36,8 @@ export default defineNuxtConfig({
     //         //     ['swiper-slide', 'swiper-container'].includes(tag),
     //     },
     // },
+    // alias:{
+    //     '~':'./src'
+    // }
 
 });

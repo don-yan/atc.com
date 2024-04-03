@@ -1,8 +1,17 @@
 <script lang="ts" setup>
 
-import {onMounted} from 'vue'
+import {onMounted, ref} from 'vue'
 import {initModals} from 'flowbite'
 
+
+import {Modal} from 'flowbite'
+
+import type {ModalOptions, ModalInterface} from 'flowbite';
+import type {InstanceOptions} from 'flowbite';
+import LogService from "~/service/LogService";
+
+
+const root = ref<HTMLElement | null>(null);
 
 const props = defineProps({
   hideNav: Boolean,
@@ -13,8 +22,52 @@ const props = defineProps({
 
 // initialize components based on data attribute selectors
 onMounted(() => {
-  console.log(`init modal [${props.title}]`)
-  initModals();
+  console.log(`V2 init modal [${props.title}]`)
+  // initModals();
+
+  // setup available elements
+  const $buttonElement = root.value?.querySelector('#button');
+  const $modalElement = root.value?.querySelector(`#${props.id}`);
+  const $closeButton = root.value?.querySelector('#closeButton');
+
+  
+
+  const modalOptions: ModalOptions = {
+    placement: 'bottom-right',
+    backdrop: 'static',
+    backdropClasses:
+        'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
+    closable: false,
+    onHide: () => {
+      console.log(`[${props.title}] modal is hidden `);
+    },
+    onShow: () => {
+      console.log(`[${props.title}] modal is shown`);
+    },
+    onToggle: () => {
+      console.log(`[${props.title}] modal has been toggled`);
+    },
+  };
+
+// instance options object
+  const instanceOptions: InstanceOptions = {
+    id: 'modalEl',
+    override: true
+  };
+
+// create a new modal instance
+  if ($modalElement) {
+    const modal = new Modal($modalElement, modalOptions, instanceOptions);
+
+    // set event listeners for the button to show the modal
+    $buttonElement.addEventListener('click', () => modal.toggle());
+    $closeButton.addEventListener('click', () => modal.hide());
+    LogService.log('init modal via logService')
+    console.log('hello')
+  }
+
+  
+
 })
 
 const onClose = () => {
@@ -25,7 +78,7 @@ const onClose = () => {
 </script>
 
 <template>
-  <div>
+  <div ref="root">
     <div class="flex justify-center p-4">
       <button id="button" :data-modal-target="props.id" :data-modal-toggle="props.id" type="button"
               class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">

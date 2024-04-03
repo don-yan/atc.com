@@ -4,6 +4,7 @@ import {onMounted, ref} from 'vue'
 import {initModals} from 'flowbite'
 
 
+
 import {Modal} from 'flowbite'
 
 import type {ModalOptions, ModalInterface} from 'flowbite';
@@ -12,6 +13,7 @@ import LogService from "~/service/LogService";
 
 
 const root = ref<HTMLElement | null>(null);
+
 
 const props = defineProps({
   hideNav: Boolean,
@@ -33,7 +35,7 @@ onMounted(() => {
   
 
   const modalOptions: ModalOptions = {
-    placement: 'bottom-right',
+    placement: 'top-right',
     backdrop: 'static',
     backdropClasses:
         'bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40',
@@ -57,7 +59,7 @@ onMounted(() => {
 
 // create a new modal instance
   if ($modalElement) {
-    const modal = new Modal($modalElement, modalOptions, instanceOptions);
+    const modal:ModalInterface = new Modal($modalElement, modalOptions, instanceOptions);
 
     // set event listeners for the button to show the modal
     $buttonElement.addEventListener('click', () => modal.toggle());

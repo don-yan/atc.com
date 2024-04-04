@@ -24,12 +24,12 @@ export const LinkService = {
                 title: 'Sandbox',
                 slug: '/sandbox'
             },
-       {     title: 'Flowbite 1',
-            slug: '/flowbite'
-        },
-     {   title: 'Flowbite V2',
-        slug: '/flowbite-v2'
-    }
+    //    {     title: 'Flowbite 1',
+    //         slug: '/flowbite'
+    //     },
+    //  {   title: 'Flowbite V2',
+    //     slug: '/flowbite-v2'
+    // }
         ]
     },
 

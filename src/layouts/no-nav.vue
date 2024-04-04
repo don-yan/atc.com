@@ -10,14 +10,14 @@ import StructureFooter from '~/components/structure/Footer.vue'
 <template>
 
 
-  <TailwindBreakpoints/>
+  <!-- <TailwindBreakpoints/> -->
 
   <!-- <div class="min-h-screen font-sans antialiased relative"> -->
   <!-- <header class="dark">
     <StructureHeader class="dark:bg-gray-800"/>
   </header> -->
   <header class="">
-    <StructureHeader class=""/>
+    <StructureHeader class="" hide-nav="true"/>
   </header>
 
   <!--  <main class="h-full py-4 px-4 mx-0 md:mx-6 lg:mx-8 lg:px-8 flex align-items-center justify-content-between relative lg:static mb-3">-->
@@ -29,7 +29,7 @@ import StructureFooter from '~/components/structure/Footer.vue'
   </main>
 
   <footer>
-    <StructureFooter/>
+    <StructureFooter  hide-nav="true"/>
   </footer>
   <!-- </div> -->
 

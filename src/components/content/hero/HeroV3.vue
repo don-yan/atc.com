@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 
-// import Image from 'primevue/image';
-// import Carousel from 'primevue/carousel'
+import {ref } from 'vue'
+import { Carousel } from 'flowbite'
 
 const products = ref()
 
@@ -74,55 +74,91 @@ products.value = [{
     rating: 5
   }]
 
-const responsiveOptions = ref([
-  {
-    breakpoint: '1400px',
-    numVisible: 2,
-    numScroll: 1
-  },
-  {
-    breakpoint: '1199px',
-    numVisible: 3,
-    numScroll: 1
-  },
-  {
-    breakpoint: '767px',
-    numVisible: 2,
-    numScroll: 1
-  },
-  {
-    breakpoint: '575px',
-    numVisible: 1,
-    numScroll: 1
-  }
-]);
+
+  onMounted(() => {
+
+const carouselElement = document.getElementById('carousel-example');
+
+const items = [
+    {
+        position: 0,
+        el: document.getElementById('carousel-item-1')
+    },
+    {
+        position: 1,
+        el: document.getElementById('carousel-item-2')
+    },
+    {
+        position: 2,
+        el: document.getElementById('carousel-item-3')
+    },
+    {
+        position: 3,
+        el: document.getElementById('carousel-item-4')
+    },
+];
+const options = {
+    defaultPosition: 1,
+    interval: 3000,
+    
+    indicators: {
+        activeClasses: 'bg-white dark:bg-gray-800',
+        inactiveClasses: 'bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800',
+        items: [
+            {
+                position: 0,
+                el: document.getElementById('carousel-indicator-1')
+            },
+            {
+                position: 1,
+                el: document.getElementById('carousel-indicator-2')
+            },
+            {
+                position: 2,
+                el: document.getElementById('carousel-indicator-3')
+            },
+            {
+                position: 3,
+                el: document.getElementById('carousel-indicator-4')
+            },
+        ]
+    },
+    
+    // callback functions
+    onNext: () => {
+        console.log('next slider item is shown');
+    },
+    onPrev: ( ) => {
+        console.log('previous slider item is shown');
+    },
+    onChange: ( ) => {
+        console.log('new slider item has been shown');
+    }
+};
+if (document.getElementById('carousel-item-1')) {
+    const carousel = new Carousel(carouselElement, items, options);
+    carousel.cycle()
+    // set event listeners for prev and next buttons
+    const prevButton = document.getElementById('data-carousel-prev');
+    const nextButton = document.getElementById('data-carousel-next');
+    prevButton.addEventListener('click', () => {
+        carousel.prev();
+    });
+    nextButton.addEventListener('click', () => {
+        carousel.next();
+    });
+}
+})
+
+
+
+
 
 </script>
 <template>
 
-  <!-- <div class="card">
-    <Carousel :value="products" :numVisible="2" :numScroll="2" :responsiveOptions="responsiveOptions" orientation="horizontal" autoplayInterval="2000" :showNavigators="false">
-      <template #item="slotProps">
-        <div class="border-1 surface-border border-round m-2  p-3">
-          <div class="mb-3">
-            <div class="relative mx-auto">
-              <Image  :src="'https://primefaces.org/cdn/primevue/images/product/' + slotProps.data.image" :alt="slotProps.data.name" class="w-full border-round" preview />
-              <Tag :value="slotProps.data.inventoryStatus" severity="contrast" class="absolute" style="left:5px; top: 5px"/>
-            </div>
-          </div>
-          <div class="mb-3 font-medium">{{ slotProps.data.name }}</div>
-          <div class="flex justify-content-between align-items-center">
-            <div class="mt-0 font-semibold text-xl">${{ slotProps.data.price }}</div>
-            <span>
-                            <Button icon="pi pi-heart" severity="secondary" outlined />
-                            <Button icon="pi pi-shopping-cart" class="ml-2"/>
-                        </span>
-          </div>
-        </div>
-      </template>
-    </Carousel>
-  </div> -->
-<!--
+
+
 
   <div
       class="container flex flex-col px-6 py-4 mx-auto space-y-6 md:h-128 md:py-16 md:flex-row md:items-center md:space-x-6">
@@ -153,7 +189,7 @@ const responsiveOptions = ref([
            src="https://images.unsplash.com/photo-1579586337278-3befd40fd17a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1352&q=80"
            alt="apple watch photo">
     </div>
-  </div>-->
+  </div>
 </template>
 
 <style lang="scss" scoped>

@@ -8,10 +8,21 @@ const currentYear = new Date().getFullYear()
 
 console.log('footer');
 
-const navLinks = LinkService.getNavLinks();
+const props = defineProps({
+  hideNav: Boolean
+})
+
+
+const navLinks = props.hideNav ? [] : LinkService.getNavLinks();
+
+
+
 const socialLinks = LinkService.getSocialLinks();
 
-consola.info("foo what");
+
+
+
+
 
 
 </script>
@@ -33,7 +44,7 @@ consola.info("foo what");
           </NuxtLink>
 
         </div>
-        <div class="flex  items-center justify-center space-x-2 gap-2 text-primary">
+        <div class="flex items-center justify-center space-x-4 gap-2 text-primary">
 
 
           <a v-for="link in socialLinks" 

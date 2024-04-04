@@ -5,7 +5,7 @@ import CallToAction from '~/components/content/CallToAction.vue'
 import DescriptionList from '~/components/content/DescriptionList.vue'
 import FeatureBlocks from '~/components/content/FeatureBlocks.vue'
 import PricingBlocks from '~/components/content/PricingBlocks.vue'
-import Image from 'primevue/image'
+// import Image from 'primevue/image'
 
 import Hero from '~/components/content/hero/Hero.vue'
 
@@ -25,8 +25,8 @@ definePageMeta({
   </section>
   <section>
 
-    <Image src="/images/hero-1.png" alt="Image" width="250" preview/>
-    <!--    <hr/>-->
+    <!-- <Image src="/images/hero-1.png" alt="Image" width="250" preview/>
+       <hr/> -->
     <!--    <Image alt="Image" width="250"-->
     <!--           preview-->
     <!--           pt:image:src="~assets/images/hero-1.png"-->

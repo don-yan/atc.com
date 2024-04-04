@@ -33,18 +33,21 @@ consola.info("foo what");
           </NuxtLink>
 
         </div>
-        <div class="flex items-center gap-1">
+        <div class="flex  items-center justify-center space-x-2 gap-2 text-primary">
 
 
-          <a v-for="link in socialLinks" :href="link.slug" target="_blank">
-            <Button
+          <a v-for="link in socialLinks" 
+          :href="link.slug" 
+          target="_blank"
+          class="p-button-rounded border-0 font-light leading-tight">
+            <!-- <Button
                 class="button"
                 text
                 rounded
                 :title="link.title"
-            >
+            > -->
               <i class="icon pi" :class="link.icon"></i>
-            </Button>
+            <!-- </Button> -->
           </a>
         </div>
       </div>

@@ -1,4 +1,5 @@
 <template>
+  
   <div
     class="fixed bottom-0 right-0 flex items-center p-2 m-2 text-sm text-white border rounded bg-gray-900 border-gray z-50"
   >

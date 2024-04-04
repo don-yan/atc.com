@@ -6,24 +6,26 @@ export default defineNuxtConfig({
         pageTransition: {name: 'page', mode: 'out-in'},
     },
     devtools: {enabled: true},
-    modules: ["@nuxtjs/tailwindcss", "nuxt-primevue",
+    modules: ["@nuxtjs/tailwindcss",
+    // TODO: why cannt we remove `nuxt-primevue` as a dependency?
+    //  "nuxt-primevue",
         // TODO: configure eslint & prettier
         // REF: https://dev.to/nikitadmitr/configure-eslint-prettier-for-nuxt-3-45f7
         // "@nuxtjs/eslint-module"
     ],
-    primevue: {
-        // cssLayerOrder: "tailwind-base, primevue, tailwind-utilities, primeflex",
-        cssLayerOrder: "tailwind-base, primevue, tailwind-utilities",
-        components: {
-            exclude: ["Editor", "Chart"]
-        },
-        ripple: true
-    },
+    // primevue: {
+    //     // cssLayerOrder: "tailwind-base, primevue, tailwind-utilities, primeflex",
+    //     cssLayerOrder: "tailwind-base, primevue, tailwind-utilities",
+    //     components: {
+    //         exclude: ["Editor", "Chart"]
+    //     },
+    //     ripple: true
+    // },
 
     css: [
 
         "primeicons/primeicons.css",
-        "assets/scss/primevue-sass-theme-3.50.0/themes/atc-theme/theme.scss"
+        // "assets/scss/primevue-sass-theme-3.50.0/themes/atc-theme/theme.scss",
         // "primevue/resources/themes/lara-light-purple/theme.css"
     ],
 
@@ -40,4 +42,4 @@ export default defineNuxtConfig({
     //     '~':'./src'
     // }
 
-}) as NuxtConfig;
+})

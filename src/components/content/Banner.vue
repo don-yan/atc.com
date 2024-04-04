@@ -18,7 +18,7 @@ let isOpen = ref(true);
             <span class="underline font-bold">Learn More</span>
           </a>
         </a>-->
-    <a @click="isOpen = false" v-ripple class="flex items-center no-underline justify-center rounded-full text-gray-50 hover:bg-bluegray-700 cursor-pointer transition-colors duration-150 p-ripple" style="width:2rem; height: 2rem">
+    <a @click="isOpen = false" class="flex items-center no-underline justify-center rounded-full text-gray-50 hover:bg-bluegray-700 cursor-pointer transition-colors duration-150 p-ripple" style="width:2rem; height: 2rem">
       <i class="pi pi-times"></i>
     </a>
   </div>

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 
+import {ref} from 'vue'
 import {LinkService} from "~/service/NavService";
 
 const navLinks = LinkService.getNavLinks();
@@ -30,18 +31,21 @@ const isOpen = ref(false)
           class="items-center surface-0 grow justify-between lg:flex absolute lg:static shadow-md lg:shadow-none right-0 px-12 lg:px-0 z-20 bg-white top-full"
           :class="isOpen ? '' : 'hidden'">
         <div class="flex justify-between w-full items-center flex-col lg:flex-row">
-          <ul class="list-none p-0 m-0 flex items-center select-none flex-col lg:flex-row cursor-pointer">
+          <ul class="list-none p-0 m-0 flex items-center space-y-1 select-none flex-col lg:flex-row cursor-pointer  first:pt-0 last:pb-0y">
             <li v-for="link in navLinks">
-              <NuxtLink v-ripple :to="link.slug"
-                        class="flex m-0 px-0 py-4 text-900 font-medium leading-normal p-ripple lg:ml-8">
+              <NuxtLink :to="link.slug"
+                        class="flex m-0 px-0 py-4 text-900 font-medium leading-normal lg:ml-8">
                 <span>{{ link.title }}</span>
               </NuxtLink>
             </li>
 
           </ul>
           <div class="flex justify-between lg:block border-t lg:border-t-0 surface-border py-4 lg:py-0 mt-4 lg:mt-0">
-            <a href="https://www.tickettailor.com/events/acquiredtastecomedy?" target="_blank">
+            <a href="https://www.tickettailor.com/events/acquiredtastecomedy?"
+             target="_blank"
+             class="px-3 py-1 shadow-lg shadow-gray-500/50 bg-primary text-white rounded-lg text-[15px] cursor-pointer active:scale-[.97]">
               <!--          <Button label="Buy Tickets" class="p-button-rounded border-0 ml-8 font-light text-white leading-tight bg-primary hover:bg-red-400"></Button>-->
+              Buy Tickets
               <Button label="Buy Tickets"
                       class="p-button-rounded border-0 font-light text-white leading-tight"></Button>
             </a>

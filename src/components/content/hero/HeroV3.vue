@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 
-import Image from 'primevue/image';
-import Carousel from 'primevue/carousel'
+// import Image from 'primevue/image';
+// import Carousel from 'primevue/carousel'
 
 const products = ref()
 
@@ -100,14 +100,13 @@ const responsiveOptions = ref([
 </script>
 <template>
 
-  <div class="card">
+  <!-- <div class="card">
     <Carousel :value="products" :numVisible="2" :numScroll="2" :responsiveOptions="responsiveOptions" orientation="horizontal" autoplayInterval="2000" :showNavigators="false">
       <template #item="slotProps">
         <div class="border-1 surface-border border-round m-2  p-3">
           <div class="mb-3">
             <div class="relative mx-auto">
               <Image  :src="'https://primefaces.org/cdn/primevue/images/product/' + slotProps.data.image" :alt="slotProps.data.name" class="w-full border-round" preview />
-<!--              <img :src="'https://primefaces.org/cdn/primevue/images/product/' + slotProps.data.image" :alt="slotProps.data.name" />-->
               <Tag :value="slotProps.data.inventoryStatus" severity="contrast" class="absolute" style="left:5px; top: 5px"/>
             </div>
           </div>
@@ -122,7 +121,7 @@ const responsiveOptions = ref([
         </div>
       </template>
     </Carousel>
-  </div>
+  </div> -->
 <!--
 
   <div

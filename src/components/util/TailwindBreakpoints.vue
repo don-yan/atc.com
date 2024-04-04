@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed bottom-0 right-0 flex items-center p-2 m-2 text-sm text-white border rounded bg-gray-900 border-gray"
+    class="fixed bottom-0 right-0 flex items-center p-2 m-2 text-sm text-white border rounded bg-gray-900 border-gray z-50"
   >
     <svg
       class="inline w-auto h-6"
@@ -29,7 +29,8 @@
       </defs>
     </svg>
     Current breakpoint
-    <span class="ml-1 sm:hidden md:hidden lg:hidden xl:hidden">default</span>
+    <span class="ml-1 xs:max-xl:hidden">default</span>
+    <span class="hidden ml-1 xs:inline sm:hidden lg:hidden xl:hidden">xs</span>
     <span class="hidden ml-1 sm:inline md:hidden lg:hidden xl:hidden">sm</span>
     <span class="hidden ml-1 font-extrabold md:inline lg:hidden">md</span>
     <span class="hidden ml-1 font-extrabold lg:inline xl:hidden">lg</span>

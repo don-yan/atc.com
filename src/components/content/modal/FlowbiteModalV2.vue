@@ -61,6 +61,8 @@ onMounted(() => {
   if ($modalElement) {
     const modal:ModalInterface = new Modal($modalElement, modalOptions, instanceOptions);
 
+
+
     // set event listeners for the button to show the modal
     $buttonElement.addEventListener('click', () => modal.toggle());
     $closeButton.addEventListener('click', () => modal.hide());
@@ -95,7 +97,7 @@ const onClose = () => {
          data-modal-backdrop="static"
          :data-modal-closable="false"
          :data-modal-onClose="onClose"
-         class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
+         class="fixed top-0 left-0 sm:bg-transparent right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
       <div class="relative w-full max-w-2xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">

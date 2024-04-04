@@ -33,6 +33,13 @@ const onClose = () => {
       </button>
     </div>
 
+
+    <hr/>
+
+    <div id="my-modal" class="bg-red p-10">
+      hi
+    </div>
+
     <!--   -->
     <div :id="props.id"
          tabindex="-1"

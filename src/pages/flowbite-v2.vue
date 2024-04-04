@@ -24,6 +24,7 @@ onMounted(() => {
     <FlowbiteModal title="modal 1" id="modal-1"/>
 
     <FlowbiteModal title="modal 2" id="modal-2"/>
+    
 
 
   </div>

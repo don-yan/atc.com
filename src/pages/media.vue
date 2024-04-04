@@ -8,7 +8,7 @@ import Hero from '~/components/content/hero/HeroV4.vue'
 <template>
 
 
-  <div class="wrapper max-w-[1000px] mx-auto">
+  <div class="wrapper w-10/12 max-w-[1000px] mx-auto">
 
     <h1>Media Page</h1>
 

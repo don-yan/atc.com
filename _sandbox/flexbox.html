@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        clifford: '#da373d',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+
+    </style>
+
+    <!-- 
+        Reference: https://unclebigbay.com/tailwind-flex-box-basics-a-comprehensive-guide 
+     -->
+</head>
+
+<body>
+
+    <div class="container h-full m-10  my-2 space-y-4 border-2 w-full p-5 border-orange-500">
+        <h1 class="text-3xl font-bold underline text-clifford">
+            Container
+        </h1>
+        <div class="flex flex-col sm:flex-col md:flex-row gap-2 border-4 border-red-600 p-3">
+            <div class="h-20 w-20 text-center border-2 border-sky-500 ring">Item 1</div>
+            <div class="h-20 w-20 grow text-center border-2 border-sky-500">Item 2</div>
+            <div class="h-20 w-20 text-center border-2 border-sky-500">Item 3</div>
+            <div class="h-20 w-20 text-center border-2 border-sky-500">Item 4</div>
+        </div>
+
+        <div class="border-4 flex gap-3 border-red-600 p-3 w-1/2">
+            <div class="h-20 w-20 text-center border-2 border-sky-500">Item 1</div>
+            <div class="h-20 w-20 text-center border-2 border-sky-500">Item 2</div>
+            <div class="h-20 w-20 text-center border-2 border-sky-500">Item 3</div>
+            <div class="h-20 w-20 text-center border-2 border-sky-500">Item 4</div>
+        </div>
+
+        <div class="flex w-full gap-4 text-slate-200 first:text-primar py-4 first:pt-0 last:pb-0y ">
+            <div class="basis-1/12 bg-orange-400 text-center ">1</div>
+            <div class="basis-1/12 bg-orange-400 text-center text-slate-200">2</div>
+            <div class="basis-1/12 shrink-[5] bg-orange-400 text-center text-slate-200">3</div>
+            <div class="basis-10/12 bg-orange-400 text-center text-slate-200">4</div>
+        </div>
+
+
+        <div class="flex w-full gap-4 bg-black">
+            <div class="shrink h-14 w-48 bg-orange-400 text-center text-slate-200">1</div>
+            <div class="h-14 w-32 bg-orange-400 text-center text-slate-200">2</div>
+            <div class="h-14 w-32 bg-orange-400 text-center text-slate-200">3</div>
+        </div>
+
+        <h1 class="text-3xl font-bold underline">Justify </h1>
+
+        <div class="flex flex-col text-center justify-center p-5">
+            <h2>Normal/Start</h2>
+            <div class="mb-6 mt-3 flex w-full justify-normal gap-4 border-b border-slate-200 pb-6">
+                <div class="h-14 w-32 bg-purple-400 text-center text-slate-200">1</div>
+                <div class="h-14 w-32 bg-purple-400 text-center text-slate-200">2</div>
+                <div class="h-14 w-32 bg-purple-400 text-center text-slate-200">3</div>
+            </div>
+
+            <h2>Center</h2>
+            <div class="mb-6 mt-3 flex w-full justify-center gap-4 border-b border-slate-200 pb-6">
+                <div class="h-14 w-32 bg-green-400 text-center text-slate-200">1</div>
+                <div class="h-14 w-32 bg-green-400 text-center text-slate-200">2</div>
+                <div class="h-14 w-32 bg-green-400 text-center text-slate-200">3</div>
+            </div>
+
+            <h2>End</h2>
+            <div class="mb-6 mt-3 flex w-full justify-end gap-4 border-b border-slate-200 pb-6">
+                <div class="h-14 w-32 bg-rose-400 text-center text-slate-200">1</div>
+                <div class="h-14 w-32 bg-rose-400 text-center text-slate-200">2</div>
+                <div class="h-14 w-32 bg-rose-400 text-center text-slate-200">3</div>
+            </div>
+
+            <h2>Between</h2>
+            <div class="mb-6 mt-3 flex w-full justify-between gap-4 border-b border-slate-200 pb-6">
+                <div class="h-14 w-32 bg-slate-800 text-center text-slate-200">1</div>
+                <div class="h-14 w-32 bg-slate-800 text-center text-slate-200">2</div>
+                <div class="h-14 w-32 bg-slate-800 text-center text-slate-200">3</div>
+            </div>
+
+            <h2>Around</h2>
+            <div class="mb-6 mt-3 flex w-full justify-around gap-4 border-b border-slate-200 pb-6">
+                <div class="h-14 w-32 bg-blue-400 text-center text-slate-200">1</div>
+                <div class="h-14 w-32 bg-blue-400 text-center text-slate-200">2</div>
+                <div class="h-14 w-32 bg-blue-400 text-center text-slate-200">3</div>
+            </div>
+
+            <h2>Evenly</h2>
+            <div class="mb-6 mt-3 flex w-full justify-evenly gap-4 border-b border-slate-200 pb-6">
+                <div class="h-14 w-32 bg-yellow-400 text-center text-slate-200">1</div>
+                <div class="h-14 w-32 bg-yellow-400 text-center text-slate-200">2</div>
+                <div class="h-14 w-32 bg-yellow-400 text-center text-slate-200">3</div>
+            </div>
+        </div>
+
+        <h1 class="text-3xl font-bold underline">Align</h1>
+
+        <div class="flex flex-col justify-center p-5 text-center">
+            <h2>Start/baseline</h2>
+            <div class="mt-3 flex h-32 w-full items-start gap-4 border-b border-slate-200 bg-green-200">
+                <div class="w-full bg-slate-800 text-center text-slate-200">1</div>
+                <div class="w-full bg-slate-800 text-center text-slate-200">2</div>
+                <div class="w-full bg-slate-800 text-center text-slate-200">3</div>
+            </div>
+
+            <hr class="my-6 border-t border-red-200" />
+
+            <h2>Center</h2>
+            <div class="mt-3 flex h-32 w-full items-center gap-4 border-b border-slate-200 bg-green-200">
+                <div class="w-full bg-blue-800 text-center text-slate-200">1</div>
+                <div class="w-full bg-blue-800 text-center text-slate-200">2</div>
+                <div class="w-full bg-blue-800 text-center text-slate-200">3</div>
+            </div>
+
+            <hr class="my-6 border-t border-red-200" />
+
+            <h2>End</h2>
+            <div class="mt-3 flex h-32 w-full items-end gap-4 border-b border-slate-200 bg-green-200">
+                <div class="w-full bg-purple-800 text-center text-purple-200">1</div>
+                <div class="w-full bg-purple-800 text-center text-purple-200">2</div>
+                <div class="w-full bg-purple-800 text-center text-slate-200">3</div>
+            </div>
+
+            <hr class="my-6 border-t border-red-200" />
+
+            <h2>stretch</h2>
+            <div class="mt-3 flex flex-row flex-wrap h-32 w-full gap-4 border-b border-slate-200 bg-green-200">
+                <div class="bg-pink-800 w-full text-center text-slate-200">1</div>
+                <div class="bg-pink-800 w-full text-center text-slate-200">2</div>
+                <div class="bg-pink-800 w-full text-center text-slate-200">3</div>
+            </div>
+        </div>
+        <h1 class="text-3xl font-bold underline">Align Self</h1>
+
+        <div class="flex flex-col justify-center p-5 text-center">
+            <h2>Start</h2>
+            <div class="mt-3 flex h-32 w-full gap-4 border-b border-slate-200 bg-green-200">
+                <div class="w-full self-start bg-slate-800 text-center text-slate-200">1</div>
+                <div class="w-full bg-slate-800 text-center text-slate-200">2</div>
+                <div class="w-full bg-slate-800 text-center text-slate-200">3</div>
+            </div>
+
+            <hr class="my-6 border-t border-red-200" />
+
+            <h2>Center</h2>
+            <div class="mt-3 flex h-32 w-full gap-4 border-b border-slate-200 bg-green-200">
+                <div class="w-full bg-blue-800 text-center text-slate-200">1</div>
+                <div class="w-full self-center bg-blue-800 text-center text-slate-200">2</div>
+                <div class="w-full bg-blue-800 text-center text-slate-200">3</div>
+            </div>
+
+            <hr class="my-6 border-t border-red-200" />
+
+            <h2>End</h2>
+            <div class="mt-3 flex h-32 w-full gap-4 border-b border-slate-200 bg-green-200">
+                <div class="w-full bg-yellow-800 text-center text-slate-200">1</div>
+                <div class="w-full bg-yellow-800 text-center text-slate-200">2</div>
+                <div class="w-full self-end bg-yellow-800 text-center text-slate-200">3</div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

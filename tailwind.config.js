@@ -3,15 +3,17 @@ const colors = require('tailwindcss/colors');
 const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
-    content: ['./src/components/**/*.{js,vue,ts}',
+    content: [
+        './src/components/**/*.{js,vue,ts}',
         './src/layouts/**/*.vue',
         './src/pages/**/*.vue',
         './src/plugins/**/*.{js,ts}',
+
         './nuxt.config.{js,ts}',
         "./node_modules/flowbite/**/*.{js,ts}"
 
     ],
-    darkMode: 'selector',
+    darkMode: 'class',
     extend: {
         colors: {
             // NOTE: Generated with https://uicolors.app/create
@@ -30,9 +32,9 @@ module.exports = {
             }
 
         },
-       
-    }, 
-     theme: {
+
+    },
+    theme: {
         colors: {
             primary: '#FF0000',
             transparent: 'transparent',
@@ -44,13 +46,13 @@ module.exports = {
 
 
             yellow: colors.amber
-        }, 
-        extend:{
+        },
+        extend: {
             fontFamily: {
                 'sans': ['"Proxima Nova"', ...defaultTheme.fontFamily.sans],
-                'don':['"DonYan"', ...defaultTheme.fontFamily.sans]
-              },
-        },screens: {
+                'don': ['"DonYan"', ...defaultTheme.fontFamily.sans]
+            },
+        }, screens: {
             xs: '415px',
             ...defaultTheme.screens
             //  sm: '576px', md: '768px', lg: '992px', xl: '1200px'
@@ -74,7 +76,12 @@ module.exports = {
             // => @media (min-width: 1536px) { ... }
             */
         }
-    }, plugins: [
+    }, variants: {},
+    plugins: [
+        require('@tailwindcss/forms'),
+        require('@tailwindcss/typography'),
+        // require('@tailwindcss/aspect-ratio'),
         require('flowbite/plugin')
+
     ]
 };

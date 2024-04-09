@@ -2,25 +2,67 @@
 
 
 definePageMeta({
-  // layout: 'no-nav',
-  layout: 'landing'
+  layout: 'no-nav'
 })
-
-
-import ShowsList from '~/components/content/dynamic/ShowsList.vue'
-import ContactForm from '~/components/forms/ContactForm.vue'
-import Button from '~/components/content/Button.vue'
-
 
 </script>
 <template>
 
 
-  <div>
-    <section id="hero" class="">
-      <!--      <div class="bg-white dark:bg-gray-900 py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:grid lg:grid-cols-3 gap-8 lg:gap-16 rounded-3xl shadow-lg shadow-red-600">-->
+
+    <section
+      class="header relative pt-16 items-center flex h-screen max-h-860-px"
+    >
+      <div class="container mx-auto items-center flex flex-wrap">
+        <div class="w-full md:w-8/12 lg:w-6/12 xl:w-6/12 px-4">
+          <div class="pt-32 sm:pt-0">
+            <h2 class="font-semibold text-4xl text-blueGray-600">
+              Vue Notus - A beautiful extension for Tailwind CSS.
+            </h2>
+            <p class="mt-4 text-lg leading-relaxed text-blueGray-500">
+              Vue Notus is Free and Open Source. It does not change any of the
+              CSS from
+              <a
+                href="https://tailwindcss.com/?ref=creativetim"
+                class="text-blueGray-600"
+                target="_blank"
+              >
+                Tailwind CSS.
+              </a>
+              It features multiple HTML elements and it comes with dynamic
+              components for ReactJS, Vue and Angular.
+            </p>
+            <div class="mt-12">
+              <a
+                href="https://www.creative-tim.com/learning-lab/tailwind/vue/overview/notus?ref=vn-index"
+                target="_blank"
+                class="get-started text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-emerald-500 active:bg-emerald-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
+              >
+                Get started
+              </a>
+              <a
+                href="https://github.com/creativetimofficial/vue-notus?ref=vn-index"
+                class="github-star ml-1 text-white font-bold px-6 py-4 rounded outline-none focus:outline-none mr-1 mb-1 bg-blueGray-700 active:bg-blueGray-600 uppercase text-sm shadow hover:shadow-lg ease-linear transition-all duration-150"
+                target="_blank"
+              >
+                Github Star
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <img
+        class="absolute top-0 b-auto right-0 pt-16 sm:w-6/12 -mt-48 sm:mt-0 w-10/12 max-h-860-px"
+        src="/images/header/standup-arrow-red.png"
+        alt="..."
+      />
+    </section>
+  
+  <div class="flex flex-col  space-y-4">
+    <section class="">
       <div
-          class="bg-white dark:bg-gray-900 py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:grid lg:grid-cols-3 gap-8 lg:gap-16 shadow-red-600">
+          class="bg-white dark:bg-gray-900 py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:grid lg:grid-cols-3 gap-8 lg:gap-16 rounded-3xl shadow-lg shadow-red-600">
         <div>
           <!--       <img class="mx-auto w-full lg:max-w-xl h-64 rounded-xl sm:h-96 shadow-xl object-cover" src="/images/promo/standup-comedy-event-arrow.jpg" />-->
           <img class="mx-auto w-full lg:max-w-xl h-64 rounded-xl sm:h-96 object-scale-down"
@@ -38,15 +80,25 @@ import Button from '~/components/content/Button.vue'
           </h1>
           <p class="mb-8 text-lg font-normal text-gray-900 lg:text-xl dark:text-gray-400">
             With a growing collection of extraordinary venues, rotating lineups of hilarious comics & surprise musical
-            guests, <strong class="whitespace-nowrap">Acquired Taste Comedy</strong> is Greater Boston's leading
-            purveyor of unparalleled
+            guests, <strong class="whitespace-nowrap">Acquired Taste Comedy</strong> is Greater Boston's leading purveyor of unparalleled
             underground comedy experience.
             <!--          <br/>
                       <br/>
                       Forget comedy shows, these are comedy events.-->
           </p>
           <div class="  justify-center space-y-4 sm:space-y-0">
-            <Button :is-blank=true href="https://www.tickettailor.com/events/acquiredtastecomedy?ref=atc-website-hero" text="Buy Tickets" :show-arrow="true" />
+            <a
+                href="https://www.tickettailor.com/events/acquiredtastecomedy?ref=website"
+                target="_blank"
+                class="inline-flex justify-center items-center py-3 px-5 text-base font-bold text-center text-white rounded-lg bg-primary hover:bg-red-900 focus:ring-4 focus:ring-red-300 dark:focus:ring-blue-900">
+              Buy Tickets
+              <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                   fill="none" viewBox="0 0 14 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M1 5h12m0 0L9 1m4 4L9 9"/>
+              </svg>
+            </a>
+
           </div>
         </div>
 
@@ -100,35 +152,23 @@ import Button from '~/components/content/Button.vue'
           </div>
         </section>-->
 
-    <ShowsList id="shows"/>
+    <section id="video" class="dark:bg-gray-900 mt-3">
+      <div
+          class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 gap-8 lg:gap-16 rounded-3xl shadow-lg shadow-red-600">
 
-    <section id="media" class="text-gray-600 body-font">
-      <div class="container px-5 pt-36 mx-auto">
-        <div class="flex flex-col">
-          <div class="h-1 bg-gray-200 rounded overflow-hidden">
-            <div class="w-24 h-full bg-red-500"></div>
-          </div>
-          <div class="flex flex-wrap sm:flex-row flex-col py-6 mb-12">
-            <h2 class="sm:w-2/5 text-gray-900 font-extrabold title-font text-4xl mb-2 sm:mb-0 dark:text-white">
-              Media</h2>
-            <p class="sm:w-3/5 leading-relaxed text-base sm:pl-10 pl-0">See what all of the fuss is about.</p>
-          </div>
-        </div>
+        <iframe class="mx-auto w-full lg:max-w-xl h-64 rounded-lg sm:h-96 shadow-xl"
+                src="https://www.youtube.com/embed/1bV0ljC9CoY" title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
 
-        <div
-            class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 gap-8 lg:gap-16 rounded-3xl- shadow-lg shadow-none shadow-red-600">
-
-          <iframe class="mx-auto w-full lg:max-w-xl h-64 rounded-lg sm:h-96 shadow-xl"
-                  src="https://www.youtube.com/embed/1bV0ljC9CoY" title="YouTube video player" frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen></iframe>
-
-        </div>
       </div>
     </section>
 
-
-    <ContactForm id="contact"/>
+    <section id="shows">
+      <div
+          class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 gap-8 lg:gap-16 rounded-3xl shadow-lg shadow-red-600">
+        <h2>Shows</h2></div>
+    </section>
   </div>
 
 </template>

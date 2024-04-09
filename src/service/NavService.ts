@@ -1,9 +1,40 @@
-let icons: NavLink[] = [];
 let selectedIcon = null;
 
 export const LinkService = {
+
+    getLandingNavLinks(): NavItem[] {
+        return [
+            {
+                title: 'Shows',
+                slug: 'shows'
+            },
+            // {
+            //     title: 'About',
+            //     slug: 'about'
+            // },
+            {
+                title: 'Media',
+                slug: 'media'
+            },
+            {
+                title: 'Contact',
+                slug: 'contact'
+            },
+            // {
+            //     title: 'Sandbox',
+            //     slug: '/sandbox'
+            // },
+            //    {     title: 'Flowbite 1',
+            //         slug: '/flowbite'
+            //     },
+            //  {   title: 'Flowbite V2',
+            //     slug: '/flowbite-v2'
+            // }
+        ]
+    },
+
     getNavLinks(): NavItem[] {
-            return [
+        return [
             {
                 title: 'Shows',
                 slug: '/shows'
@@ -24,12 +55,12 @@ export const LinkService = {
                 title: 'Sandbox',
                 slug: '/sandbox'
             },
-    //    {     title: 'Flowbite 1',
-    //         slug: '/flowbite'
-    //     },
-    //  {   title: 'Flowbite V2',
-    //     slug: '/flowbite-v2'
-    // }
+            //    {     title: 'Flowbite 1',
+            //         slug: '/flowbite'
+            //     },
+            //  {   title: 'Flowbite V2',
+            //     slug: '/flowbite-v2'
+            // }
         ]
     },
 

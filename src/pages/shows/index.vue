@@ -2,22 +2,20 @@
 
 
 definePageMeta({
-  // layout: 'no-nav',
-  layout: 'landing'
+  layout: 'no-nav'
 })
 
 
 import ShowsList from '~/components/content/dynamic/ShowsList.vue'
 import ContactForm from '~/components/forms/ContactForm.vue'
-import Button from '~/components/content/Button.vue'
 
 
 </script>
 <template>
 
 
-  <div>
-    <section id="hero" class="">
+  <div class="flex flex-col space-y-4">
+    <section class="">
       <!--      <div class="bg-white dark:bg-gray-900 py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:grid lg:grid-cols-3 gap-8 lg:gap-16 rounded-3xl shadow-lg shadow-red-600">-->
       <div
           class="bg-white dark:bg-gray-900 py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:grid lg:grid-cols-3 gap-8 lg:gap-16 shadow-red-600">
@@ -46,7 +44,18 @@ import Button from '~/components/content/Button.vue'
                       Forget comedy shows, these are comedy events.-->
           </p>
           <div class="  justify-center space-y-4 sm:space-y-0">
-            <Button :is-blank=true href="https://www.tickettailor.com/events/acquiredtastecomedy?ref=atc-website-hero" text="Buy Tickets" :show-arrow="true" />
+            <a
+                href="https://www.tickettailor.com/events/acquiredtastecomedy?ref=website&a=engine"
+                target="_blank"
+                class="inline-flex justify-center items-center py-3 px-5 text-base font-bold text-center text-white rounded-lg bg-primary hover:bg-red-900 focus:ring-4 focus:ring-red-300 dark:focus:ring-blue-900">
+              Buy Tickets
+              <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                   fill="none" viewBox="0 0 14 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M1 5h12m0 0L9 1m4 4L9 9"/>
+              </svg>
+            </a>
+
           </div>
         </div>
 
@@ -100,35 +109,24 @@ import Button from '~/components/content/Button.vue'
           </div>
         </section>-->
 
-    <ShowsList id="shows"/>
+    <section id="video" class="dark:bg-gray-900 mt-3 pt-5 border-t-red-500 border-t-2">
+      <h1 class="mb-4 text-center text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+        Videos</h1>
+      <div
+          class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 gap-8 lg:gap-16 rounded-3xl- shadow-lg shadow-none shadow-red-600">
 
-    <section id="media" class="text-gray-600 body-font">
-      <div class="container px-5 pt-36 mx-auto">
-        <div class="flex flex-col">
-          <div class="h-1 bg-gray-200 rounded overflow-hidden">
-            <div class="w-24 h-full bg-red-500"></div>
-          </div>
-          <div class="flex flex-wrap sm:flex-row flex-col py-6 mb-12">
-            <h2 class="sm:w-2/5 text-gray-900 font-extrabold title-font text-4xl mb-2 sm:mb-0 dark:text-white">
-              Media</h2>
-            <p class="sm:w-3/5 leading-relaxed text-base sm:pl-10 pl-0">See what all of the fuss is about.</p>
-          </div>
-        </div>
+        <iframe class="mx-auto w-full lg:max-w-xl h-64 rounded-lg sm:h-96 shadow-xl"
+                src="https://www.youtube.com/embed/1bV0ljC9CoY" title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
 
-        <div
-            class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 gap-8 lg:gap-16 rounded-3xl- shadow-lg shadow-none shadow-red-600">
-
-          <iframe class="mx-auto w-full lg:max-w-xl h-64 rounded-lg sm:h-96 shadow-xl"
-                  src="https://www.youtube.com/embed/1bV0ljC9CoY" title="YouTube video player" frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen></iframe>
-
-        </div>
       </div>
     </section>
 
+        <ShowsList id="shows"/>
 
-    <ContactForm id="contact"/>
+
+    <ContactForm id="contact-form"/>
   </div>
 
 </template>

@@ -7,8 +7,8 @@ export default defineNuxtConfig({
     },
     devtools: {enabled: true},
     modules: ["@nuxtjs/tailwindcss",
-    // TODO: why cannt we remove `nuxt-primevue` as a dependency?
-    //  "nuxt-primevue",
+        // TODO: why cannt we remove `nuxt-primevue` as a dependency?
+        //  "nuxt-primevue",
         // TODO: configure eslint & prettier
         // REF: https://dev.to/nikitadmitr/configure-eslint-prettier-for-nuxt-3-45f7
         // "@nuxtjs/eslint-module"
@@ -30,6 +30,13 @@ export default defineNuxtConfig({
     ],
 
 
+    runtimeConfig: {
+        private: {
+            CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
+            CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN,
+            TICKET_TAILOR_KEY: process.env.TICKET_TAILOR_KEY,
+        },
+    },
     srcDir: 'src/',
     // vue: {
     //     compilerOptions: {

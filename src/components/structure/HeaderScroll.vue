@@ -12,6 +12,17 @@ const navLinks = props.hideNav ? [] : LinkService.getNavLinks();
 
 const isOpen = ref(props.hideNav)
 
+const scrollToId = (id: string) => {
+
+  console.log('scrollToId', id)
+
+  document.getElementById(id)?.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
+
+}
+
 </script>
 <template>
   <!--  <div class="py-6 px-6 mx-0 lg:px-20 flex items-center justify-between relative lg:fixed mb-4 shadow-md w-full top-0 bg-white z-20">-->
@@ -24,7 +35,7 @@ const isOpen = ref(props.hideNav)
         <!--      <span class="text-900 font-medium text-2xl leading-normal mr-20">{{ props.hideNav }}</span>-->
       </NuxtLink>
 
-      <div class="flex justify-between w-full" v-if="!props.hideNav">
+      <div class="flex justify-between w-full">
         <button @click="isOpen = !isOpen" type="button" class="block lg:hidden focus:outline-none">
           <i class="text-4xl pi" :class="isOpen ? 'pi-times': 'pi-bars'"></i>
         </button>
@@ -33,13 +44,16 @@ const isOpen = ref(props.hideNav)
             :class="isOpen ? '' : 'hidden'">
           <div class="flex justify-between w-full items-center flex-col lg:flex-row">
             <ul class="list-none p-0 m-0 flex items-center space-y-1 select-none flex-col lg:flex-row cursor-pointer ">
-              <li v-for="link in navLinks">
-                <NuxtLink :to="link.slug"
-                          class="flex m-0 px-0 py-4 text-900 font-medium leading-normal lg:ml-8">
-                  <span>{{ link.title }}</span>
-                </NuxtLink>
+              <!--              <li v-for="link in navLinks">
+                              <NuxtLink :to="link.slug"
+                                        class="flex m-0 px-0 py-4 text-900 font-medium leading-normal lg:ml-8">
+                                <span>{{ link.title }}</span>
+                              </NuxtLink>
+                            </li>-->
+              <li>
+                <a @click="scrollToId('shows')" class="flex m-0 px-0 py-4 text-900 font-medium leading-normal lg:ml-8">
+                  Scroll</a>
               </li>
-
             </ul>
             <div class="flex justify-between lg:block border-t lg:border-t-0 surface-border py-4 lg:py-0 mt-4 lg:mt-0">
               <a href="https://www.tickettailor.com/events/acquiredtastecomedy?"

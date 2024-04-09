@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import TailwindBreakpoints from "~/components/util/TailwindBreakpoints.vue";
 
-import StructureHeader from '~/components/structure/Header.vue'
+// import StructureHeader from '~/components/structure/Header.vue'
+import StructureHeader from '~/components/structure/HeaderScroll.vue'
 
 import StructureFooter from '~/components/structure/Footer.vue'
 
@@ -10,7 +11,7 @@ import StructureFooter from '~/components/structure/Footer.vue'
 <template>
 
 
-  <!-- <TailwindBreakpoints/> -->
+   <TailwindBreakpoints/>
 
   <!-- <div class="min-h-screen font-sans antialiased relative"> -->
   <!-- <header class="dark">

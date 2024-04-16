@@ -41,8 +41,12 @@ const scrollToId = (id: string) => {
       class="py-6 px-6 mx-0 lg:px-20 flex justify-center fixed mb-4 shadow-md w-full top-0 left-0 bg-white z-20">
     <nav class="max-w-[1000px] mx-auto sm:mx-4 w-full flex items-center justify-between">
       <NuxtLink class="flex items-center" @click="scrollToId('hero')" title="Home">
-        <img src="~assets/images/logo/atc-logo-full-transparent.png" alt="Acquired Taste Comedy Logo"
-             class="mr-0 lg:mr-2 max-w-[75px] w-full"/>
+        <NuxtImg
+            class="mr-0 lg:mr-2 max-w-[75px] w-full"
+            src="/images/logo/atc-logo-full-transparent.png"
+            alt="Acquired Taste Comedy Logo"
+            format="webp"
+        />
       </NuxtLink>
 
       <Button :is-blank=true

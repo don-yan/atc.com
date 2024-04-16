@@ -6,7 +6,9 @@ export default defineNuxtConfig({
         pageTransition: {name: 'page', mode: 'out-in'},
     },
     devtools: {enabled: true},
-    modules: ["@nuxtjs/tailwindcss",
+    modules: [
+        "@nuxt/image",
+        "@nuxtjs/tailwindcss",
         // TODO: why cannt we remove `nuxt-primevue` as a dependency?
         //  "nuxt-primevue",
         // TODO: configure eslint & prettier
@@ -28,6 +30,9 @@ export default defineNuxtConfig({
         // "assets/scss/primevue-sass-theme-3.50.0/themes/atc-theme/theme.scss",
         // "primevue/resources/themes/lara-light-purple/theme.css"
     ],
+    image: {
+        provider: 'ipx'
+    },
 
 
     runtimeConfig: {
@@ -35,6 +40,9 @@ export default defineNuxtConfig({
             CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
             CONTENTFUL_ACCESS_TOKEN: process.env.CONTENTFUL_ACCESS_TOKEN,
             TICKET_TAILOR_KEY: process.env.TICKET_TAILOR_KEY,
+            MAILCHIMP_KEY: process.env.MAILCHIMP_KEY,
+            MAILCHIMP_SERVER_PREFIX: process.env.MAILCHIMP_SERVER_PREFIX,
+            MAILCHIMP_AUDIENCE_ID: process.env.MAILCHIMP_AUDIENCE_ID,
         },
     },
     srcDir: 'src/',

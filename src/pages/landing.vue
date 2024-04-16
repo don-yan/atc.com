@@ -3,9 +3,13 @@
 
 definePageMeta({
   // layout: 'no-nav',
-  layout: 'landing'
+  layout: 'landing',
+  title: 'Acquired Taste Comedy'
 })
 
+useHead({
+  title:'Landing'
+})
 
 import ShowsList from '~/components/content/dynamic/ShowsList.vue'
 import ContactForm from '~/components/forms/ContactForm.vue'
@@ -46,7 +50,8 @@ import Button from '~/components/content/Button.vue'
                       Forget comedy shows, these are comedy events.-->
           </p>
           <div class="  justify-center space-y-4 sm:space-y-0">
-            <Button :is-blank=true href="https://www.tickettailor.com/events/acquiredtastecomedy?ref=atc-website-hero" text="Buy Tickets" :show-arrow="true" />
+            <Button :is-blank=true href="https://www.tickettailor.com/events/acquiredtastecomedy?ref=atc-website-hero"
+                    text="Buy Tickets" :show-arrow="true"/>
           </div>
         </div>
 

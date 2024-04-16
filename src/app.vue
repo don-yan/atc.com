@@ -2,8 +2,8 @@
 
 
 useHead({
-  // titleTemplate: '%s - Acquired Taste Comedy',
-  title:'Acquired Taste Comedy'
+  titleTemplate: '%s - Acquired Taste Comedy',
+  // title:'Acquired Taste Comedy'
 })
 
 

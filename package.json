@@ -30,8 +30,12 @@
     "vue-router": "^4.2.5"
   },
   "dependencies": {
-        "contentful": "^10.8.1",
+    "@mailchimp/mailchimp_marketing": "^3.0.80",
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
     "consola": "^3.2.3",
+    "contentful": "^10.8.1",
+    "crypto": "^1.0.1",
     "flowbite": "^2.3.0",
     "primeicons": "^6.0.1"
   }

@@ -31,7 +31,7 @@ export default defineNuxtConfig({
         // "primevue/resources/themes/lara-light-purple/theme.css"
     ],
     image: {
-        provider: 'ipx'
+        provider: process.env.VERCEL_ENV ? 'vercel' : 'ipx',
     },
 
 
@@ -46,6 +46,7 @@ export default defineNuxtConfig({
         },
     },
     srcDir: 'src/',
+    // ssr: true
     // vue: {
     //     compilerOptions: {
     //         // TODO

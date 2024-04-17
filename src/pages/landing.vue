@@ -108,7 +108,7 @@ import Button from '~/components/content/Button.vue'
           </div>
         </section>-->
 
-    <ShowsList id="shows"/>
+    <ShowsList id="events"/>
 
     <section id="media" class="text-gray-600 body-font">
       <div class="container px-5 pt-36 mx-auto">

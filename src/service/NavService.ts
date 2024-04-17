@@ -5,8 +5,8 @@ export const LinkService = {
     getLandingNavLinks(): NavItem[] {
         return [
             {
-                title: 'Shows',
-                slug: 'shows'
+                title: 'Events',
+                slug: 'events'
             },
             // {
             //     title: 'About',
@@ -36,8 +36,8 @@ export const LinkService = {
     getNavLinks(): NavItem[] {
         return [
             {
-                title: 'Shows',
-                slug: '/shows'
+                title: 'Events',
+                slug: '/events'
             },
             {
                 title: 'About',

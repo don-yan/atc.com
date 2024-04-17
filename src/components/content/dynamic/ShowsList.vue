@@ -78,7 +78,7 @@ const isNoShows = shows.length === 0;
           <div class="w-full h-full bg-red-500"></div>
         </div>
         <div class="flex flex-wrap sm:flex-row flex-col py-6 mb-12">
-          <h2 class="sm:w-2/5 text-gray-900 font-extrabold title-font text-4xl mb-2 sm:mb-0 dark:text-white">Shows</h2>
+          <h2 class="sm:w-2/5 text-gray-900 font-extrabold title-font text-4xl mb-2 sm:mb-0 dark:text-white">Events</h2>
           <p class="sm:w-3/5 leading-relaxed text-base sm:pl-10 pl-0">Catch an Event near you.</p>
         </div>
       </div>

@@ -44,7 +44,7 @@ export async function GET(request: Request) {
             // TODO: sort
             console.debug(json);
             json.timestamp = timestamp;
-            return new Response(json)
+            return new Response(JSON.stringify(json));
         })
 
     // return new Response(`Hello from ${process.env.VERCEL_REGION} | [${process.env.MAILCHIMP_SERVER_PREFIX}] [${timestamp}]`);

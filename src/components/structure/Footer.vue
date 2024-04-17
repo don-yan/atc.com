@@ -6,8 +6,6 @@ import {LinkService} from "~/service/NavService";
 
 const currentYear = new Date().getFullYear()
 
-console.log('footer');
-
 const props = defineProps({
   hideNav: Boolean
 })

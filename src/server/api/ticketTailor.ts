@@ -23,14 +23,20 @@ export default defineEventHandler((event): Promise<TTApiResponse> => {
     const requestOptions = {
         method: 'get',
         headers: myHeaders,
-        redirect: "follow"
+        redirect: "follow",
     };
 
-    return fetch("https://api.tickettailor.com/v1/events?start_at.gte=1711671932", requestOptions)
+    let greaterThan = Math.ceil(new Date().getTime()/1000);
+
+    // TODO: Remove (we are fetching extra events for development)
+    greaterThan =  1704085200 //
+
+    return fetch(`https://api.tickettailor.com/v1/events?end_at.gte=${greaterThan}`, requestOptions)
         .then(async (response) => {
 
             const json = await response.json();
-            console.log(json);
+            // TODO: sort
+            console.debug(json);
             return json as TTApiResponse
         })
 })

@@ -33,6 +33,10 @@ export default defineEventHandler(async (event) => {
         server: config.private.MAILCHIMP_SERVER_PREFIX
     });
 
+    let nameParts = body.name.split(' ')
+    let firstName = nameParts[0];
+    let lastName = (nameParts.length > 1 ? nameParts.splice(1) : nameParts).join(' ')
+
 
     // const response = await mailchimp.ping.get();
     const response = await mailchimp.lists.setListMember(
@@ -44,8 +48,8 @@ export default defineEventHandler(async (event) => {
             status_if_new: "subscribed",
             // https://mailchimp.com/developer/marketing/docs/merge-fields/#structure
             merge_fields: {
-                FNAME: "New Name",
-                LNAME: "Grady",
+                FNAME: firstName,
+                LNAME: lastName,
             },
             interests: {},
             "language": "",
@@ -59,7 +63,7 @@ export default defineEventHandler(async (event) => {
             "timestamp_signup": "",
             "ip_opt": "",
             "timestamp_opt": "",
-            "tags": ["form","atc-website"]
+            "tags": ["form", "atc-website"]
         }
     )
 

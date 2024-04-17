@@ -11,7 +11,7 @@ export const config = {
 };
 
 
-export function GET(request: Request) {
+export async function GET(request: Request) {
 
     let timestamp = Math.ceil(new Date().getTime() / 1000);
     let TT_KEY = process.env.TICKET_TAILOR_KEY;
@@ -44,7 +44,7 @@ export function GET(request: Request) {
             // TODO: sort
             console.debug(json);
             json.timestamp = timestamp;
-            return json as TTApiResponse
+            return new Response(json)
         })
 
     // return new Response(`Hello from ${process.env.VERCEL_REGION} | [${process.env.MAILCHIMP_SERVER_PREFIX}] [${timestamp}]`);

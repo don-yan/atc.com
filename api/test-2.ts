@@ -8,5 +8,7 @@ export const config = {
 
 
 export function GET(request: Request) {
-    return new Response(`Hello from ${process.env.VERCEL_REGION}`);
+
+    let timestamp = Math.ceil(new Date().getTime() / 1000);
+    return new Response(`Hello from ${process.env.VERCEL_REGION} | [${process.env.MAILCHIMP_SERVER_PREFIX}] [${timestamp}]`);
 }

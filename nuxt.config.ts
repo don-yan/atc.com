@@ -46,7 +46,7 @@ export default defineNuxtConfig({
         },
     },
     srcDir: 'src/',
-    // ssr: true
+    ssr: true
     // vue: {
     //     compilerOptions: {
     //         // TODO

@@ -33,7 +33,6 @@ shows = shows.sort((a, b) => {
  * @param url
  */
 const formatImgUrl = (url: string): string => {
-
   let result = url.substring(url.indexOf('/v1'));
   result = `https://uploads.tickettailor.com${result}`;
   // console.log({imgUrl: url, result})
@@ -42,13 +41,21 @@ const formatImgUrl = (url: string): string => {
 }
 
 const formatTicketLink = (url: string): string => {
-
   let result = url.substring(0, url.indexOf('?'));
   result = `${result}?ref=atc-website`;
-
   return result;
-
 }
+
+const formatEventTitle = (title: string): string => {
+  // TODO: Remove "standup comedy event"
+  return title.substring(0, title.indexOf("("))
+}
+
+const formatGoogleMapsQueryUrl = (name: string, postal_code: string): string => {
+  // TODO: Remove "standup comedy event"
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name + ' ' + postal_code)}`
+}
+
 
 const isMultipleShows = shows.length > 1
 const isNoShows = shows.length === 0;
@@ -72,19 +79,25 @@ const isNoShows = shows.length === 0;
         </div>
         <div class="flex flex-wrap sm:flex-row flex-col py-6 mb-12">
           <h2 class="sm:w-2/5 text-gray-900 font-extrabold title-font text-4xl mb-2 sm:mb-0 dark:text-white">Shows</h2>
-          <p class="sm:w-3/5 leading-relaxed text-base sm:pl-10 pl-0">Catch a show near you.</p>
+          <p class="sm:w-3/5 leading-relaxed text-base sm:pl-10 pl-0">Catch an Event near you.</p>
         </div>
       </div>
       <div v-if="!isNoShows"
            class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
-        <div v-for="item in shows" class="p-4 sm:mb-0 mb-6 space-y-3" :class="isMultipleShows ? 'md:w-1/2' : ''">
+        <div v-for="item in shows" class="p-4 sm:mb-0 mb-6 space-y-3 text-center"
+             :class="isMultipleShows ? 'md:w-1/2' : ''">
           <div class="rounded-lg h-64 overflow-hidden">
             <!--            <img alt="content" class="object-cover object-center h-full w-full" :src="rewriteTicketTailorImgUrl(item.images.thumbnail)">-->
             <img alt="content" class="object-scale-down h-full w-full"
                  :src="formatImgUrl(item.images.thumbnail)">
           </div>
-          <h2 class="text-xl font-medium title-font text-gray-900 mt-5">{{ item.name }}</h2>
-          <h3 class="tracking-widest text-red-500 text-xs font-medium title-font">{{ item.venue.name }}</h3>
+          <h2 class="text-xl font-medium title-font text-gray-900 mt-5">{{ formatEventTitle(item.name) }}</h2>
+          <h2 class="text-lg font-bold title-font text-gray-900 mt-3 hidden">(A Standup Comedy Event)</h2>
+          <h3 class="tracking-widest text-red-500 text-xs font-medium title-font">
+            <a :href="formatGoogleMapsQueryUrl(item.venue.name, item.venue.postal_code)" target="_blank">
+              {{ item.venue.name }} <span class="text-gray-800">({{ item.venue.postal_code }})</span>
+            </a>
+          </h3>
           <p class="text-base leading-relaxed mt-2">{{ item.start.formatted }}</p>
 
           <Button :is-blank=true

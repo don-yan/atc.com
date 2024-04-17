@@ -11,7 +11,16 @@ const {data} = await useFetch('/api/ticketTailor')
 // const shows:Ref<Array<TTEvent>> = ref(data.value?.data ?? [])
 // console.log(shows.value.length)
 
-const shows: Array<TTEvent> = data.value?.data ?? []
+let shows: Array<TTEvent> = data.value?.data ?? []
+
+// TODO: sort shows
+shows = shows.sort((a, b) => {
+  return b.end.unix - a.end.unix
+})
+
+// TODO: Show "upcoming" & "past" shows
+
+// TODO: Create /shows/[slug].vue with more info
 
 
 /**
@@ -27,7 +36,7 @@ const formatImgUrl = (url: string): string => {
 
   let result = url.substring(url.indexOf('/v1'));
   result = `https://uploads.tickettailor.com${result}`;
-  console.log({imgUrl: url, result})
+  // console.log({imgUrl: url, result})
   return result;
 
 }
@@ -42,6 +51,7 @@ const formatTicketLink = (url: string): string => {
 }
 
 const isMultipleShows = shows.length > 1
+const isNoShows = shows.length === 0;
 
 
 // shows.value[0].
@@ -57,14 +67,16 @@ const isMultipleShows = shows.length > 1
     <div class="container px-5 pt-36 mx-auto">
       <div class="flex flex-col">
         <div class="h-1 bg-gray-200 rounded overflow-hidden">
-          <div class="w-24 h-full bg-red-500"></div>
+          <!--            <div class="w-24 h-full bg-red-500"></div>-->
+          <div class="w-full h-full bg-red-500"></div>
         </div>
         <div class="flex flex-wrap sm:flex-row flex-col py-6 mb-12">
           <h2 class="sm:w-2/5 text-gray-900 font-extrabold title-font text-4xl mb-2 sm:mb-0 dark:text-white">Shows</h2>
           <p class="sm:w-3/5 leading-relaxed text-base sm:pl-10 pl-0">Catch a show near you.</p>
         </div>
       </div>
-      <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
+      <div v-if="!isNoShows"
+           class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
         <div v-for="item in shows" class="p-4 sm:mb-0 mb-6 space-y-3" :class="isMultipleShows ? 'md:w-1/2' : ''">
           <div class="rounded-lg h-64 overflow-hidden">
             <!--            <img alt="content" class="object-cover object-center h-full w-full" :src="rewriteTicketTailorImgUrl(item.images.thumbnail)">-->
@@ -82,7 +94,10 @@ const isMultipleShows = shows.length > 1
 
 
         </div>
-
+      </div>
+      <div v-else
+           class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
+        <h2>There are no shows at this time... subscribe to our mailing list to learn more</h2>
       </div>
     </div>
   </section>

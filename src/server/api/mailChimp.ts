@@ -10,8 +10,8 @@
 
 
 import crypto from 'crypto'
-import {createContact} from "~~/shared/api/mailChimp";
-import {MailChimpConfig,MailChimpContactData} from "~/@types/mailchimp";
+import {createContact} from "../../../shared/api/mailChimp";
+import type {MailChimpConfig,MailChimpContactData} from "~/@types/mailchimp";
 
 
 export default defineEventHandler(async (event) => {

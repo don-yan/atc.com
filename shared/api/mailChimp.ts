@@ -1,4 +1,3 @@
-import {type TTApiResponse} from "../../src/@types";
 import {type MailChimpConfig, type MailChimpContactData} from "../../src/@types/mailchimp";
 import crypto from 'crypto'
 

@@ -6,7 +6,7 @@ definePageMeta({
 })
 
 
-import ShowsList from '~/components/content/dynamic/ShowsList.vue'
+import ShowsList from '~/components/content/events/EventsList.vue'
 import ContactForm from '~/components/forms/ContactForm.vue'
 
 
@@ -123,7 +123,7 @@ import ContactForm from '~/components/forms/ContactForm.vue'
       </div>
     </section>
 
-        <ShowsList id="shows"/>
+    <ShowsList id="shows"/>
 
 
     <ContactForm id="contact-form"/>

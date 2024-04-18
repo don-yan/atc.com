@@ -6,6 +6,10 @@ import {ref} from 'vue'
 import {LinkService} from "~/service/NavService";
 import {scrollToId} from "~/utils/scroll-utils";
 
+import {useMobileMenuStore} from '~/store/mobileMenu';
+
+const mobileMenuStore = useMobileMenuStore();
+
 const props = defineProps({
   hideNav: Boolean,
   isLandingNav: Boolean
@@ -13,8 +17,6 @@ const props = defineProps({
 
 const navLinks = props.hideNav ? [] : props.isLandingNav ? LinkService.getLandingNavLinks() : LinkService.getNavLinks();
 
-
-const isOpen = ref(false)
 
 // const scrollToId = (id: string) => {
 //
@@ -29,11 +31,9 @@ const isOpen = ref(false)
 // }
 
 
-
 onMounted(() => {
   console.log('mount header')
 })
-
 
 
 // TODO: Underline current section based on scroll position
@@ -59,7 +59,7 @@ onMounted(() => {
             src="/images/logo/atc-logo-full-transparent.png"
             alt="Acquired Taste Comedy Logo"
             format="webp"
-            
+
         />
       </NuxtLink>
 
@@ -70,15 +70,15 @@ onMounted(() => {
               v-if="props.hideNav"
               :show-arrow="false"/>
 
-      <button @click="isOpen = !isOpen" type="button" class="block lg:hidden focus:outline-none"
+      <button @click="mobileMenuStore.toggleMobileMenu()" type="button" class="block lg:hidden focus:outline-none"
               :class="props.hideNav ? 'hidden' : ''">
-        <i class="text-4xl pi" :class="isOpen ? 'pi-times': 'pi-bars'"></i>
+        <i class="text-4xl pi" :class="mobileMenuStore.isOpen ? 'pi-times': 'pi-bars'"></i>
       </button>
 
       <div
           v-if="!props.hideNav"
           class="items-center surface-0 grow justify-between lg:flex absolute lg:static shadow-md lg:shadow-none right-0 px-12 lg:px-0 z-20 bg-white top-full"
-          :class="isOpen ? '' : 'hidden'">
+          :class="mobileMenuStore.isOpen ? '' : 'hidden'">
         <div class="flex justify-between w-full items-center flex-col lg:flex-row">
           <ul class="list-none p-0 m-0 flex items-center select-none flex-col lg:flex-row cursor-pointer sm:last:pb-0y">
             <li v-for="link in navLinks">

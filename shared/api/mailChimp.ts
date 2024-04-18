@@ -1,5 +1,6 @@
 import {type MailChimpConfig, type MailChimpContactData} from "../../src/@types/mailchimp";
-import crypto from 'crypto'
+
+// import crypto from 'crypto'
 
 export async function createContact(apiConfig: MailChimpConfig, requestData: MailChimpContactData): Promise<string> {
     let timestamp = Math.ceil(new Date().getTime() / 1000);
@@ -12,7 +13,8 @@ export async function createContact(apiConfig: MailChimpConfig, requestData: Mai
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Basic ${encodedBasicAuthHeader}`);
 
-    let subscriberHash = crypto.createHash('md5').update(requestData.email.toLowerCase()).digest("hex")
+    // let subscriberHash = crypto.createHash('md5').update(requestData.email.toLowerCase()).digest("hex")
+    let subscriberHash = requestData.email.toLowerCase(); // crypto.createHash('md5').update(requestData.email.toLowerCase()).digest("hex")
 
     let nameParts = requestData.name.split(' ')
     let firstName = nameParts[0];

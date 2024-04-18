@@ -22,8 +22,7 @@ export async function getEvents(apiKey: string): Promise<TTApiResponse> {
 
     // TODO: Remove (we are fetching extra events for development)
     greaterThan = 1704085200 //
-
-    console.log('timestamp', timestamp)
+    
     return fetch(`https://api.tickettailor.com/v1/events?end_at.gte=${greaterThan}`, requestOptions)
         .then(async (response) => {
 

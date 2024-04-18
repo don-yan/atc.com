@@ -2,6 +2,7 @@
 
 import {onMounted} from 'vue'
 import {initModals} from 'flowbite'
+import ContactForm from '~/components/forms/ContactForm.vue'
 
 
 const props = defineProps({
@@ -36,9 +37,7 @@ const onClose = () => {
 
     <hr/>
 
-    <div id="my-modal" class="bg-red p-10">
-      hi
-    </div>
+
 
     <!--   -->
     <div :id="props.id"
@@ -67,6 +66,8 @@ const onClose = () => {
           </div>
           <!-- Modal body -->
           <div class="p-6 space-y-6">
+
+            <ContactForm />
             <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
               With less than a month to go before the European Union enacts new consumer privacy laws for its
               citizens, companies around the world are updating their terms of service agreements to comply.

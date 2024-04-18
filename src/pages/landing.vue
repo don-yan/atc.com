@@ -1,5 +1,9 @@
 <script lang="ts" setup>
 
+import ShowsList from '~/components/content/dynamic/ShowsList.vue'
+import ContactForm from '~/components/forms/ContactForm.vue'
+import Button from '~/components/content/buttons/Button.vue'
+
 
 definePageMeta({
   // layout: 'no-nav',
@@ -14,9 +18,13 @@ useHead({
   titleTemplate: '%s'
 })
 
-import ShowsList from '~/components/content/dynamic/ShowsList.vue'
-import ContactForm from '~/components/forms/ContactForm.vue'
-import Button from '~/components/content/Button.vue'
+
+// $gtag.pageview({ page_path: '/about' })
+
+
+onMounted(() => {
+  console.log('mount page')
+})
 
 
 </script>
@@ -114,7 +122,7 @@ import Button from '~/components/content/Button.vue'
       <div class="container px-5 pt-36 mx-auto">
         <div class="flex flex-col">
           <div class="h-1 bg-gray-200 rounded overflow-hidden">
-<!--            <div class="w-24 h-full bg-red-500"></div>-->
+            <!--            <div class="w-24 h-full bg-red-500"></div>-->
             <div class="w-full h-full bg-red-500"></div>
           </div>
           <div class="flex flex-wrap sm:flex-row flex-col py-6 mb-12">

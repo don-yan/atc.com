@@ -3,7 +3,7 @@
 
 import type {TTEvent} from "~/@types";
 
-import Button from '~/components/content/Button.vue'
+import Button from '~/components/content/buttons/Button.vue'
 
 const {data} = await useFetch('/api/ticketTailor')
 
@@ -64,6 +64,11 @@ const isNoShows = shows.length === 0;
 // shows.value[0].
 
 // TODO: Show some sort of message if there aren't any upcoming shows
+
+onMounted(() => {
+  console.log('mount list')
+})
+
 
 </script>
 

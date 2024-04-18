@@ -3,7 +3,7 @@
  */
 
 import {getEvents} from "../shared/api/ticketTailor";
-import type {MailChimpConfig, MailChimpContactData} from "../src/@types";
+import  {type MailChimpConfig, type MailChimpContactData} from "../src/@types";
 import {createContact} from "../shared/api/mailChimp";
 
 export const config = {

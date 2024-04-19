@@ -3,21 +3,22 @@
  */
 
 
-import {type MailChimpConfig, type MailChimpContactData} from "../src/@types";
+// import {type MailChimpConfig, type MailChimpContactData} from "../src/@types";
 import {createContact} from "../shared/api/mailChimp";
 
 export const config = {
-    // runtime: 'nodejs',
+    runtime: 'edge',
 };
 
 
 export async function POST(request: Request) {
 
 
-    const body: MailChimpContactData = await request.json();
+    // const body: MailChimpContactData = await request.json();
+    const body = await request.json();
 
 
-    const mailChimpConfig: MailChimpConfig = {
+    const mailChimpConfig = {
         apiKey: process.env.MAILCHIMP_KEY || '',
         server: process.env.MAILCHIMP_SERVER_PREFIX || '',
         listId: process.env.MAILCHIMP_AUDIENCE_ID || ''

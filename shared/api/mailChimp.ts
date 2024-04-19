@@ -1,7 +1,20 @@
-import type {MailChimpConfig, MailChimpContactData} from "../../src/@types/mailchimp";
+// import type {MailChimpConfig, MailChimpContactData} from "../../src/@types/mailchimp";
+// import type {MailChimpConfig, MailChimpContactData} from "../../src/@types/mailchimp";
+
+ export interface MailChimpContactData {
+    name: string
+    email: string
+}
+
+export interface MailChimpConfig {
+    apiKey: string
+    server: string
+    listId: string
+}
 
 // import crypto from 'crypto'
 
+// export async function createContact(apiConfig: MailChimpConfig, requestData: MailChimpContactData): Promise<string> {
 export async function createContact(apiConfig: MailChimpConfig, requestData: MailChimpContactData): Promise<string> {
     let timestamp = Math.ceil(new Date().getTime() / 1000);
 

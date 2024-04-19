@@ -1,6 +1,7 @@
-import {type TTApiResponse} from "../../src/@types";
+// import {type TTApiResponse} from "../../src/@types";
 
-export async function getEvents(apiKey: string): Promise<TTApiResponse> {
+// export async function getEvents(apiKey: string): Promise<TTApiResponse> {
+export async function getEvents(apiKey: string): Promise<object> {
     let timestamp = Math.ceil(new Date().getTime() / 1000);
 
     // NOTE: TT only needs username: https://developers.tickettailor.com/#authentication

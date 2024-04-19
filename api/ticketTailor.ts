@@ -4,6 +4,7 @@
  * Reference: https://developers.tickettailor.com/
  */
 
+import {type TTApiResponse} from "../src/@types";
 import {getEvents} from "../shared/api/ticketTailor";
 
 export const config = {

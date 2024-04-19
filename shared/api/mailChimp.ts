@@ -1,4 +1,4 @@
-import {type MailChimpConfig, type MailChimpContactData} from "~/@types";
+import {type MailChimpConfig, type MailChimpContactData} from "../../src/@types/mailchimp";
 
 // import crypto from 'crypto'
 

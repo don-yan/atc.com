@@ -1,4 +1,4 @@
-import {type TTApiResponse} from "~/@types";
+import {type TTApiResponse} from "../../src/@types";
 
 export async function getEvents(apiKey: string): Promise<TTApiResponse> {
     let timestamp = Math.ceil(new Date().getTime() / 1000);

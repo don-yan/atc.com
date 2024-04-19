@@ -12,6 +12,9 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
+  "resolutions": {
+    "typescript": "4.9.5"
+  },
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxt/eslint": "^0.3.8",

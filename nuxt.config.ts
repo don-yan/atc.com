@@ -8,12 +8,13 @@ export default defineNuxtConfig({
     devtools: {enabled: true},
     modules: [
         "@nuxt/image",
-        "@nuxtjs/tailwindcss",
-        // TODO: why cannt we remove `nuxt-primevue` as a dependency?
-        //  "nuxt-primevue",
+        
         // TODO: configure eslint & prettier
         // REF: https://dev.to/nikitadmitr/configure-eslint-prettier-for-nuxt-3-45f7
         // "@nuxtjs/eslint-module"
+        "@nuxtjs/tailwindcss",
+        '@pinia/nuxt',
+        "@nuxt/eslint"
     ],
     // primevue: {
     //     // cssLayerOrder: "tailwind-base, primevue, tailwind-utilities, primeflex",
@@ -25,10 +26,12 @@ export default defineNuxtConfig({
     // },
 
     css: [
-
+        // TODO: Replace primeicons with another library
         "primeicons/primeicons.css",
+        '../node_modules/flowbite-vue/dist/index.css'
         // "assets/scss/primevue-sass-theme-3.50.0/themes/atc-theme/theme.scss",
-        // "primevue/resources/themes/lara-light-purple/theme.css"
+        // "primevue/resources/themes/lara-light-purple/theme.css"          ,
+
     ],
     image: {
         provider: process.env.VERCEL_ENV ? 'vercel' : 'ipx',
@@ -44,6 +47,9 @@ export default defineNuxtConfig({
             MAILCHIMP_SERVER_PREFIX: process.env.MAILCHIMP_SERVER_PREFIX,
             MAILCHIMP_AUDIENCE_ID: process.env.MAILCHIMP_AUDIENCE_ID,
         },
+        public: {
+            GTAG_ID: process.env.GTAG_ID
+        }
     },
     srcDir: 'src/',
     ssr: true

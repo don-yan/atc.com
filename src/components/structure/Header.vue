@@ -1,9 +1,14 @@
 <script lang="ts" setup>
 
-import Button from '~/components/content/Button.vue'
+import Button from '~/components/content/buttons/Button.vue'
 
 import {ref} from 'vue'
 import {LinkService} from "~/service/NavService";
+import {scrollToId} from "~/utils/scroll-utils";
+
+import {useMobileMenuStore} from '~/store/mobileMenu';
+
+const mobileMenuStore = useMobileMenuStore();
 
 const props = defineProps({
   hideNav: Boolean,
@@ -13,19 +18,27 @@ const props = defineProps({
 const navLinks = props.hideNav ? [] : props.isLandingNav ? LinkService.getLandingNavLinks() : LinkService.getNavLinks();
 
 
-const isOpen = ref(false)
+// const scrollToId = (id: string) => {
+//
+//   console.log('scrollToId', id)
+//
+//   document.getElementById(id)?.scrollIntoView({
+//     behavior: 'smooth',
+//     block: 'start',
+//     inline: "nearest"
+//   });
+//
+// }
 
-const scrollToId = (id: string) => {
 
-  console.log('scrollToId', id)
+onMounted(() => {
+  console.log('mount header')
+})
 
-  document.getElementById(id)?.scrollIntoView({
-    behavior: 'smooth',
-    block: 'start',
-    inline: "nearest"
-  });
 
-}
+// TODO: Underline current section based on scroll position
+
+// TODO: Read hash onLoad & scroll to position
 
 
 // TODO: Create "navigateTo()" function which either scrolls or pushes to router
@@ -46,7 +59,7 @@ const scrollToId = (id: string) => {
             src="/images/logo/atc-logo-full-transparent.png"
             alt="Acquired Taste Comedy Logo"
             format="webp"
-            
+
         />
       </NuxtLink>
 
@@ -57,17 +70,17 @@ const scrollToId = (id: string) => {
               v-if="props.hideNav"
               :show-arrow="false"/>
 
-      <button @click="isOpen = !isOpen" type="button" class="block lg:hidden focus:outline-none"
+      <button @click="mobileMenuStore.toggleMobileMenu()" type="button" class="block lg:hidden focus:outline-none"
               :class="props.hideNav ? 'hidden' : ''">
-        <i class="text-4xl pi" :class="isOpen ? 'pi-times': 'pi-bars'"></i>
+        <i class="text-4xl pi" :class="mobileMenuStore.isOpen ? 'pi-times': 'pi-bars'"></i>
       </button>
 
       <div
           v-if="!props.hideNav"
           class="items-center surface-0 grow justify-between lg:flex absolute lg:static shadow-md lg:shadow-none right-0 px-12 lg:px-0 z-20 bg-white top-full"
-          :class="isOpen ? '' : 'hidden'">
+          :class="mobileMenuStore.isOpen ? '' : 'hidden'">
         <div class="flex justify-between w-full items-center flex-col lg:flex-row">
-          <ul class="list-none p-0 m-0 flex items-center space-y-1 select-none flex-col lg:flex-row cursor-pointer sm:first:pt-0 sm:last:pb-0y">
+          <ul class="list-none p-0 m-0 flex items-center select-none flex-col lg:flex-row cursor-pointer sm:last:pb-0y">
             <li v-for="link in navLinks">
 
               <!-- TODO: Create "navigateTo()" function which either scrolls or pushes to router  -->

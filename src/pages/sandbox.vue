@@ -17,32 +17,33 @@ definePageMeta({
 
 <template>
 
+  <div>
 
-  <section class="md:container md:mx-auto">
+    <section class="md:container md:mx-auto">
 
 
-    <Banner class="mb-1"/>
-  </section>
-  <section>
+      <Banner class="mb-1"/>
+    </section>
+    <section>
 
-    <!-- <Image src="/images/hero-1.png" alt="Image" width="250" preview/>
-       <hr/> -->
-    <!--    <Image alt="Image" width="250"-->
-    <!--           preview-->
-    <!--           pt:image:src="~assets/images/hero-1.png"-->
-    <!--    />-->
+      <!-- <Image src="/images/hero-1.png" alt="Image" width="250" preview/>
+         <hr/> -->
+      <!--    <Image alt="Image" width="250"-->
+      <!--           preview-->
+      <!--           pt:image:src="~assets/images/hero-1.png"-->
+      <!--    />-->
 
-    <Hero class="mb-3"/>
+      <Hero class="mb-3"/>
 
-    <FeatureBlocks/>
-    <CallToAction/>
-    <Card/>
-    <DescriptionList class="mb-2"/>
+      <FeatureBlocks/>
+      <CallToAction/>
+      <Card/>
+      <DescriptionList class="mb-2"/>
 
-    <PricingBlocks/>
+      <PricingBlocks/>
 
-  </section>
-
+    </section>
+  </div>
 
 </template>
 <style lang="scss">

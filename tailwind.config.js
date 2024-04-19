@@ -10,6 +10,7 @@ module.exports = {
         './src/plugins/**/*.{js,ts}',
 
         './nuxt.config.{js,ts}',
+        './node_modules/flowbite-vue/**/*.{js,jsx,ts,tsx,vue}',
         "./node_modules/flowbite/**/*.{js,ts}"
 
     ],

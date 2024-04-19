@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 
+
 const props = defineProps({
   title: String,
   description: String,
@@ -20,10 +21,11 @@ const props = defineProps({
           <h2 class="sm:w-2/5 text-gray-900 font-extrabold title-font text-4xl mb-2 sm:mb-0 dark:text-white">
             {{ props.title }}
           </h2>
-          <p  class="sm:w-3/5 leading-relaxed text-base sm:pl-10 pl-0">
+          <p class="sm:w-3/5 leading-relaxed text-base sm:pl-10 pl-0">
             <slot name="description">
-              {{props.description}}
+              {{ props.description }}
             </slot>
+            
           </p>
         </div>
       </div>

@@ -28,8 +28,10 @@ export default defineNuxtConfig({
     css: [
         // TODO: Replace primeicons with another library
         "primeicons/primeicons.css",
+        '../node_modules/flowbite-vue/dist/index.css'
         // "assets/scss/primevue-sass-theme-3.50.0/themes/atc-theme/theme.scss",
-        // "primevue/resources/themes/lara-light-purple/theme.css"
+        // "primevue/resources/themes/lara-light-purple/theme.css"          ,
+
     ],
     image: {
         provider: process.env.VERCEL_ENV ? 'vercel' : 'ipx',

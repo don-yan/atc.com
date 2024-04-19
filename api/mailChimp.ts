@@ -7,7 +7,7 @@ import {type MailChimpConfig, type MailChimpContactData} from "../src/@types";
 import {createContact} from "../shared/api/mailChimp";
 
 export const config = {
-    runtime: 'nodejs',
+    // runtime: 'nodejs',
 };
 
 

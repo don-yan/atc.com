@@ -13,7 +13,7 @@
     "postinstall": "nuxt prepare"
   },
   "resolutions": {
-    "typescript": "5.4.5"
+    "_typescript": "5.4.5"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",

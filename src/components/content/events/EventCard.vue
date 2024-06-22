@@ -50,10 +50,10 @@ const props = defineProps({
   item: {
     type: Object as PropType<TTEvent>,
     required: true,
-
   },
-
+  isPast: Boolean
 })
+
 
 // shows.value[0].
 
@@ -77,7 +77,7 @@ const item = ref<TTEvent>(props.item)
     <img alt="content" class="object-scale-down h-full w-full"
          :src="formatImgUrl(item.images.thumbnail)">
   </div>
-  <h2 class="text-xl font-medium title-font text-gray-900 mt-5">{{ formatEventTitle(item.name) }}</h2>
+  <h2 class="text-xl font-medium title-font text-gray-900 mt-5 event-title">{{ formatEventTitle(item.name) }}</h2>
   <h2 class="text-lg font-bold title-font text-gray-900 mt-3 hidden">(A Standup Comedy Event)</h2>
   <h3 class="tracking-widest text-red-500 text-xs font-medium title-font">
     <a :href="formatGoogleMapsQueryUrl(item.venue.name, item.venue.postal_code)" target="_blank">
@@ -86,9 +86,11 @@ const item = ref<TTEvent>(props.item)
   </h3>
   <p class="text-base leading-relaxed mt-2">{{ item.start.formatted }}</p>
 
-  <Button :is-blank=true
+  <!--  TODO: Change button text for past shows -->
+  <Button class="link-btn"
+          :is-blank=true
           :href="formatTicketLink(item.url)"
-          text="Buy Tickets"
+          :text="isPast ? 'See details' :'Buy Tickets'"
           :show-arrow="true"/>
 
 

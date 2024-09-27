@@ -55,15 +55,15 @@ const activeTab = ref('upcoming')
     <div class="w-full">
       <flowbite-themable theme="red">
         <fwb-tabs v-model="activeTab" directive="show" variant="underline"
-                  class="flex flex-wrap justify-center yk-tab-container">
+                  class="flex flex-wrap justify-center yk-tab-container py-4">
 
           <fwb-tab name="upcoming" title="Upcoming Events" class="flex flex-wrap justify-center yk-tab">
-            <div v-if="upcomingShows.length === 0">
-              <h2>There are no scheduled events at this time...</h2>
+             <div v-if="upcomingShows.length === 0" class="text-center">
+              <h2 class="text-2xl">There are no scheduled events at this time...</h2>
               <h3
                   @click="scrollToId('contact')"
-                  class="flex m-0 px-0 py-4 text-900 font-medium leading-normal lg:ml-8">
-                subscribe to our <strong class="px-1">mailing list</strong> to learn more
+                  class="m-0 py-4 text-900 text-xl text-center">
+                Subscribe to our <strong class="px-1">mailing list</strong> to learn more
               </h3>
             </div>
             <div v-else

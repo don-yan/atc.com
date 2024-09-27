@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 
 import Button from '~/components/content/buttons/Button.vue'
-
-import {ref} from 'vue'
 import {LinkService} from "~/service/NavService";
 import {scrollToId} from "~/utils/scroll-utils";
 
@@ -29,6 +27,9 @@ const navLinks = props.hideNav ? [] : props.isLandingNav ? LinkService.getLandin
 //   });
 //
 // }
+
+
+const socialLinks = LinkService.getSocialLinks();
 
 
 onMounted(() => {
@@ -101,6 +102,23 @@ onMounted(() => {
             </li>
 
           </ul>
+          <div class="lg:hidden xl:hidden md:flex xs:flex sm:flex items-center justify-center space-x-4 gap-2 text-primary  border-t surface-border pt-4">
+
+
+            <a v-for="link in socialLinks"
+               :href="link.slug"
+               target="_blank"
+               class="p-button-rounded border-0 font-light leading-tight">
+              <!-- <Button
+                  class="button"
+                  text
+                  rounded
+                  :title="link.title"
+              > -->
+              <i class="icon pi" :class="link.icon"></i>
+              <!-- </Button> -->
+            </a>
+          </div>
           <div class="flex justify-between lg:block border-t lg:border-t-0 surface-border py-4 lg:py-0 mt-4 lg:mt-0">
 
             <Button :is-blank=true

@@ -100,6 +100,25 @@ onMounted(() => {
       </template>
     </PageSection>
 
+    <PageSection id="booking" title="Booking">
+      <template #description>
+        Interested in performing?
+      </template>
+      <template #content>
+        <div class="flex gap-2">
+          <p class="inline">Fill out the following form to get on a show!</p>
+
+
+          <Button :is-blank=true
+                  href="https://docs.google.com/forms/d/e/1FAIpQLSeac72xR7rzwFd7mW0QcKrnt-vpKfmh2vPxMGIK9r70UtwHcA/viewform?pli=1"
+                  text="Comics Signup"
+                  class="inline"
+                  :show-arrow="false"/>
+
+        </div>
+      </template>
+    </PageSection>
+
   </div>
 
 </template>

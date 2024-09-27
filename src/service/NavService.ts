@@ -20,6 +20,10 @@ export const LinkService = {
                 title: 'Contact',
                 slug: 'contact'
             },
+            {
+                title: 'Booking',
+                slug: 'booking'
+            },
             // {
             //     title: 'Sandbox',
             //     slug: '/sandbox'

@@ -1,7 +1,6 @@
 const sharp = require('sharp');
 const fs = require('fs');
 
-// TODO: loop through image tuples
 const eventName = 'atc-025'
 const dirPath = `img/${eventName}/`
 const inputPath = dirPath + `${eventName}-square.png`;

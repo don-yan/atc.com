@@ -25,18 +25,18 @@ let inputPath = null; // Single input file path
 let workDir = 'img/atc-025'; // Directory containing multiple image files
 let outputBaseName = 'output'; // Base name for output files
 let outputItems = [
-    {aspectRatio: '9:16', backgroundType: 'gradient'},
-    {aspectRatio: '16:9', backgroundType: 'gradient'},
-    {aspectRatio: '16:9', backgroundType: 'black'},
-    {aspectRatio: '3:2', backgroundType: 'black'},
-    {aspectRatio: '3:2', backgroundType: 'gradient'},
-    {aspectRatio: '7:5', backgroundType: 'black'},
-    {aspectRatio: '7:5', backgroundType: 'gradient'},
-    {aspectRatio: '50:27', backgroundType: 'black'},
-    {aspectRatio: '50:27', backgroundType: 'gradient'},
-    {aspectRatio: '4:5', backgroundType: 'black'},
-    {aspectRatio: '4:5', backgroundType: 'gradient'},
-    {aspectRatio: '1:1', backgroundType: 'black'},
+    // {aspectRatio: '9:16', backgroundType: 'gradient'},
+    // {aspectRatio: '16:9', backgroundType: 'gradient'},
+    // {aspectRatio: '16:9', backgroundType: 'black'},
+    // {aspectRatio: '3:2', backgroundType: 'black'},
+    // {aspectRatio: '3:2', backgroundType: 'gradient'},
+    // {aspectRatio: '7:5', backgroundType: 'black'},
+    // {aspectRatio: '7:5', backgroundType: 'gradient'},
+    // {aspectRatio: '50:27', backgroundType: 'black'},
+    // {aspectRatio: '50:27', backgroundType: 'gradient'},
+    // {aspectRatio: '4:5', backgroundType: 'black'},
+    // {aspectRatio: '4:5', backgroundType: 'gradient'},
+    {aspectRatio: '1:1', backgroundType: 'black', maxWidth: 2000},
 ]; // Default aspect ratios with background types
 
 // Parse command-line arguments
@@ -86,13 +86,24 @@ args.forEach((arg) => {
                 const inputBaseName = path.basename(imagePath, path.extname(imagePath));
 
                 // Process each aspect ratio
-                const tasks = outputItems.map(async (itemConfig) => {
+                const tasks = outputItems.map(async (item) => {
                     try {
-                        const aspectRatio = itemConfig.aspectRatio;
-                        const backgroundType = itemConfig.backgroundType || 'gradient'; // Default to 'gradient' if not specified
+                        const aspectRatio = item.aspectRatio;
+                        const backgroundType = item.backgroundType || 'gradient'; // Default to 'gradient' if not specified
 
+                        const maxWidth = item.maxWidth ? parseInt(item.maxWidth, 10) : null;
+                        const maxHeight = item.maxHeight ? parseInt(item.maxHeight, 10) : null;
+
+                        // Validate maxWidth and maxHeight
+                        if (item.maxWidth && isNaN(maxWidth)) {
+                            throw new Error(`Invalid maxWidth "${item.maxWidth}" for aspect ratio ${aspectRatio}.`);
+                        }
+                        if (item.maxHeight && isNaN(maxHeight)) {
+                            throw new Error(`Invalid maxHeight "${item.maxHeight}" for aspect ratio ${aspectRatio}.`);
+                        }
                         // Parse aspect ratio
                         const [aspectWidth, aspectHeight] = aspectRatio.split(':').map(Number);
+                        const isSquare = aspectHeight === aspectWidth
                         if (!aspectWidth || !aspectHeight) {
                             throw new Error(`Invalid aspect ratio format: ${aspectRatio}. Use "width:height", e.g., "16:9" or "9:16".`);
                         }
@@ -109,6 +120,21 @@ args.forEach((arg) => {
                             outputHeight = Math.round((outputWidth * aspectHeight) / aspectWidth);
                         }
 
+                        // Apply maxWidth and maxHeight if provided
+                        if (maxWidth && outputWidth > maxWidth) {
+                            const scaleFactor = maxWidth / outputWidth;
+                            outputWidth = maxWidth;
+                            outputHeight = Math.round(outputHeight * scaleFactor);
+                        }
+                        if (maxHeight && outputHeight > maxHeight) {
+                            const scaleFactor = maxHeight / outputHeight;
+                            outputHeight = maxHeight;
+                            outputWidth = Math.round(outputWidth * scaleFactor);
+                        }
+
+                        console.log('widths', {outputWidth, maxWidth, maxHeight, outputHeight})
+
+
                         // Determine if the output image is portrait
                         const isPortraitImage = aspectHeight > aspectWidth;
 
@@ -121,7 +147,7 @@ args.forEach((arg) => {
                             // Extract slices to get average colors
                             const channels = metadata.channels;
 
-                            const paddingX = 20 // 0
+                            const paddingX = 20 //0
 
                             const startSliceBuffer = await inputImage.clone()
                                 .extract({
@@ -223,20 +249,45 @@ args.forEach((arg) => {
                             throw new Error(`Invalid background type "${backgroundType}". Use "gradient" or "black".`);
                         }
 
+                        // Resize the input image if necessary
+                        let resizedInputImage = inputImage;
+                        let resizedInputWidth = inputWidth;
+                        let resizedInputHeight = inputHeight;
+
+                        if (inputWidth > outputWidth || inputHeight > outputHeight) {
+                            const resizeOptions = {
+                                width: outputWidth,
+                                height: outputHeight,
+                                fit: 'inside', // Ensure the image fits within the dimensions
+                                withoutEnlargement: true // Do not enlarge smaller images
+                            };
+                            resizedInputImage = inputImage.resize(resizeOptions);
+                            const resizedMetadata = await resizedInputImage.metadata();
+                            resizedInputWidth = resizedMetadata.width;
+                            resizedInputHeight = resizedMetadata.height;
+                        }
+
                         // Calculate offsets to center the image
-                        const leftOffset = Math.round((outputWidth - inputWidth) / 2);
-                        const topOffset = Math.round((outputHeight - inputHeight) / 2);
+                        let leftOffset, topOffset;
+                        if (!isSquare) {
+
+                            leftOffset = Math.round((outputWidth - resizedInputWidth) / 2);
+                            topOffset = Math.round((outputHeight - resizedInputHeight) / 2);
+                        } else {
+                            leftOffset = 0
+                            topOffset = 0
+                        }
 
                         // Generate output filename including aspect ratio and input filename
                         const aspectRatioFormatted = aspectRatio.replace(':', 'x');
                         const outputFileName = `${outputBaseName}_${inputBaseName}_${aspectRatioFormatted}_${backgroundType}.jpg`;
                         const outputPath = path.join(outputDir, outputFileName);
 
-                        // Composite the original image onto the background using a clone
+                        // Composite the resized input image onto the background
                         await sharp(backgroundBuffer)
                             .composite([
                                 {
-                                    input: await inputImage.clone().toBuffer(),
+                                    input: await resizedInputImage.toBuffer(),
                                     top: topOffset,
                                     left: leftOffset
                                 }
@@ -245,7 +296,7 @@ args.forEach((arg) => {
 
                         console.log(`Image saved to ${outputPath}`);
                     } catch (err) {
-                        console.error(`Error processing aspect ratio ${itemConfig.aspectRatio} for image ${imagePath}:`, err.message);
+                        console.error(`Error processing aspect ratio ${item.aspectRatio} for image ${imagePath}:`, err.message);
                     }
                 });
 

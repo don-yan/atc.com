@@ -22,20 +22,23 @@ const args = process.argv.slice(2);
 
 // Default values
 let inputPath = null; // Single input file path
-let workDir = 'img/atc-025'; // Directory containing multiple image files
+let workDir = 'img/atc-028'; // Directory containing multiple image files
 let outputBaseName = 'output'; // Base name for output files
 let outputItems = [
-    // {aspectRatio: '9:16', backgroundType: 'gradient'},
-    // {aspectRatio: '16:9', backgroundType: 'gradient'},
-    // {aspectRatio: '16:9', backgroundType: 'black'},
-    // {aspectRatio: '3:2', backgroundType: 'black'},
-    // {aspectRatio: '3:2', backgroundType: 'gradient'},
-    // {aspectRatio: '7:5', backgroundType: 'black'},
-    // {aspectRatio: '7:5', backgroundType: 'gradient'},
-    // {aspectRatio: '50:27', backgroundType: 'black'},
-    // {aspectRatio: '50:27', backgroundType: 'gradient'},
-    // {aspectRatio: '4:5', backgroundType: 'black'},
-    // {aspectRatio: '4:5', backgroundType: 'gradient'},
+    {aspectRatio: '9:16', backgroundType: 'gradient'},
+    {aspectRatio: '16:9', backgroundType: 'gradient'},
+    {aspectRatio: '12:9', backgroundType: 'gradient'},
+    {aspectRatio: '12:9', backgroundType: 'black'},
+    {aspectRatio: '16:9', backgroundType: 'black'},
+    {aspectRatio: '3:2', backgroundType: 'black'},
+    {aspectRatio: '3:2', backgroundType: 'gradient'},
+    {aspectRatio: '2:1', backgroundType: 'gradient'},
+    {aspectRatio: '7:5', backgroundType: 'black'},
+    {aspectRatio: '7:5', backgroundType: 'gradient'},
+    {aspectRatio: '50:27', backgroundType: 'black'},
+    {aspectRatio: '50:27', backgroundType: 'gradient'},
+    {aspectRatio: '4:5', backgroundType: 'black'},
+    {aspectRatio: '4:5', backgroundType: 'gradient'},
     {aspectRatio: '1:1', backgroundType: 'black', maxWidth: 2000},
 ]; // Default aspect ratios with background types
 
@@ -120,16 +123,19 @@ args.forEach((arg) => {
                             outputHeight = Math.round((outputWidth * aspectHeight) / aspectWidth);
                         }
 
-                        // Apply maxWidth and maxHeight if provided
-                        if (maxWidth && outputWidth > maxWidth) {
-                            const scaleFactor = maxWidth / outputWidth;
-                            outputWidth = maxWidth;
-                            outputHeight = Math.round(outputHeight * scaleFactor);
-                        }
-                        if (maxHeight && outputHeight > maxHeight) {
-                            const scaleFactor = maxHeight / outputHeight;
-                            outputHeight = maxHeight;
-                            outputWidth = Math.round(outputWidth * scaleFactor);
+                        // TODO: review
+                        if(false) {
+                            // Apply maxWidth and maxHeight if provided
+                            if (maxWidth && outputWidth > maxWidth) {
+                                const scaleFactor = maxWidth / outputWidth;
+                                outputWidth = maxWidth;
+                                outputHeight = Math.round(outputHeight * scaleFactor);
+                            }
+                            if (maxHeight && outputHeight > maxHeight) {
+                                const scaleFactor = maxHeight / outputHeight;
+                                outputHeight = maxHeight;
+                                outputWidth = Math.round(outputWidth * scaleFactor);
+                            }
                         }
 
                         console.log('widths', {outputWidth, maxWidth, maxHeight, outputHeight})
@@ -142,7 +148,7 @@ args.forEach((arg) => {
                         let backgroundBuffer;
                         if (backgroundType === 'gradient') {
                             // Determine slice size (at least 1 pixel, up to 10% of the image dimension)
-                            const sliceSize = Math.max(1, Math.floor((isPortraitImage ? inputHeight : inputWidth) * 0.005));
+                            const sliceSize = Math.max(1, Math.floor((isPortraitImage ? inputHeight : inputWidth) * 0.010));
 
                             // Extract slices to get average colors
                             const channels = metadata.channels;

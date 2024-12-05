@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallax Animation</title>
+    <!--    <link rel="stylesheet" href="./assets/style.css">-->
+
+<!-- TODO: https://gsap.com/community/forums/topic/24712-how-to-create-parallax-effect-with-gsap/
+
+https://dev.to/ingosteinke/pure-css-parallax-perspective-beyond-landscape-images-24g2
+-->
+
+    <style>
+
+        body, html {
+            //height: 100%;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .parallax {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            perspective: 1px;
+            transform-style: preserve-3d;
+        }
+
+        .layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transform: translateZ(0);
+        }
+
+
+        .layer img {
+            width: 100%;
+            height: auto;
+        }
+
+
+        #layer1 {
+            transform: translateZ(-2px) scale(3);
+        }
+
+        #layer2 {
+            transform: translateZ(-1px) scale(2);
+        }
+
+        #layer3 {
+            transform: translateZ(0px) scale(1);
+        }
+
+        .spacer{
+            margin:5em 0;
+        }
+
+    </style>
+
+    <script>
+
+    let lastKnownScrollPosition = 0;
+let ticking = false;
+
+function doSomething(scrollPos) {
+  // Do something with the scroll position
+    console.log('scroll',scrollPos)
+}
+
+console.log('bind handler')
+window.addEventListener("scroll", (event) => {
+  lastKnownScrollPosition = window.scrollY;
+
+  console.log('scrolll')
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      doSomething(lastKnownScrollPosition);
+      ticking = false;
+    });
+
+    ticking = true;
+  }
+});
+    </script>
+</head>
+<body>
+<h1>Yan</h1>
+<div class="spacer">
+
+
+</div>
+<div class="parallax">
+    <div class="layer" id="layer2">
+        <img src="./assets/images/atc-arrow-layers/arrow - simple populate - top layer - with text.png" alt="Layer 1">
+    </div>
+    <div class="layer" id="layer1">
+        <img src="./assets/images/atc-arrow-layers/arrow - filled text only.png" alt="Layer 2">
+    </div>
+    <div class="layer" id="layer3">
+        <img src="./assets/images/atc-arrow-layers/arrow - letters populate - top layer.png" alt="Layer 3">
+    </div>
+</div>
+
+<div class="spacer">
+
+
+</div>
+<script type="application/javascript">
+    console.log('load')
+    document.addEventListener('scroll', function () {
+        const layers = document.querySelectorAll('.layer');
+        const scrollTop = window.pageYOffset;
+
+        console.log('scroll')
+        layers.forEach(layer => {
+            const speed = layer.getAttribute('data-speed');
+            layer.style.transform = `translateY(${scrollTop * speed}px)`;
+        });
+    });
+
+
+</script>
+</body>
+</html>

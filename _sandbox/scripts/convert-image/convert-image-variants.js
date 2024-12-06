@@ -22,7 +22,7 @@ const args = process.argv.slice(2);
 
 // Default values
 let inputPath = null; // Single input file path
-let workDir = 'img/atc-028'; // Directory containing multiple image files
+let workDir = 'img/atc-029'; // Directory containing multiple image files
 let outputBaseName = 'output'; // Base name for output files
 let outputItems = [
     {aspectRatio: '9:16', backgroundType: 'gradient'},
@@ -40,6 +40,12 @@ let outputItems = [
     {aspectRatio: '4:5', backgroundType: 'black'},
     {aspectRatio: '4:5', backgroundType: 'gradient'},
     {aspectRatio: '1:1', backgroundType: 'black', maxWidth: 2000},
+    {exactWidth: 1920, exactHeight: 915, backgroundType: 'gradient'},
+    // {exactWidth: 1920, exactHeight: 1005, backgroundType: 'gradient'},
+    // {exactWidth: 1920, exactHeight: 915, backgroundType: 'black'},
+    // {exactWidth: 1200, exactHeight: 628, backgroundType: 'gradient'},
+    // {exactWidth: 1200, exactHeight: 628, backgroundType: 'black'},
+    // 1200x628
 ]; // Default aspect ratios with background types
 
 // Parse command-line arguments
@@ -85,6 +91,9 @@ args.forEach((arg) => {
                 const inputWidth = metadata.width;
                 const inputHeight = metadata.height;
 
+                // Clone the original image for further operations
+                const originalImage = inputImage.clone();
+
                 // Extract base name of input file without extension
                 const inputBaseName = path.basename(imagePath, path.extname(imagePath));
 
@@ -96,36 +105,50 @@ args.forEach((arg) => {
 
                         const maxWidth = item.maxWidth ? parseInt(item.maxWidth, 10) : null;
                         const maxHeight = item.maxHeight ? parseInt(item.maxHeight, 10) : null;
+                        const exactWidth = item.exactWidth ? parseInt(item.exactWidth, 10) : null;
+                        const exactHeight = item.exactHeight ? parseInt(item.exactHeight, 10) : null;
 
-                        // Validate maxWidth and maxHeight
+                        // Validate numeric inputs
                         if (item.maxWidth && isNaN(maxWidth)) {
                             throw new Error(`Invalid maxWidth "${item.maxWidth}" for aspect ratio ${aspectRatio}.`);
                         }
                         if (item.maxHeight && isNaN(maxHeight)) {
                             throw new Error(`Invalid maxHeight "${item.maxHeight}" for aspect ratio ${aspectRatio}.`);
                         }
-                        // Parse aspect ratio
-                        const [aspectWidth, aspectHeight] = aspectRatio.split(':').map(Number);
-                        const isSquare = aspectHeight === aspectWidth
-                        if (!aspectWidth || !aspectHeight) {
-                            throw new Error(`Invalid aspect ratio format: ${aspectRatio}. Use "width:height", e.g., "16:9" or "9:16".`);
+                        if (item.exactWidth && isNaN(exactWidth)) {
+                            throw new Error(`Invalid exactWidth "${item.exactWidth}" for aspect ratio ${aspectRatio}.`);
+                        }
+                        if (item.exactHeight && isNaN(exactHeight)) {
+                            throw new Error(`Invalid exactHeight "${item.exactHeight}" for aspect ratio ${aspectRatio}.`);
                         }
 
-                        // Decide on output dimensions based on aspect ratio
                         let outputWidth, outputHeight;
-                        if (aspectWidth >= aspectHeight) {
-                            // Landscape orientation
-                            outputHeight = inputHeight;
-                            outputWidth = Math.round((outputHeight * aspectWidth) / aspectHeight);
-                        } else {
-                            // Portrait orientation
-                            outputWidth = inputWidth;
-                            outputHeight = Math.round((outputWidth * aspectHeight) / aspectWidth);
-                        }
+                        let useExactDimensions = false;
 
-                        // TODO: review
-                        if(false) {
-                            // Apply maxWidth and maxHeight if provided
+                        if (exactWidth && exactHeight) {
+                            // If exact dimensions are provided, use them directly
+                            outputWidth = exactWidth;
+                            outputHeight = exactHeight;
+                            useExactDimensions = true;
+                        } else {
+                            // Otherwise, use aspect ratio logic
+                            const [aspectW, aspectH] = aspectRatio.split(':').map(Number);
+                            const isSquare = aspectH === aspectW;
+                            if (!aspectW || !aspectH) {
+                                throw new Error(`Invalid aspect ratio format: ${aspectRatio}. Use "width:height", e.g., "16:9" or "9:16".`);
+                            }
+
+                            if (aspectW >= aspectH) {
+                                // Landscape orientation
+                                outputHeight = inputHeight;
+                                outputWidth = Math.round((outputHeight * aspectW) / aspectH);
+                            } else {
+                                // Portrait orientation
+                                outputWidth = inputWidth;
+                                outputHeight = Math.round((outputWidth * aspectH) / aspectW);
+                            }
+
+                            // Apply maxWidth and maxHeight if provided (only if we are using aspect ratio)
                             if (maxWidth && outputWidth > maxWidth) {
                                 const scaleFactor = maxWidth / outputWidth;
                                 outputWidth = maxWidth;
@@ -138,11 +161,26 @@ args.forEach((arg) => {
                             }
                         }
 
-                        console.log('widths', {outputWidth, maxWidth, maxHeight, outputHeight})
-
+                        console.log('item settings', {
+                            aspectRatio,
+                            exactWidth,
+                            exactHeight,
+                            maxWidth,
+                            maxHeight,
+                            outputWidth,
+                            outputHeight
+                        })
 
                         // Determine if the output image is portrait
-                        const isPortraitImage = aspectHeight > aspectWidth;
+                        // If exactWidth and exactHeight given, determine orientation from those
+                        // Otherwise, from aspect ratio
+                        let isPortraitImage;
+                        if (exactWidth && exactHeight) {
+                            isPortraitImage = exactHeight > exactWidth;
+                        } else {
+                            const [aspectW, aspectH] = aspectRatio.split(':').map(Number);
+                            isPortraitImage = aspectH > aspectW;
+                        }
 
                         // Create background based on the specified type
                         let backgroundBuffer;
@@ -152,10 +190,9 @@ args.forEach((arg) => {
 
                             // Extract slices to get average colors
                             const channels = metadata.channels;
+                            const paddingX = 20; //0
 
-                            const paddingX = 20 //0
-
-                            const startSliceBuffer = await inputImage.clone()
+                            const startSliceBuffer = await originalImage.clone()
                                 .extract({
                                     left: paddingX,
                                     top: 0,
@@ -165,7 +202,7 @@ args.forEach((arg) => {
                                 .raw()
                                 .toBuffer();
 
-                            const endSliceBuffer = await inputImage.clone()
+                            const endSliceBuffer = await originalImage.clone()
                                 .extract({
                                     left: paddingX,
                                     top: inputHeight - sliceSize,
@@ -211,7 +248,7 @@ args.forEach((arg) => {
                                             </svg>
                                           `;
                                 } else {
-                                    // Landscape output: horizontal gradient
+                                    // Landscape output: vertical gradient
                                     svg = `
                                             <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
                                               <defs>
@@ -256,44 +293,69 @@ args.forEach((arg) => {
                         }
 
                         // Resize the input image if necessary
-                        let resizedInputImage = inputImage;
+                        let resizedInputImage = await originalImage.clone();
                         let resizedInputWidth = inputWidth;
                         let resizedInputHeight = inputHeight;
 
                         if (inputWidth > outputWidth || inputHeight > outputHeight) {
                             const resizeOptions = {
-                                width: outputWidth,
-                                height: outputHeight,
-                                fit: 'inside', // Ensure the image fits within the dimensions
-                                withoutEnlargement: true // Do not enlarge smaller images
+                                fit: 'inside',
+                                withoutEnlargement: true
                             };
-                            resizedInputImage = inputImage.resize(resizeOptions);
+
+                            let originalAspectRatio = inputHeight / inputWidth;
+
+                            // resize to the smaller dimension while keeping scale
+                            if (outputWidth <= outputHeight) {
+                                // Constrain by width
+                                resizeOptions.width = outputWidth;
+                                resizedInputWidth = outputWidth;
+                                resizedInputHeight = Math.round(outputWidth * originalAspectRatio);
+                            } else {
+                                // Constrain by height
+                                resizeOptions.height = outputHeight;
+                                resizedInputHeight = outputHeight;
+                                resizedInputWidth = Math.round(outputHeight / originalAspectRatio);
+                            }
+
+                            resizedInputImage = await originalImage.clone().resize(resizeOptions);
                             const resizedMetadata = await resizedInputImage.metadata();
-                            resizedInputWidth = resizedMetadata.width;
-                            resizedInputHeight = resizedMetadata.height;
+
                         }
 
                         // Calculate offsets to center the image
                         let leftOffset, topOffset;
-                        if (!isSquare) {
 
-                            leftOffset = Math.round((outputWidth - resizedInputWidth) / 2);
-                            topOffset = Math.round((outputHeight - resizedInputHeight) / 2);
+
+                        leftOffset = Math.round((outputWidth - resizedInputWidth) / 2);
+                        topOffset = Math.round((outputHeight - resizedInputHeight) / 2);
+
+
+                        console.log('offsets', {
+                            leftOffset,
+                            topOffset,
+                            outputWidth,
+                            outputHeight,
+                            resizedInputWidth,
+                            resizedInputHeight
+                        })
+                        // Modify outputFileName if exactWidth & exactHeight are supplied
+                        let dimensionIdentifier;
+                        if (exactWidth && exactHeight) {
+                            dimensionIdentifier = `${exactWidth}x${exactHeight}`;
                         } else {
-                            leftOffset = 0
-                            topOffset = 0
+                            dimensionIdentifier = aspectRatio.replace(':', 'x');
                         }
 
-                        // Generate output filename including aspect ratio and input filename
-                        const aspectRatioFormatted = aspectRatio.replace(':', 'x');
-                        const outputFileName = `${outputBaseName}_${inputBaseName}_${aspectRatioFormatted}_${backgroundType}.jpg`;
+                        const outputDir = path.resolve(workDir, 'output_images');
+                        const outputFileName = `${outputBaseName}_${inputBaseName}_${dimensionIdentifier}_${backgroundType}.jpg`;
                         const outputPath = path.join(outputDir, outputFileName);
 
                         // Composite the resized input image onto the background
                         await sharp(backgroundBuffer)
                             .composite([
                                 {
-                                    input: await resizedInputImage.toBuffer(),
+                                    input: await resizedInputImage.clone().toBuffer(),
                                     top: topOffset,
                                     left: leftOffset
                                 }

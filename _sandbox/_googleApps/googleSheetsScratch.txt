@@ -1,0 +1,2 @@
+="- " & TEXTJOIN(CHAR(10) & "- ", TRUE, ARRAYFORMULA(IF(SORT(D2:D7, E2:E7, TRUE) = "Headliner", SORT(F2:F7 & " " & G2:G7, E2:E7, TRUE) & " (Headliner)", IF(SORT(D2:D7, E2:E7, TRUE) = "Host:", SORT(F2:F7 & " " & G2:G7, E2:E7, TRUE) & " (Host)", SORT(F2:F7 & " " & G2:G7, E2:E7, TRUE)))))
+z

@@ -2,6 +2,7 @@ require('dotenv').config();
 const axios = require('axios');
 const mailChimp = require('./export-audience')
 const stringifySafe = require('json-stringify-safe');
+const {writeFileSync} = require("fs");
 // Load values from environment variables
 const apiKey = process.env.TICKET_TAILOR_API_KEY; // Your Ticket Tailor API key
 
@@ -30,8 +31,12 @@ const apiKey = process.env.TICKET_TAILOR_API_KEY; // Your Ticket Tailor API key
         const voucherCodes = lastNames.join('\n');
 
 
-        // fs.writeFileSync('processed_last_names.csv', csvHeaders + csvData);
         console.log('createVoucherCodesFromMailchimp | ', voucherCodes);
+
+        console.log('\n\n===========\n\n\n\n')
+
+
+        writeFileSync('processed_last_names.csv', csvHeaders + csvData);
     } catch (error) {
         console.error('Error exporting audience list:', error.message);
     }
@@ -147,10 +152,10 @@ async function fetchEventSeries(params) {
 async function main() {
 
 
-    let latestEvent = await getLatestEvent();
-    await createVoucher(latestEvent);
+    // let latestEvent = await getLatestEvent();
+    // await createVoucher(latestEvent);
 
-   // await createVoucherCodesFromMailchimp();
+   await createVoucherCodesFromMailchimp();
 
 }
 

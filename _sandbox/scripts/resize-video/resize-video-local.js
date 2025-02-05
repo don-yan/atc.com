@@ -6,14 +6,14 @@ const async = require('async');
 
 
 // Specify the local directory path
-// const directoryPath = '/Users/apple/Desktop/atc-desktop-videos/atc-027/video/atc-027-video/tmp'; // Replace with your local directory path
-const directoryPath = './tmp'; // Replace with your local directory path
+const directoryPath = '/Users/apple/Desktop/atc-desktop-videos/atc-029/atc-029-video/tmp'; // Replace with your local directory path
+// const directoryPath = './tmp'; // Replace with your local directory path
 
 // Should the original file be overwritten?
 const replaceFile = false;
 
 // Limit the number of concurrent processes to 2
-const concurrencyLimit = 1;
+const concurrencyLimit = 2;
 
 
 // Function to get video metadata using ffprobe
@@ -50,6 +50,8 @@ function processMP4File(task, callback) {
 
 
     let tmpDir = './tmp-4';
+    let startTime;
+    let endTime;
 
     // tmpDir = path.join(path.dirname(filePath), 'tmp');
 
@@ -58,7 +60,9 @@ function processMP4File(task, callback) {
         fs.mkdirSync(tmpDir);
     }
 
-    const processedFilePath = path.join(tmpDir, fileName + '_compressed');
+    const parsed = path.parse(fileName);
+    const processedFilePath = path.join(tmpDir, parsed.name + '_compressed' + parsed.ext);
+
 
     // Step 1: Get original video metadata
     getVideoMetadata(filePath)
@@ -97,10 +101,34 @@ function processMP4File(task, callback) {
             // Step 2: Resize the video using FFMPEG with original encoding settings
             ffmpeg(filePath)
                 .videoCodec(codec) // Use the mapped encoder
-                // .videoBitrate(bitrate) // Use the original bitrate
+
                 .videoFilters('scale=-2:1080') // Scale height to 1080p
 
-                .outputOptions('-preset', 'medium') // Optional: Set encoding preset
+                /*   // Use libx264 codec for H.264 video
+                   .videoCodec('libx264')
+                   // Set a target video bitrate (~3.5 Mbps is good for 1080 vertical)
+                   .videoBitrate('3500k')
+                   // Use AAC for audio and copy sample rate/channels
+                   .audioCodec('aac')
+                   .audioBitrate('128k')
+                   // Set framerate to 30 fps
+                   .outputOptions('-r 30')*/
+                //
+                // // Use a high profile, level 4.1, and ensure proper pixel format for compatibility
+                // .outputOptions([
+                //     '-profile:v high',
+                //     '-level 4.1',
+                //     '-pix_fmt yuv420p',
+                //     '-c:a aac',
+                //     '-strict experimental', // On some older ffmpeg builds, needed for aac
+                //     '-loglevel verbose'
+                // ])
+                // .videoBitrate(bitrate) // Use the original bitrate
+                .videoBitrate('3500k')
+                .outputOptions('-profile:v', 'high')
+                .outputOptions('-threads', '8') // Limit to 8 threads
+                // Presets: [ultrafast, superfast, veryfast, faster, fast, medium, slow, slower, veryslow]
+                .outputOptions('-preset', 'fast') // Optional: Set encoding preset
                 .outputOptions('-crf', '24') // Optional: Set encoding preset
                 .outputOptions('-c:a copy') // Copy the audio stream without re-encoding
                 .outputOptions('-loglevel', 'verbose') // Verbose logging
@@ -108,6 +136,8 @@ function processMP4File(task, callback) {
                 .on('start', (commandLine) => {
                     console.log(`Started processing ${fileName}`);
                     console.log('FFMPEG command:', commandLine);
+                    startTime = new Date();
+                    console.log(`Start time for ${fileName}: ${startTime}`);
                 })
                 .on('progress', (progress) => {
                     console.log(`Processing ${fileName}: ${progress.percent.toFixed(2)}% done`);
@@ -120,8 +150,13 @@ function processMP4File(task, callback) {
                 })
                 .on('end', () => {
 
+                    endTime = new Date();
+                    console.log(`Finished processing ${fileName}`);
+                    console.log(`End time for ${fileName}: ${endTime}`);
 
-                    console.log('processMP4File | [end]', fileName);
+                    const totalTimeMs = endTime - startTime;
+                    const totalTimeSec = (totalTimeMs / 1000).toFixed(2);
+                    console.log(`Total processing time for ${fileName}: ${totalTimeSec} seconds`);
                     if (replaceFile) {
                         console.log('replacing original file', {fileName, processedFilePath})
 
@@ -154,6 +189,16 @@ function processMP4File(task, callback) {
                     console.error(`FFMPEG error: [${fileName}]\n`, err.message);
                     console.error(`FFMPEG stdout: [${fileName}]\n`, stdout);
                     console.error(`FFMPEG stderr: [${fileName}]\n`, stderr);
+
+                    // Even if there's an error, we can log the end time and total time.
+                    endTime = new Date();
+                    console.log(`Error encountered for ${fileName} at: ${endTime}`);
+                    if (startTime) {
+                        const totalTimeMs = endTime - startTime;
+                        const totalTimeSec = (totalTimeMs / 1000).toFixed(2);
+                        console.log(`Total time before error: ${totalTimeSec} seconds`);
+                    }
+
                 })
                 .run();
         })

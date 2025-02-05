@@ -22,7 +22,7 @@ const args = process.argv.slice(2);
 
 // Default values
 let inputPath = null; // Single input file path
-let workDir = 'img/atc-029'; // Directory containing multiple image files
+let workDir = 'img/atc-031'; // Directory containing multiple image files
 let outputBaseName = 'output'; // Base name for output files
 let outputItems = [
     {aspectRatio: '9:16', backgroundType: 'gradient'},
@@ -39,6 +39,7 @@ let outputItems = [
     {aspectRatio: '50:27', backgroundType: 'gradient'},
     {aspectRatio: '4:5', backgroundType: 'black'},
     {aspectRatio: '4:5', backgroundType: 'gradient'},
+    {aspectRatio: '1920:1005', backgroundType: 'gradient'},
     {aspectRatio: '1:1', backgroundType: 'black', maxWidth: 2000},
     {exactWidth: 1920, exactHeight: 915, backgroundType: 'gradient'},
     // {exactWidth: 1920, exactHeight: 1005, backgroundType: 'gradient'},
@@ -186,7 +187,7 @@ args.forEach((arg) => {
                         let backgroundBuffer;
                         if (backgroundType === 'gradient') {
                             // Determine slice size (at least 1 pixel, up to 10% of the image dimension)
-                            const sliceSize = Math.max(1, Math.floor((isPortraitImage ? inputHeight : inputWidth) * 0.010));
+                            const sliceSize = Math.max(1, Math.floor((isPortraitImage ? inputHeight : inputWidth) * 0.015));
 
                             // Extract slices to get average colors
                             const channels = metadata.channels;

@@ -22,10 +22,12 @@ const args = process.argv.slice(2);
 
 // Default values
 let inputPath = null; // Single input file path
-let workDir = 'img/atc-031'; // Directory containing multiple image files
+let atcShowId = 'atc-033'
+let workDir = `img/${atcShowId}`; // Directory containing multiple image files
 let outputBaseName = 'output'; // Base name for output files
 let outputItems = [
     {aspectRatio: '9:16', backgroundType: 'gradient'},
+    {aspectRatio: '9:16', backgroundType: 'black'},
     {aspectRatio: '16:9', backgroundType: 'gradient'},
     {aspectRatio: '12:9', backgroundType: 'gradient'},
     {aspectRatio: '12:9', backgroundType: 'black'},
@@ -348,7 +350,7 @@ args.forEach((arg) => {
                             dimensionIdentifier = aspectRatio.replace(':', 'x');
                         }
 
-                        const outputDir = path.resolve(workDir, 'output_images');
+                        // const outputDir = path.resolve(workDir, `${atcShowId}_output_images`);
                         const outputFileName = `${outputBaseName}_${inputBaseName}_${dimensionIdentifier}_${backgroundType}.jpg`;
                         const outputPath = path.join(outputDir, outputFileName);
 
@@ -378,7 +380,8 @@ args.forEach((arg) => {
         }
 
         // Create output directory if it doesn't exist
-        const outputDir = path.resolve(workDir, 'output_images');
+
+        const outputDir = path.resolve(workDir, `${atcShowId}_output_images`);
         try {
             await fs.mkdir(outputDir, {recursive: true});
         } catch (err) {

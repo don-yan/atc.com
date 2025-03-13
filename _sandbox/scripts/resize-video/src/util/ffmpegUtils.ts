@@ -110,13 +110,14 @@ export async function processVideo({
                 startTime = new Date();
             })
             .on('progress', (progress) => {
-                console.log(`Processing ${path.basename(inputPath)}: ${progress.percent.toFixed(2)}% done`);
+                const message = `Processing ${path.basename(inputPath)}: ${progress.percent.toFixed(2)}% done`;
+                process.stdout.write(`\r${message.padEnd(60)}`); // Single-line progress
             })
             .on('end', () => {
                 const endTime = new Date();
                 const totalTimeSec = ((endTime.getTime() - startTime.getTime()) / 1000).toFixed(2);
-                console.log(`Finished processing ${path.basename(inputPath)} in ${totalTimeSec} seconds`);
-
+                const message = `Finished processing ${path.basename(inputPath)} in ${totalTimeSec} seconds`;
+                process.stdout.write(`\r${message}\n`); // Move to new line on completion
                 if (replaceOriginal) {
                     fs.unlinkSync(inputPath);
                     fs.renameSync(outputPath, inputPath);

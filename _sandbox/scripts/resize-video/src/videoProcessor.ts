@@ -11,7 +11,7 @@ import * as dotenv from 'dotenv';
 // Load environment variables
 dotenv.config();
 
-interface Config {
+export interface Config {
     dropboxToken: string;
     dropboxFolderPath: string;
     localFolderPath: string;
@@ -20,7 +20,7 @@ interface Config {
     useH265: boolean;
 }
 
-const config: Config = {
+export const appConfig: Config = {
     dropboxToken: process.env.DROPBOX_TOKEN || '',
     dropboxFolderPath: process.env.DROPBOX_FOLDER_PATH || '',
     localFolderPath: process.env.LOCAL_FOLDER_PATH || '',
@@ -29,10 +29,10 @@ const config: Config = {
     useH265: process.env.USE_H265 === 'true'
 };
 
-console.log(config)
+console.log(appConfig)
 
 // Custom fetch wrapper to shim .buffer()
-const customFetch = async (...args: Parameters<typeof nodeFetch>) => {
+export const customFetch = async (...args: Parameters<typeof nodeFetch>) => {
     const response = await nodeFetch(...args);
     if (!('buffer' in response)) {
         (response as any).buffer = async () => Buffer.from(await response.arrayBuffer());
@@ -46,10 +46,10 @@ interface FileTask {
 }
 
 async function processLocalFiles(): Promise<void> {
-    const files = fs.readdirSync(config.localFolderPath)
+    const files = fs.readdirSync(appConfig.localFolderPath)
         .filter(file => file.toLowerCase().endsWith('.mp4'))
         .map(file => ({
-            filePath: path.join(config.localFolderPath, file),
+            filePath: path.join(appConfig.localFolderPath, file),
             fileName: file
         } as FileTask));
 
@@ -64,15 +64,15 @@ async function processLocalFiles(): Promise<void> {
             await processVideo({
                 inputPath: task.filePath,
                 outputPath,
-                replaceOriginal: config.replaceOriginal,
-                useH265: config.useH265
+                replaceOriginal: appConfig.replaceOriginal,
+                useH265: appConfig.useH265
             });
             callback();
         } catch (error) {
             console.error(`Error processing ${task.fileName}:`, error);
             callback(error as Error);
         }
-    }, config.concurrencyLimit);
+    }, appConfig.concurrencyLimit);
 
     queue.drain(() => console.log('All local files have been processed.'));
    queue.push(mp4Files, (err, task) => {
@@ -83,9 +83,9 @@ async function processLocalFiles(): Promise<void> {
 async function processDropboxFiles(): Promise<void> {
 
     // Initialize Dropbox client
-    const dbx = new Dropbox({accessToken: config.dropboxToken, fetch: customFetch});
+    const dbx = new Dropbox({accessToken: appConfig.dropboxToken, fetch: customFetch});
 
-    const {result} = await dbx.filesListFolder({path: config.dropboxFolderPath});
+    const {result} = await dbx.filesListFolder({path: appConfig.dropboxFolderPath,recursive:false});
     const mp4Files = result.entries.filter(
         entry => entry['.tag'] === 'file' && entry.name.toLowerCase().endsWith('.mp4')
     );
@@ -110,10 +110,10 @@ async function processDropboxFiles(): Promise<void> {
             await processVideo({
                 inputPath: localPath,
                 outputPath: processedPath,
-                useH265: config.useH265
+                useH265: appConfig.useH265
             });
 
-            await uploadFile(dbx, processedPath, file.path_lower);
+            await uploadFile(dbx, processedPath, file.path_display);
             console.log(`Processed and replaced Dropbox file: ${file.name}`);
 
             fs.unlinkSync(localPath);
@@ -123,7 +123,7 @@ async function processDropboxFiles(): Promise<void> {
             console.error(`error processing file: [${file.name}]`, error)
             callback(error as Error);
         }
-    }, config.concurrencyLimit);
+    }, appConfig.concurrencyLimit);
 
     queue.drain(() => console.log('All Dropbox files have been processed.'));
   queue.push(mp4Files, (err, task) => {

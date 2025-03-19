@@ -66,20 +66,76 @@ export async function downloadFile(dbx: Dropbox, file: DropboxFile): Promise<str
 }
 
 export async function uploadFile(dbx: Dropbox, localPath: string, dropboxPath: string): Promise<files.FileMetadata> {
-    console.log('uploadFile', {localPath, dropboxPath});
+
 
     const stats = fs.statSync(localPath);
     const totalSize = stats.size;
+    const CHUNK_SIZE = 8 * 1024 * 1024; // 8 MB chunks
+    const MAX_SINGLE_UPLOAD_SIZE = 150 * 1024 * 1024; // 150 MB
+
+    console.log('uploadFile', {localPath, dropboxPath,stats});
 
     const readStream = fs.createReadStream(localPath);
     const progressLogger = new ProgressLogger(totalSize, path.basename(localPath), 'upload');
 
+    if (totalSize <= MAX_SINGLE_UPLOAD_SIZE) {
+        // Single upload for small files
     const uploadPromise = dbx.filesUpload({
         path: dropboxPath,
-        mode: {'.tag': 'overwrite' as const},
+            mode: { '.tag': 'overwrite' as const },
         contents: readStream.pipe(progressLogger),
     });
+        const response = await uploadPromise;
+        return response.result;
+    } else {
+        // Chunked upload for large files
+        let sessionId: string;
+        let offset = 0;
+        const chunks: Buffer[] = [];
 
-    const response = await uploadPromise; // Wait for the upload to complete
-    return response.result; // Extract and return the FileMetadata
+        // Read file into chunks
+        for await (const chunk of readStream) {
+            chunks.push(chunk);
+            progressLogger.write(chunk); // Manually push chunks through progress logger
+
+            if (chunks.reduce((sum, c) => sum + c.length, 0) >= CHUNK_SIZE || offset + chunk.length === totalSize) {
+                const chunkBuffer = Buffer.concat(chunks);
+                if (!sessionId) {
+                    // Start the upload session
+                    const startResponse = await dbx.filesUploadSessionStart({
+                        close: false,
+                        contents: chunkBuffer,
+                    });
+                    sessionId = startResponse.result.session_id;
+                } else {
+                    // Append to the session
+                    await dbx.filesUploadSessionAppendV2({
+                        cursor: {
+                            session_id: sessionId,
+                            offset: offset,
+                        },
+                        close: false,
+                        contents: chunkBuffer,
+                    });
+                }
+                offset += chunkBuffer.length;
+                chunks.length = 0; // Clear chunks
+            }
+}
+
+        // Finish the session
+        const finishResponse = await dbx.filesUploadSessionFinish({
+            cursor: {
+                session_id: sessionId!,
+                offset: offset,
+            },
+            commit: {
+                path: dropboxPath,
+                mode: { '.tag': 'overwrite' as const },
+            },
+        });
+
+        progressLogger.end(); // Ensure final progress log
+        return finishResponse.result;
+    }
 }

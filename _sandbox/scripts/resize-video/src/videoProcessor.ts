@@ -116,8 +116,8 @@ async function processDropboxFiles(): Promise<void> {
             await uploadFile(dbx, processedPath, file.path_display);
             console.log(`Processed and replaced Dropbox file: ${file.name}`);
 
-            fs.unlinkSync(localPath);
-            fs.unlinkSync(processedPath);
+            // fs.unlinkSync(localPath);
+            // fs.unlinkSync(processedPath);
             callback();
         } catch (error) {
             console.error(`error processing file: [${file.name}]`, error)

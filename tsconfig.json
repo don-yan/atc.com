@@ -12,6 +12,12 @@
     // Required with allowImportingTsExtensions
     "baseUrl": ".",
     "paths": {
+      "~/*": [
+        "src/*"
+      ],
+      "#shared/*": [
+        "shared/*"
+      ]
     }
     // "moduleResolution": "Node"
   }

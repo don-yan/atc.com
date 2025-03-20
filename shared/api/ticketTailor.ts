@@ -1,6 +1,5 @@
-import {type TTMappedEventResponse, type TTFullEventResponse, type TTEventMapped} from "~/@types";
-import {mapPick} from "~/utils/data-utils.ts";
-import type {TTEventFull, TTEventImages} from "../../src/@types";
+import {mapPick} from "../../src/utils/data-utils.ts";
+import type {TTEventFull, TTEventMapped, TTFullEventResponse, TTMappedEventResponse} from "../../src/@types/tickettailor.ts";
 
 // export async function getEvents(apiKey: string): Promise<TTApiResponse> {
 export async function getEvents(apiKey: string): Promise<TTMappedEventResponse> {

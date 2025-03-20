@@ -4,7 +4,7 @@
 
 
 // import {type MailChimpConfig, type MailChimpContactData} from "../src/@types";
-import {createContact} from "../shared/api/mailChimp";
+import {createContact} from "../shared/api/mailChimp.ts";
 
 export const config = {
     runtime: 'edge',

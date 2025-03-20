@@ -2,6 +2,10 @@ import {defineNuxtConfig} from 'nuxt/config'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+    alias: {
+        // "~": "./src", // Ensure ~ points to src/
+        "@shared":"./shared"
+    },
     app: {
         pageTransition: {name: 'page', mode: 'out-in'},
     },
@@ -59,7 +63,10 @@ export default defineNuxtConfig({
         }
     },
     srcDir: 'src/',
-    ssr: true
+    ssr: true,
+    typescript: {
+        shim: false, // Disable shims to enforce strict TS
+    },
     // vue: {
     //     compilerOptions: {
     //         // TODO

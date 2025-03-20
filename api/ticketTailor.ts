@@ -4,7 +4,7 @@
  * Reference: https://developers.tickettailor.com/
  */
 
-import {getEvents} from "../shared/api/ticketTailor";
+import {getEvents} from "../shared/api/ticketTailor.ts";
 
 export const config = {
     runtime: 'edge',

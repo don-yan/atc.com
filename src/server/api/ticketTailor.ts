@@ -5,7 +5,7 @@
  */
 
 import type {TTApiResponse} from "~/@types";
-import {getEvents} from "../../../shared/api/ticketTailor";
+import {getEvents} from "@shared/api/ticketTailor.ts";
 
 export default defineEventHandler((event): Promise<TTApiResponse> => {
 

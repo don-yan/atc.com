@@ -4,7 +4,7 @@ import TailwindBreakpoints from "~/components/util/TailwindBreakpoints.vue";
 import StructureHeader from '~/components/structure/Header.vue'
 // import StructureHeader from '~/components/structure/HeaderScroll.vue'
 import StructureFooter from '~/components/structure/Footer.vue'
-import {scrollToId} from "~/utils/scroll-utils";
+import {scrollToId} from "~/utils/scroll-utils.ts";
 
 import {useRoute} from 'vue-router';
 

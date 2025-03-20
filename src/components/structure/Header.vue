@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 
 import Button from '~/components/content/buttons/Button.vue'
-import {LinkService} from "~/service/NavService";
-import {scrollToId} from "~/utils/scroll-utils";
+import {LinkService} from "~/service/NavService.ts";
+import {scrollToId} from "~/utils/scroll-utils.ts";
 
-import {useMobileMenuStore} from '~/store/mobileMenu';
+import {useMobileMenuStore} from '~/store/mobileMenu.ts';
 
 const mobileMenuStore = useMobileMenuStore();
 

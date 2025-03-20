@@ -7,7 +7,7 @@ import {computed, ref} from 'vue'
 import type {TTEventMapped} from '~/@types'
 
 import EventCard from "~/components/content/events/EventCard.vue";
-import {scrollToId} from "~/utils/scroll-utils";
+import {scrollToId} from "~/utils/scroll-utils.ts";
 
 // Create a reactive variable to hold events.
 const events = ref<TTEventMapped[]>([])
@@ -23,7 +23,7 @@ watch(
       if (newValue && newValue.data) {
         // Assuming your API returns { data: TTEvent[] }
         events.value = newValue.data
-        console.log('Fetched events:', events.value)
+        console.log('Fetched events:', events.value.length)
       }
     },
     {immediate: true}

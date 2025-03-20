@@ -39,7 +39,7 @@ export const LinkService = {
 
     getNavLinks(): NavItem[] {
         return [
-            {
+           /* {
                 title: 'Events',
                 slug: '/events'
             },
@@ -58,7 +58,7 @@ export const LinkService = {
             {
                 title: 'Sandbox',
                 slug: '/sandbox'
-            }
+            }*/
 
         ]
     },

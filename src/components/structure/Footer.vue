@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 
-import {LinkService} from "~/service/NavService";
+import {LinkService} from "~/service/NavService.ts";
 
 const currentYear = new Date().getFullYear()
 

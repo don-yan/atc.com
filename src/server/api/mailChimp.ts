@@ -7,8 +7,8 @@
  */
 
 
-import {createContact} from "#shared/api/mailChimp";
-import type {MailChimpConfig, MailChimpContactData} from "~/@types/mailchimp";
+import {createContact} from "#shared/api/mailChimp.ts";
+import type {MailChimpConfig, MailChimpContactData} from "~/@types";
 
 
 export default defineEventHandler(async (event) => {

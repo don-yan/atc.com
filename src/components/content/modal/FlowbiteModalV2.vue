@@ -9,7 +9,7 @@ import {Modal} from 'flowbite'
 
 import type {ModalOptions, ModalInterface} from 'flowbite';
 import type {InstanceOptions} from 'flowbite';
-import LogService from "~/service/LogService";
+import LogService from "~/service/LogService.ts";
 
 
 const root = ref<HTMLElement | null>(null);
@@ -32,7 +32,7 @@ onMounted(() => {
   const $modalElement = root.value?.querySelector(`#${props.id}`);
   const $closeButton = root.value?.querySelector('#closeButton');
 
-  
+
 
   const modalOptions: ModalOptions = {
     placement: 'top-right',
@@ -70,7 +70,7 @@ onMounted(() => {
     console.log('hello')
   }
 
-  
+
 
 })
 

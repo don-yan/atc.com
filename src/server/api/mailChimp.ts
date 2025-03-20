@@ -7,7 +7,7 @@
  */
 
 
-import {createContact} from "../../../shared/api/mailChimp";
+import {createContact} from "#shared/api/mailChimp";
 import type {MailChimpConfig, MailChimpContactData} from "~/@types/mailchimp";
 
 

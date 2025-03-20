@@ -4,17 +4,16 @@
  * Reference: https://developers.tickettailor.com/
  */
 
-import type {TTApiResponse} from "~/@types";
-import {getEvents} from "@shared/api/ticketTailor.ts";
+import type {TTMappedEventResponse} from "~/@types/tickettailor";
+import {getEvents} from "#shared/api/ticketTailor";
 
-export default defineEventHandler((event): Promise<TTApiResponse> => {
+export default defineEventHandler((event): Promise<TTMappedEventResponse> => {
 
     const config = useRuntimeConfig()
 
-    console.log('nuxt event handler')
+    console.info('nuxt event handler')
 
     return getEvents(config.private.TICKET_TAILOR_KEY);
-
 
 
 })

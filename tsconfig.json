@@ -1,9 +1,11 @@
 {
   // https://nuxt.com/docs/guide/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
-
   "compilerOptions": {
-    "sourceRoot": "./src"
-  // "moduleResolution": "Node"
-}
+    "sourceRoot": "./src",
+    "module": "ESNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2020"
+    // "moduleResolution": "Node"
+  }
 }

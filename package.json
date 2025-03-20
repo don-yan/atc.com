@@ -42,7 +42,7 @@
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
     "consola": "^3.2.3",
-    "contentful": "^11.5.10",
+    "contentful": "^10.8.1",
     "crypto": "^1.0.1",
     "flowbite": "^2.5.2",
     "flowbite-vue": "^0.1.9",

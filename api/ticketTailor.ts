@@ -20,6 +20,8 @@ export async function GET(request: Request) {
 
     console.log('new response')
 
+    console.log('top level event handler')
+
     return new Response(JSON.stringify(responseData));
 
 

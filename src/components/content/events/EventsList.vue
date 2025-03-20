@@ -1,14 +1,13 @@
 <script lang="ts" setup>
 
 
-import {ref, computed, onMounted} from 'vue'
+import {useFetch} from '#app'
 import {FlowbiteThemable, FwbTab, FwbTabs} from 'flowbite-vue'
+import {computed, ref} from 'vue'
+import type {TTEventMapped} from '~/@types'
 
 import EventCard from "~/components/content/events/EventCard.vue";
 import {scrollToId} from "~/utils/scroll-utils";
-
-import {useFetch} from '#app'
-import type {TTEventMapped} from '~/@types'
 
 // Create a reactive variable to hold events.
 const events = ref<TTEventMapped[]>([])
@@ -24,7 +23,7 @@ watch(
       if (newValue && newValue.data) {
         // Assuming your API returns { data: TTEvent[] }
         events.value = newValue.data
-        // console.log('Fetched events:', events.value)
+        console.log('Fetched events:', events.value)
       }
     },
     {immediate: true}
@@ -55,10 +54,11 @@ const pastEvents = computed(() => {
   <div
       class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
     <div class="w-full">
-      <flowbite-themable theme="red">
-        <div v-if="pending">Loading events...</div>
-        <div v-else-if="error">Error loading events: {{ error.message }}</div>
-        <div v-else>
+
+      <div v-if="pending">Loading events...</div>
+      <div v-else-if="error">Error loading events: {{ error.message }}</div>
+      <div v-else>
+        <flowbite-themable theme="red">
           <fwb-tabs v-model="activeTab" directive="show" variant="underline"
                     class="flex flex-wrap justify-center yk-tab-container py-4">
 
@@ -90,8 +90,9 @@ const pastEvents = computed(() => {
             </fwb-tab>
 
           </fwb-tabs>
-        </div>
-      </flowbite-themable>
+        </flowbite-themable>
+      </div>
+
     </div>
   </div>
 

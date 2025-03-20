@@ -1,5 +1,6 @@
 import {type TTMappedEventResponse, type TTFullEventResponse, type TTEventMapped} from "~/@types";
 import {mapPick} from "~/utils/data-utils.ts";
+import type {TTEventFull, TTEventImages} from "../../src/@types/index.js";
 
 // export async function getEvents(apiKey: string): Promise<TTApiResponse> {
 export async function getEvents(apiKey: string): Promise<TTMappedEventResponse> {
@@ -37,7 +38,7 @@ export async function getEvents(apiKey: string): Promise<TTMappedEventResponse> 
             console.log('end request', apiResponse.links)
 
             // == Sort data by event end date
-            apiResponse.data = apiResponse.data.sort((a, b) => {
+            apiResponse.data = apiResponse.data.sort((a:TTEventFull, b:TTEventFull) => {
                 return b.end.unix - a.end.unix
             })
 
@@ -75,7 +76,7 @@ export async function getEvents(apiKey: string): Promise<TTMappedEventResponse> 
 
             return {
                 links: apiResponse.links,
-                data: apiResponse.data.map(item => mapPick(item, allowedKeys)),
+                data: apiResponse.data.map((item: TTEventMapped) => mapPick(item, allowedKeys)),
                 timestamp
             };
         })

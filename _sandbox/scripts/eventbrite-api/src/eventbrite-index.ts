@@ -37,8 +37,8 @@ let EVENT_DATA: InputEventData = {
     startTime: '19:30',
     endTime: '21:30',
     // description: '<p>New event description here</p>',
-    summary: 'my summary',
-    // summary:'Catch a carefully curated selection of the area\'s funniest comics as Acquired Taste Comedy presents another signature Standup Comedy Event™.',
+    // summary: 'my summary',
+    summary:'Catch a carefully curated selection of the area\'s funniest comics as Acquired Taste Comedy presents another signature Standup Comedy Event™.',
     atcId: 'atc-030'
 };
 

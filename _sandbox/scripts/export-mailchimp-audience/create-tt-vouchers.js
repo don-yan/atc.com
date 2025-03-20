@@ -2,6 +2,7 @@ require('dotenv').config();
 const axios = require('axios');
 const mailChimp = require('./export-audience')
 const stringifySafe = require('json-stringify-safe');
+const {writeFileSync} = require("fs");
 // Load values from environment variables
 const apiKey = process.env.TICKET_TAILOR_API_KEY; // Your Ticket Tailor API key
 
@@ -10,7 +11,7 @@ const apiKey = process.env.TICKET_TAILOR_API_KEY; // Your Ticket Tailor API key
  *
  * @return {Promise<void>}
  */
- async function createVoucherCodesFromMailchimp() {
+async function createVoucherCodesFromMailchimp() {
     try {
         const allMembers = await mailChimp.fetchAllMembers();
 
@@ -20,18 +21,26 @@ const apiKey = process.env.TICKET_TAILOR_API_KEY; // Your Ticket Tailor API key
             .filter(name => name !== '')                     // Remove any empty names
 
         // Remove duplicates, convert to lowercase, and replace spaces and apostrophes with dashes
-        lastNames = [...new Set(lastNames)]  // Remove duplicates
-            .map(name => name.toLowerCase())    // Convert to lowercase
-            .map(name => name.replace(/[\s']/g, '-')) // Replace spaces and apostrophes with dashes
+        lastNames = lastNames.map(name => name.toLowerCase())    // Convert to lowercase
+            .map(name => name.replace(/[\s'’]/g, '-')) // Replace spaces and apostrophes with dashes
+            .map(name => toLatinEquivalent(name)) // normalize non-latin characters
             .sort()
             .map(name => 'code-' + name) // prefix with "code-"
+
+        lastNames = [...new Set(lastNames)]  // Remove duplicates
 
 
         const voucherCodes = lastNames.join('\n');
 
 
-        // fs.writeFileSync('processed_last_names.csv', csvHeaders + csvData);
         console.log('createVoucherCodesFromMailchimp | ', voucherCodes);
+
+        console.log('\n\n===========\n\n\n\n')
+
+
+        const csvHeaders = 'email_address,status,first_name,last_name,code\n';
+        // const csvHeaders = 'code\n';
+        writeFileSync('exported_audience.csv', csvHeaders + voucherCodes);
     } catch (error) {
         console.error('Error exporting audience list:', error.message);
     }
@@ -54,8 +63,8 @@ async function createVoucher(eventSeries, voucherCodes = ["testCode1", "testCode
         const voucherData = {
             codes: ["testCode1", "testCode2"],         // Voucher codes to be created
             // event_series_ids: ["es_1", "es_2"],        // Associated event series IDs
-           // expiry: expiryDate,                        // Voucher expiry as Unix timestamp
-            interval:12,
+            // expiry: expiryDate,                        // Voucher expiry as Unix timestamp
+            interval: 12,
             name: "Test voucher with codes",           // Name of the voucher
             partial_redemption: "false",               // Whether the voucher can be partially redeemed
             voucher_type: "GIFT_CARD",                     // Type of voucher: "PROMO" for promo codes or "GIFT_CARD"
@@ -142,15 +151,69 @@ async function fetchEventSeries(params) {
 }
 
 /**
+ * Convert non-latin characters to latin equivalent
+ *
+ * Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize#form
+ * @param str
+ * @return {*}
+ */
+function toLatinEquivalent(str) {
+    // Step 1: Normalize to decompose characters (e.g., "é" → "e" + combining acute accent)
+    let normalized = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+    // NOTE: 'NFD' = Canonical Decomposition.
+
+
+    // Step 2: Custom mapping for non-Latin characters not handled by normalization
+    const charMap = {
+        'æ': 'ae',
+        'œ': 'oe',
+        'ß': 'ss',
+        'đ': 'd',
+        'ł': 'l',
+        'ø': 'o',
+        'å': 'a',
+        'ä': 'a',
+        'ö': 'o',
+        'ü': 'u',
+        'ñ': 'n',
+        'ç': 'c',
+        'ć': 'c',
+        'š': 's',
+        'ž': 'z',
+        'ý': 'y',
+        'þ': 'th',
+        'ð': 'd',
+        'ı': 'i',
+        // Add more mappings as needed
+    };
+
+    const regex = /[æœßđłøåäöüñçćšžýþðı]/g
+
+
+    if (regex.test(str)) {
+        // Step 3: Replace characters using the map
+        console.log('toLatinEquivalent match!', str)
+        return normalized.replace(regex, match => charMap[match] || match);
+    }
+
+
+    return str;
+}
+
+/**
  * MAIN Method
  */
 async function main() {
 
+    console.log('begin')
 
-    let latestEvent = await getLatestEvent();
-    await createVoucher(latestEvent);
+    // console.log(toLatinEquivalent("ćevapčići")); // Should output "cevapcici"
 
-   // await createVoucherCodesFromMailchimp();
+    // let latestEvent = await getLatestEvent();
+    // await createVoucher(latestEvent);
+
+    await createVoucherCodesFromMailchimp();
 
 }
 

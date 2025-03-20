@@ -1,7 +1,7 @@
 // import type {MailChimpConfig, MailChimpContactData} from "../../src/@types/mailchimp";
 // import type {MailChimpConfig, MailChimpContactData} from "../../src/@types/mailchimp";
 
- export interface MailChimpContactData {
+export interface MailChimpContactData {
     name: string
     email: string
 }
@@ -15,10 +15,10 @@ export interface MailChimpConfig {
 // import crypto from 'crypto'
 
 // export async function createContact(apiConfig: MailChimpConfig, requestData: MailChimpContactData): Promise<string> {
-export async function createContact(apiConfig: MailChimpConfig, requestData: MailChimpContactData): Promise<string> {
+export async function createContact(apiConfig: MailChimpConfig, requestData: MailChimpContactData): Promise<string | void> {
     let timestamp = Math.ceil(new Date().getTime() / 1000);
 
-    
+
     const encodedBasicAuthHeader = Buffer.from(`:${apiConfig.apiKey}`).toString('base64')
 
     const myHeaders = new Headers();
@@ -61,17 +61,16 @@ export async function createContact(apiConfig: MailChimpConfig, requestData: Mai
     )
     console.log(raw)
 
-    const requestOptions = {
-        method: 'PUT',
-        headers: myHeaders,
-        redirect: "follow",
-        body: raw
-    };
 
     const requestURL = `https://${apiConfig.server}.api.mailchimp.com/3.0/lists/${apiConfig.listId}/members/${subscriberHash}?skip_merge_validation=true`;
     console.log(requestURL)
 
-    return fetch(requestURL, requestOptions)
+    return fetch(requestURL, {
+        method: 'PUT',
+        headers: myHeaders,
+        redirect: "follow",
+        body: raw
+    })
         .then(async (response) => {
 
             const json = await response.text();

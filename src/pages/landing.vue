@@ -28,6 +28,39 @@ onMounted(() => {
   console.log('mount page')
 })
 
+type Link = {
+  id:number,
+  title:string,
+  description:string,
+  url:string
+}
+const links = ref<Link[]>([
+  {
+    id: 1,
+    title: "Blog",
+    description: "Check out my latest posts",
+    url: "https://example.com/blog",
+  },
+  {
+    id: 2,
+    title: "Shop",
+    description: "Browse my products",
+    url: "https://example.com/shop",
+  },
+  {
+    id: 3,
+    title: "Twitter",
+    description: "Follow me on X",
+    url: "https://twitter.com/yourhandle",
+  },
+]);
+
+
+function trackClick(link:Link) {
+      console.log(`Clicked: ${link.title}`);
+       // $gtag.pageview({ page_path: '/about' })
+      // Add your analytics tracking here (e.g., gtag, custom event)
+    }
 
 </script>
 <template>
@@ -71,10 +104,63 @@ onMounted(() => {
       </div>
     </section>
 
+     <PageSection id="links" title="Links">
+      <template #description>
+        Links
+      </template>
+      <template #content>
+       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <a
+            v-for="link in links"
+            :key="link.id"
+            :href="link.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block"
+            @click="trackClick(link)"
+          >
+            <div
+              class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex items-center space-x-4"
+            >
+              <!-- Icon (Flowbite/Tailwind) -->
+              <div
+                class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center"
+              >
+                <svg
+                  class="w-6 h-6 text-blue-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  ></path>
+                </svg>
+              </div>
+
+              <!-- Link Info -->
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900">{{ link.title }}</h3>
+                <p class="text-sm text-gray-500">{{ link.description }}</p>
+              </div>
+            </div>
+          </a>
+        </div>
+
+
+      </template>
+    </PageSection>
+
 
     <PageSection id="events" title="Events" description=" See what all of the fuss is about.">
       <template #content>
-        <EventsList id="events" title="Events"/>
+<!--        <client-only>-->
+          <EventsList id="events" title="Events"/>
+<!--        </client-only>-->
       </template>
     </PageSection>
 

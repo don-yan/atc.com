@@ -46,14 +46,14 @@ interface FileTask {
 }
 
 async function processLocalFiles(): Promise<void> {
-    const files = fs.readdirSync(appConfig.localFolderPath)
+    const mp4Files = fs.readdirSync(appConfig.localFolderPath)
         .filter(file => file.toLowerCase().endsWith('.mp4'))
         .map(file => ({
             filePath: path.join(appConfig.localFolderPath, file),
             fileName: file
         } as FileTask));
 
-    if (!files.length) {
+    if (!mp4Files.length) {
         console.log('No MP4 files found in the local directory.');
         return;
     }
@@ -133,8 +133,8 @@ async function processDropboxFiles(): Promise<void> {
 
 async function main(): Promise<void> {
     try {
-        // await processLocalFiles();
-        await processDropboxFiles();
+        await processLocalFiles();
+        // await processDropboxFiles();
     } catch (error) {
         console.error('Error in main process:', error);
     }

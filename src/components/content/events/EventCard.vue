@@ -3,6 +3,7 @@
 
 import type {TTEventMapped} from "~/@types";
 
+// import Button from '~/components/content/buttons/ButtonAnimated.vue'
 import Button from '~/components/content/buttons/Button.vue'
 import type {PropType} from "vue";
 

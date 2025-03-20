@@ -6,10 +6,12 @@
     "module": "ESNext",
     "moduleResolution": "NodeNext",
     "target": "ES2020",
-    "allowImportingTsExtension": true,
+    "allowImportingTsExtensions": true,
+    // Enable .ts imports
+    "noEmit": true,
+    // Required with allowImportingTsExtensions
     "baseUrl": ".",
     "paths": {
-
     }
     // "moduleResolution": "Node"
   }

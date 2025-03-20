@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     devtools: {enabled: true},
     modules: [
         "@nuxt/image",
-        
+
         // TODO: configure eslint & prettier
         // REF: https://dev.to/nikitadmitr/configure-eslint-prettier-for-nuxt-3-45f7
         // "@nuxtjs/eslint-module"
@@ -35,6 +35,13 @@ export default defineNuxtConfig({
     ],
     image: {
         provider: process.env.VERCEL_ENV ? 'vercel' : 'ipx',
+        ipx: {
+
+            // Specify the directory where your images are located
+            dir: 'public',
+            // Optionally define allowed domains if you're fetching remote images (not usually needed for local images)
+            // domains: ['localhost'],
+        },
     },
 
 

@@ -17,6 +17,7 @@ export async function GET(request: Request) {
     let TT_KEY = process.env.TICKET_TAILOR_KEY || '';
 
     let responseData = await getEvents(TT_KEY)
+
     console.log('new response')
 
     return new Response(JSON.stringify(responseData));

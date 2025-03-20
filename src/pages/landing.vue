@@ -74,7 +74,9 @@ onMounted(() => {
 
     <PageSection id="events" title="Events" description=" See what all of the fuss is about.">
       <template #content>
-        <EventsList id="events" title="Events"/>
+<!--        <client-only>-->
+          <EventsList id="events" title="Events"/>
+<!--        </client-only>-->
       </template>
     </PageSection>
 

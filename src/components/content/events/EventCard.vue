@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 
 
-import type {TTEvent} from "~/@types";
+import type {TTEventMapped} from "~/@types";
 
 import Button from '~/components/content/buttons/Button.vue'
 import type {PropType} from "vue";
@@ -48,7 +48,7 @@ const props = defineProps({
   title: String,
   description: String,
   item: {
-    type: Object as PropType<TTEvent>,
+    type: Object as PropType<TTEventMapped>,
     required: true,
   },
   isPast: Boolean
@@ -63,7 +63,7 @@ onMounted(() => {
   console.log('mount card')
 })
 
-const item = ref<TTEvent>(props.item)
+const item = ref<TTEventMapped>(props.item)
 
 
 </script>

@@ -3,8 +3,8 @@ import {defineNuxtConfig} from 'nuxt/config'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   alias: {
-      // "~": "./src", // Ensure ~ points to src/
-      "@shared":"./shared"
+      "~": "./src", // Ensure ~ points to src/
+      "#shared":"./shared"
   },
 
   app: {
@@ -15,41 +15,19 @@ export default defineNuxtConfig({
 
   modules: [
       "@nuxt/image",
-
-      // TODO: configure eslint & prettier
-      // REF: https://dev.to/nikitadmitr/configure-eslint-prettier-for-nuxt-3-45f7
-      // "@nuxtjs/eslint-module"
       "@nuxtjs/tailwindcss",
       '@pinia/nuxt',
       "@nuxt/eslint"
   ],
 
-  // primevue: {
-  //     // cssLayerOrder: "tailwind-base, primevue, tailwind-utilities, primeflex",
-  //     cssLayerOrder: "tailwind-base, primevue, tailwind-utilities",
-  //     components: {
-  //         exclude: ["Editor", "Chart"]
-  //     },
-  //     ripple: true
-  // },
-
   css: [
-      // TODO: Replace primeicons with another library
-      "primeicons/primeicons.css",
       '../node_modules/flowbite-vue/dist/index.css'
-      // "assets/scss/primevue-sass-theme-3.50.0/themes/atc-theme/theme.scss",
-      // "primevue/resources/themes/lara-light-purple/theme.css"          ,
-
   ],
 
   image: {
       provider: process.env.VERCEL_ENV ? 'vercel' : 'ipx',
       ipx: {
-
-          // Specify the directory where your images are located
           dir: 'public',
-          // Optionally define allowed domains if you're fetching remote images (not usually needed for local images)
-          // domains: ['localhost'],
       },
   },
 

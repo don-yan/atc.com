@@ -35,7 +35,7 @@ type Link = {
   url:string
 }
 const links = ref<Link[]>([
-  {
+  /*{
     id: 1,
     title: "Blog",
     description: "Check out my latest posts",
@@ -52,7 +52,7 @@ const links = ref<Link[]>([
     title: "Twitter",
     description: "Follow me on X",
     url: "https://twitter.com/yourhandle",
-  },
+  },*/
 ]);
 
 
@@ -104,7 +104,7 @@ function trackClick(link:Link) {
       </div>
     </section>
 
-     <PageSection id="links" title="Links">
+     <PageSection id="links" title="Links" style="display:none;">
       <template #description>
         Links
       </template>

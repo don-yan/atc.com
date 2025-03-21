@@ -18,6 +18,7 @@ export interface Config {
     concurrencyLimit: number;
     replaceOriginal: boolean;
     useH265: boolean;
+    doLocal: boolean;
 }
 
 export const appConfig: Config = {
@@ -26,7 +27,8 @@ export const appConfig: Config = {
     localFolderPath: process.env.LOCAL_FOLDER_PATH || '',
     concurrencyLimit: parseInt(process.env.CONCURRENCY_LIMIT || '2', 10),
     replaceOriginal: process.env.REPLACE_ORIGINAL === 'true',
-    useH265: process.env.USE_H265 === 'true'
+    useH265: process.env.USE_H265 === 'true',
+    doLocal: process.env.DO_LOCAL === 'true'
 };
 
 console.log(appConfig)
@@ -75,7 +77,7 @@ async function processLocalFiles(): Promise<void> {
     }, appConfig.concurrencyLimit);
 
     queue.drain(() => console.log('All local files have been processed.'));
-   queue.push(mp4Files, (err, task) => {
+    queue.push(mp4Files, (err, task) => {
         if (err) console.error(`Error processing file ${task?.name || 'unknown'}:`, err);
     });
 }
@@ -85,7 +87,7 @@ async function processDropboxFiles(): Promise<void> {
     // Initialize Dropbox client
     const dbx = new Dropbox({accessToken: appConfig.dropboxToken, fetch: customFetch});
 
-    const {result} = await dbx.filesListFolder({path: appConfig.dropboxFolderPath,recursive:false});
+    const {result} = await dbx.filesListFolder({path: appConfig.dropboxFolderPath, recursive: false});
     const mp4Files = result.entries.filter(
         entry => entry['.tag'] === 'file' && entry.name.toLowerCase().endsWith('.mp4')
     );
@@ -126,15 +128,18 @@ async function processDropboxFiles(): Promise<void> {
     }, appConfig.concurrencyLimit);
 
     queue.drain(() => console.log('All Dropbox files have been processed.'));
-  queue.push(mp4Files, (err, task) => {
+    queue.push(mp4Files, (err, task) => {
         if (err) console.error(`Error processing Dropbox file ${task?.name || 'unknown'}:`, err);
     });
 }
 
 async function main(): Promise<void> {
     try {
-        await processLocalFiles();
-        // await processDropboxFiles();
+        if (appConfig.doLocal) {
+            await processLocalFiles();
+        } else {
+            await processDropboxFiles();
+        }
     } catch (error) {
         console.error('Error in main process:', error);
     }

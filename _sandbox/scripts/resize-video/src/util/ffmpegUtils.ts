@@ -2,6 +2,7 @@
 import ffmpeg from 'fluent-ffmpeg';
 import * as fs from 'fs';
 import * as path from 'path';
+import { progressManager } from './progressManager';
 
 interface VideoMetadata {
     codec: string;
@@ -46,13 +47,14 @@ export async function processVideo({
                                        useH265 = false
                                    }: ProcessVideoOptions): Promise<void> {
     let startTime: Date;
+    const fileId = `process-${path.basename(inputPath)}`;
 
     const outputDir = path.dirname(outputPath);
     if (!fs.existsSync(outputDir)) {
-        fs.mkdirSync(outputDir, {recursive: true});
+        fs.mkdirSync(outputDir, { recursive: true });
     }
 
-    console.log('processVideo', {inputPath, outputPath})
+    console.log('processVideo', { inputPath, outputPath });
     const metadata = await getVideoMetadata(inputPath);
     const codecMap: { [key: string]: string } = {
         'h264': 'libx264',
@@ -69,13 +71,11 @@ export async function processVideo({
     const scaledBitrateKbps = Math.max(3000, Math.min(8000, Math.floor(originalBitrateKbps / 4))); // Scale for 1080p
     const bitrate = `${scaledBitrateKbps}k`;
 
-    console.log('bitrate', bitrate)
-    console.log('metadata', metadata)
-    console.log('useH265', useH265)
+    console.log({bitrate,useH265,metadata})
     return new Promise((resolve, reject) => {
         let ffmpegCommand = ffmpeg(inputPath)
             .videoCodec(codec)
-            .videoBitrate(bitrate)
+            // .videoBitrate(bitrate) // NOTE: bitrate will be resolved to match CRF
             .videoFilters('scale=-2:1080')
             .outputOptions(['-map 0:v:0', '-map 0:a:0']) // Map only video and audio streams
             // .outputOptions('-map 0') // Map all streams from input
@@ -108,16 +108,18 @@ export async function processVideo({
                 console.log(`Started processing ${path.basename(inputPath)}`);
                 console.log('FFMPEG command:', commandLine);
                 startTime = new Date();
+                progressManager.register(fileId, `Processing ${path.basename(inputPath)}: 0.00% done`);
             })
             .on('progress', (progress) => {
                 const message = `Processing ${path.basename(inputPath)}: ${progress.percent.toFixed(2)}% done`;
-                process.stdout.write(`\r${message.padEnd(60)}`); // Single-line progress
+                progressManager.update(fileId, message);
             })
             .on('end', () => {
                 const endTime = new Date();
                 const totalTimeSec = ((endTime.getTime() - startTime.getTime()) / 1000).toFixed(2);
                 const message = `Finished processing ${path.basename(inputPath)} in ${totalTimeSec} seconds`;
-                process.stdout.write(`\r${message}\n`); // Move to new line on completion
+                progressManager.update(fileId, message);
+                setTimeout(() => progressManager.unregister(fileId), 1000); // Delay removal
                 if (replaceOriginal) {
                     fs.unlinkSync(inputPath);
                     fs.renameSync(outputPath, inputPath);
@@ -126,6 +128,7 @@ export async function processVideo({
             })
             .on('error', (err, stdout, stderr) => {
                 console.error(`FFMPEG error: [${path.basename(inputPath)}]\n`, err.message);
+                progressManager.unregister(fileId);
                 reject(err);
             });
 

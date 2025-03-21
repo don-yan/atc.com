@@ -4,7 +4,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { pipeline } from 'stream/promises';
 import { Transform, Readable } from 'stream';
-import {appConfig, customFetch} from '../videoProcessor'; // Import customFetch
+import { appConfig, customFetch } from '../videoProcessor';
+import { progressManager } from './progressManager';
 
 interface DropboxFile extends files.FileMetadata {
     path_lower: string;
@@ -15,25 +16,28 @@ interface DropboxFile extends files.FileMetadata {
 class ProgressLogger extends Transform {
     private totalBytes: number;
     private bytesTransferred: number = 0;
+    private fileId: string;
 
     constructor(totalBytes: number, fileName: string, operation: 'download' | 'upload') {
         super();
         this.totalBytes = totalBytes;
         this.bytesTransferred = 0;
-        process.stdout.write(`${operation} started for ${fileName}, total size: ${this.totalBytes} bytes\n`);
+        this.fileId = `${operation}-${fileName}`; // Unique ID per file and operation
+        progressManager.register(this.fileId, `${operation} started for ${fileName}, total size: ${this.totalBytes} bytes`);
     }
 
     _transform(chunk: Buffer, encoding: string, callback: (error?: Error | null, data?: Buffer) => void) {
         this.bytesTransferred += chunk.length;
         const percent = ((this.bytesTransferred / this.totalBytes) * 100).toFixed(2);
         const message = `Progress: ${percent}% (${this.bytesTransferred}/${this.totalBytes} bytes)`;
-        process.stdout.write(`\r${message.padEnd(60)}`); // Overwrite line, pad to clear previous output
+        progressManager.update(this.fileId, message);
         callback(null, chunk);
     }
 
     _final(callback: (error?: Error | null) => void) {
         const message = `Completed: 100% (${this.totalBytes}/${this.totalBytes} bytes)`;
-        process.stdout.write(`\r${message}\n`); // Move to new line on completion
+        progressManager.update(this.fileId, message);
+        setTimeout(() => progressManager.unregister(this.fileId), 1000); // Delay removal for visibility
         callback();
     }
 }
@@ -73,7 +77,7 @@ export async function uploadFile(dbx: Dropbox, localPath: string, dropboxPath: s
     const CHUNK_SIZE = 8 * 1024 * 1024; // 8 MB chunks
     const MAX_SINGLE_UPLOAD_SIZE = 150 * 1024 * 1024; // 150 MB
 
-    console.log('uploadFile', {localPath, dropboxPath,stats});
+    console.log('uploadFile', { localPath, dropboxPath, stats });
 
     const readStream = fs.createReadStream(localPath);
     const progressLogger = new ProgressLogger(totalSize, path.basename(localPath), 'upload');

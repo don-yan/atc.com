@@ -33,6 +33,10 @@ export default defineNuxtConfig({
         ipx: {
             // dir: 'public',
         },
+        vercel: {
+            baseURL: '' // Ensure it uses the root path
+        },
+        // domains: ['atc-staging.vercel.app'] // Allow your domain
     },
 
     // Add nitro.preset here

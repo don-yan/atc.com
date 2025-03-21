@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parallax Scrolling Effect</title>
     <style>
-        body, html {
+        body,
+        html {
             margin: 0;
             padding: 0;
             overflow-x: hidden;
-            min-height: 300vh; /* Increased height to allow more scrolling */
+            /* min-height: 300vh; */
+            /* Increased height to allow more scrolling */
             font-family: Arial, sans-serif;
         }
 
         .parallax-container {
             position: relative;
             width: 100%;
-            height: 100vh; /* Sets the container to fill the viewport height */
+            height: 100vh;
+            /* Sets the container to fill the viewport height */
             overflow: hidden;
             perspective: 2px;
             display: flex;
@@ -33,55 +37,83 @@
         }
 
         .layer0 {
-            transform: translate(-50%, -80%) scale(1.15); /* Starts higher */
+            /* Starts higher */
+            transform: translate(-50%, -80%);
             z-index: 1;
         }
 
         .layer1 {
-            transform: translate(-50%, -70%) scale(1.1); /* Starts slightly higher */
+            /* Starts slightly higher */
+            transform: translate(-50%, -70%);
             z-index: 2;
         }
 
         .layer2 {
-            transform: translate(-50%, -60%) scale(1.05); /* Starts slightly higher */
+            /* Starts slightly higher */
+            transform: translate(-50%, -60%);
             z-index: 3;
         }
 
         .text-layer {
-            transform: translate(-50%, -100%); /* Starts even higher above other layers */
+            transform: translate(-50%, -40%);
             z-index: 4;
             width: 60%;
             height: auto;
         }
+
+        .buffer-div {
+            background: #666;
+            height: 500px;
+        }
     </style>
 </head>
+
 <body>
+    <div class="buffer-div"></div>
     <div class="parallax-container">
-        <img src="assets/images/atc-arrow-layers/0-arrow - simple populate - bottom layer.png" class="parallax-layer layer0">
-        <img src="assets/images/atc-arrow-layers/1-arrow - simple populate - middle layer.png" class="parallax-layer layer1">
-        <img src="assets/images/atc-arrow-layers/2-arrow - simple populate - top layer - arrow only.png" class="parallax-layer layer2">
-        <img src="assets/images/atc-arrow-layers/3-arrow - filled text only.png" class="parallax-layer text-layer">
+        <img src="assets/images/atc-arrow-layers/0-arrow - simple populate - bottom layer.png"
+            class="parallax-layer layer0">
+        <img src="assets/images/atc-arrow-layers/1-arrow - simple populate - middle layer.png"
+            class="parallax-layer layer1">
+        <img src="assets/images/atc-arrow-layers/2-arrow - simple populate - top layer - arrow only.png"
+            class="parallax-layer layer2">
+        <img src="assets/images/atc-arrow-layers/3-arrow - filled text only.png"
+            class="parallax-layer text-layer layer3">
     </div>
+    <div class="buffer-div"></div>
 
     <script>
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             let scrollTop = window.scrollY;
-            let combinePoint = window.innerHeight * 1.5; // Locks midway through the page (1.5 * viewport height)
+            let combinePoint = window.innerHeight * 1.5;
+
+             combinePoint=277
+
+            console.log({ scrollTop, combinePoint })
 
             if (scrollTop < combinePoint) {
+
                 // Move layers towards each other as you scroll up to combinePoint
-                document.querySelector('.layer0').style.transform = `translate(-50%, calc(-80% + ${scrollTop * 0.15}px)) scale(1.15)`;
-                document.querySelector('.layer1').style.transform = `translate(-50%, calc(-70% + ${scrollTop * 0.2}px)) scale(1.1)`;
-                document.querySelector('.layer2').style.transform = `translate(-50%, calc(-60% + ${scrollTop * 0.25}px)) scale(1.05)`;
-                document.querySelector('.text-layer').style.transform = `translate(-50%, calc(-100% + ${scrollTop * 0.35}px))`;
+                document.querySelector('.layer0').style.transform = `translate(-50%, calc(-80% - ${scrollTop * 0.15}px))`;
+                document.querySelector('.layer1').style.transform = `translate(-50%, calc(-70% - ${scrollTop * 0.2}px))`;
+                document.querySelector('.layer2').style.transform = `translate(-50%, calc(-60% - ${scrollTop * 0.25}px))`;
+                document.querySelector('.text-layer').style.transform = `translate(-50%, calc(-40% - ${scrollTop * 0.35}px))`;
             } else {
+                console.log('lower')
                 // Lock the layers in position after reaching combinePoint
+                /*
                 document.querySelector('.layer0').style.transform = `translate(-50%, -50%) scale(1.15)`;
                 document.querySelector('.layer1').style.transform = `translate(-50%, -50%) scale(1.1)`;
                 document.querySelector('.layer2').style.transform = `translate(-50%, -50%) scale(1.05)`;
-                document.querySelector('.text-layer').style.transform = `translate(-50%, -50%)`;
+                document.querySelector('.text-layer').style.transform = `translate(-50%, -50%)`; */
+
+                /* document.querySelector('.layer0').style.transform = `translate(-50%, -50%)`;
+                document.querySelector('.layer1').style.transform = `translate(-50%, -50%)`;
+                document.querySelector('.layer2').style.transform = `translate(-50%, -50%)`;
+                document.querySelector('.text-layer').style.transform = `translate(-50%, -50%)`; */
             }
         });
     </script>
 </body>
+
 </html>

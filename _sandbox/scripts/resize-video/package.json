@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-     "start": "tsx --tsconfig tsconfig.json src/videoProcessor.ts"
+    "start": "tsx --tsconfig tsconfig.json src/videoProcessor.ts"
   },
   "type": "module",
   "author": "",
@@ -16,7 +16,8 @@
     "dropbox": "^10.34.0",
     "fluent-ffmpeg": "^2.1.3",
     "node-fetch": "^3.3.2",
-    "p-limit": "^6.1.0"
+    "p-limit": "^6.1.0",
+    "readline": "^1.3.0"
   },
   "devDependencies": {
     "@types/async": "^3.2.24",

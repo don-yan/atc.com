@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallax Scrolling Effect</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .parallax-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            perspective: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .parallax-layer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60%;
+            height: auto;
+        }
+
+        .layer0 {
+            /* transform: translate(-50%, -80%); Highest */
+            z-index: 1;
+        }
+
+        .layer1 {
+            /* transform: translate(-50%, -65%); */
+            z-index: 2;
+        }
+
+        .layer2 {
+            /* transform: translate(-50%, -60%); */
+            z-index: 3;
+        }
+
+        .text-layer {
+            /* transform: translate(-50%, -55%); Lowest */
+            z-index: 4;
+            width: 60%;
+            height: auto;
+        }
+
+        .buffer-div {
+            background: #666;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+    <div class="buffer-div"></div>
+    <div class="parallax-container">
+        <img src="assets/images/atc-arrow-layers/0-arrow - simple populate - bottom layer.png" class="parallax-layer layer0">
+        <img src="assets/images/atc-arrow-layers/1-arrow - simple populate - middle layer.png" class="parallax-layer layer1">
+        <img src="assets/images/atc-arrow-layers/2-arrow - simple populate - top layer - arrow only.png" class="parallax-layer layer2">
+        <img src="assets/images/atc-arrow-layers/3-arrow - filled text only.png" class="parallax-layer text-layer layer3">
+    </div>
+    <div class="buffer-div"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let hasReachedCombinePoint = false;
+
+            // Define initial percentages for each layer
+            const initialPercentages = {
+                layer0: -80, // Highest
+                layer1: -65,
+                layer2: -60,
+                layer3: -55  // Lowest
+            };
+
+            // Get elements
+            const container = document.querySelector('.parallax-container');
+            const layer0 = document.querySelector('.layer0');
+            const layer1 = document.querySelector('.layer1');
+            const layer2 = document.querySelector('.layer2');
+            const layer3 = document.querySelector('.text-layer');
+
+            // Set initial transforms dynamically
+            layer0.style.transform = `translate(-50%, ${initialPercentages.layer0}%)`;
+            layer1.style.transform = `translate(-50%, ${initialPercentages.layer1}%)`;
+            layer2.style.transform = `translate(-50%, ${initialPercentages.layer2}%)`;
+            layer3.style.transform = `translate(-50%, ${initialPercentages.layer3}%)`;
+
+            // Calculate combinePoint dynamically
+            const containerTop = container.offsetTop; // e.g., 400px (due to buffer-div)
+            const containerHeight = container.offsetHeight; // e.g., window.innerHeight
+            const layerHeight = layer0.offsetHeight; // Actual height of the layer
+
+            // Calculate the topmost point of layer0 and bottommost point of layer3
+            const layer0Top = containerTop + (containerHeight / 2) - (layerHeight / 2) - (layerHeight * (initialPercentages.layer0 / 100));
+            const layer3Bottom = containerTop + (containerHeight / 2) + (layerHeight / 2) + (layerHeight * (initialPercentages.layer3 / 100));
+
+            // Calculate combinePoint: when all layers are fully visible
+            let combinePoint = Math.max(layer0Top, layer3Bottom - window.innerHeight);
+            combinePoint = Math.max(containerTop, combinePoint);
+            combinePoint = combinePoint + 200; // Add 200px for animation duration
+
+            // Calculate scroll distance
+            const scrollDistance = combinePoint - containerTop;
+
+            // Calculate distances to move (finalY - initialY)
+            const finalY = -50; // Convergence point: translate(-50%, -50%)
+            const distances = {
+                layer0: finalY - initialPercentages.layer0, // e.g., -50 - (-80) = 30
+                layer1: finalY - initialPercentages.layer1, // e.g., -50 - (-65) = 15
+                layer2: finalY - initialPercentages.layer2, // e.g., -50 - (-60) = 10
+                layer3: finalY - initialPercentages.layer3  // e.g., -50 - (-55) = 5
+            };
+
+            // Calculate multipliers dynamically
+            const multipliers = {
+                layer0: Math.abs(distances.layer0) / scrollDistance,
+                layer1: Math.abs(distances.layer1) / scrollDistance,
+                layer2: Math.abs(distances.layer2) / scrollDistance,
+                layer3: Math.abs(distances.layer3) / scrollDistance
+            };
+
+            // Log initial values for debugging
+            console.log({
+                containerTop,
+                containerHeight,
+                layerHeight,
+                layer0Top,
+                layer3Bottom,
+                combinePoint,
+                scrollDistance,
+                distances,
+                multipliers
+            });
+
+            window.addEventListener('scroll', function onScroll() {
+                let scrollTop = window.scrollY;
+                let adjustedScrollTop = Math.max(0, scrollTop - containerTop);
+
+                console.log({ scrollTop, adjustedScrollTop });
+
+                if (scrollTop < combinePoint) {
+                    // Move all layers upward to converge at -50%
+                    // Since distances are positive (moving upward), we subtract the pixel offset
+                    layer0.style.transform = `translate(-50%, calc(${initialPercentages.layer0}% - ${adjustedScrollTop * multipliers.layer0}px))`;
+                    layer1.style.transform = `translate(-50%, calc(${initialPercentages.layer1}% - ${adjustedScrollTop * multipliers.layer1}px))`;
+                    layer2.style.transform = `translate(-50%, calc(${initialPercentages.layer2}% - ${adjustedScrollTop * multipliers.layer2}px))`;
+                    layer3.style.transform = `translate(-50%, calc(${initialPercentages.layer3}% - ${adjustedScrollTop * multipliers.layer3}px))`;
+                } else if (!hasReachedCombinePoint) {
+                    console.log('Reached combinePoint');
+                    // Lock the layers in position after reaching combinePoint
+                    layer0.style.transform = `translate(-50%, -50%)`;
+                    layer1.style.transform = `translate(-50%, -50%)`;
+                    layer2.style.transform = `translate(-50%, -50%)`;
+                    layer3.style.transform = `translate(-50%, calc(-50% + 20px))`; // Adjust for text position
+                    hasReachedCombinePoint = true; // Prevent further updates
+                }
+            });
+        });
+    </script>
+</body>
+</html>

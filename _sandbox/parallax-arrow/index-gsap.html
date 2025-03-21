@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallax Scrolling Effect with GSAP</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            min-height: 300vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .parallax-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            perspective: 2px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .parallax-layer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 60%;
+            height: auto;
+        }
+
+        .layer0 {
+            transform: translate(-50%, -80%);
+            z-index: 1;
+        }
+
+        .layer1 {
+            transform: translate(-50%, -70%);
+            z-index: 2;
+        }
+
+        .layer2 {
+            transform: translate(-50%, -60%);
+            z-index: 3;
+        }
+
+        .layer3, .text-layer {
+            transform: translate(-50%, -60%);
+            width: 60%;
+            height: auto;
+            z-index: 4;
+        }
+
+        .buffer-div {
+            background: #666;
+            height: 400px;
+        }
+    </style>
+</head>
+<body>
+<div class="buffer-div"></div>
+<div class="parallax-container">
+    <img src="assets/images/atc-arrow-layers/0-arrow - simple populate - bottom layer.png"
+         class="parallax-layer layer0">
+    <img src="assets/images/atc-arrow-layers/1-arrow - simple populate - middle layer.png"
+         class="parallax-layer layer1">
+    <img src="assets/images/atc-arrow-layers/2-arrow - simple populate - top layer - arrow only.png"
+         class="parallax-layer layer2">
+    <img src="assets/images/atc-arrow-layers/3-arrow - filled text only.png" class="parallax-layer text-layer layer3">
+</div>
+<div class="buffer-div"></div>
+
+<!-- Include GSAP and ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<script>
+    // Register ScrollTrigger with GSAP
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Log to confirm GSAP and ScrollTrigger are loaded
+    console.log("GSAP Loaded:", typeof gsap !== "undefined");
+    console.log("ScrollTrigger Loaded:", typeof ScrollTrigger !== "undefined");
+
+    // Define the combine point (same as in the original code)
+    const combinePoint = 450;
+
+    // Convert percentage-based transforms to pixels for GSAP
+    const viewportHeight = window.innerHeight;
+    const initialY0 = -80 * viewportHeight / 100; // -80% of viewport height
+    const initialY1 = -70 * viewportHeight / 100; // -70% of viewport height
+    const initialY2 = -60 * viewportHeight / 100; // -60% of viewport height
+    const initialYText = -60 * viewportHeight / 100; // -60% of viewport height
+
+    // Animate each layer using GSAP and ScrollTrigger
+    gsap.to(".layer0", {
+        scrollTrigger: {
+            trigger: ".parallax-container",
+            start: "top center", // Start when the top of the container hits the center of the viewport
+            end: `+=${combinePoint}`, // End after scrolling 450px
+            scrub: true, // Smoothly animate as the user scrolls
+            markers: true, // Enable markers for debugging
+            onEnter: () => console.log("Layer0 animation started"),
+            onLeave: () => console.log("Layer0 animation ended")
+        },
+        y: initialY0 - (0.15 * combinePoint), // Move by the same offset as the original code
+        ease: "none"
+    });
+
+    gsap.to(".layer1", {
+        scrollTrigger: {
+            trigger: ".parallax-container",
+            start: "top center",
+            end: `+=${combinePoint}`,
+            scrub: true,
+            markers: true,
+            onEnter: () => console.log("Layer1 animation started"),
+            onLeave: () => console.log("Layer1 animation ended")
+        },
+        y: initialY1 - (0.2 * combinePoint),
+        ease: "none"
+    });
+
+    gsap.to(".layer2", {
+        scrollTrigger: {
+            trigger: ".parallax-container",
+            start: "top center",
+            end: `+=${combinePoint}`,
+            scrub: true,
+            markers: true,
+            onEnter: () => console.log("Layer2 animation started"),
+            onLeave: () => console.log("Layer2 animation ended")
+        },
+        y: initialY2 - (0.25 * combinePoint),
+        ease: "none"
+    });
+
+    gsap.to(".text-layer", {
+        scrollTrigger: {
+            trigger: ".parallax-container",
+            start: "top center",
+            end: `+=${combinePoint}`,
+            scrub: true,
+            markers: true,
+            onEnter: () => console.log("Text-layer animation started"),
+            onLeave: () => console.log("Text-layer animation ended")
+        },
+        y: initialYText - (0.25 * combinePoint),
+        ease: "none"
+    });
+</script>
+</body>
+</html>

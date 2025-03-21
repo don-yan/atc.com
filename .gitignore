@@ -18,6 +18,8 @@ tmp*/
 .DS_Store
 .fleet
 .idea
+.vscode
+*.iml
 
 # Local env files
 .env

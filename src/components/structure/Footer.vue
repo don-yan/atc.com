@@ -17,7 +17,7 @@ const socialLinks = LinkService.getSocialLinks();
   <div class="container flex flex-col mx-auto">
     <div class="flex flex-col items-center w-full my-20">
       <span class="mb-8 sm:mb-3">
-        <img src="~assets/images/logo/atc-logo-abbreviated-transparent.png" alt="Acquired Taste Comedy Logo" height="50"
+        <img src="/images/logo/atc-logo-abbreviated-transparent.png" alt="Acquired Taste Comedy Logo" height="50"
              class="lg:mr-2  max-h-12"/>
       </span>
       <div class="flex flex-col items-center gap-6 mb-8">

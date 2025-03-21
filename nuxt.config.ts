@@ -51,7 +51,7 @@ export default defineNuxtConfig({
         // serverAssets: [{ baseName: 'assets', dir: './assets' }], // Ensure server-side assets are included
         output: {
             dir: '.output',
-            publicDir: 'public',
+            publicDir: '.output/public',
             serverDir: '.output/server' // Explicitly set server output
         }
     },

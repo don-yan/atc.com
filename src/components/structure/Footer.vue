@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 
-import {consola, createConsola} from "consola";
-
-import {LinkService} from "~/service/NavService";
+import {LinkService} from "~/service/NavService.ts";
 
 const currentYear = new Date().getFullYear()
 
@@ -10,18 +8,9 @@ const props = defineProps({
   hideNav: Boolean
 })
 
-
 const navLinks = props.hideNav ? [] : LinkService.getNavLinks();
 
-
-
 const socialLinks = LinkService.getSocialLinks();
-
-
-
-
-
-
 
 </script>
 <template>
@@ -45,17 +34,17 @@ const socialLinks = LinkService.getSocialLinks();
         <div class="flex items-center justify-center space-x-4 gap-2 text-primary">
 
 
-          <a v-for="link in socialLinks" 
-          :href="link.slug" 
-          target="_blank"
-          class="p-button-rounded border-0 font-light leading-tight">
+          <a v-for="link in socialLinks"
+             :href="link.slug"
+             target="_blank"
+             class="p-button-rounded border-0 font-light leading-tight">
             <!-- <Button
                 class="button"
                 text
                 rounded
                 :title="link.title"
             > -->
-              <i class="icon pi" :class="link.icon"></i>
+            <i class="icon pi" :class="link.icon"></i>
             <!-- </Button> -->
           </a>
         </div>

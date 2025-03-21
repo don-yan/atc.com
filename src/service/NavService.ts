@@ -20,6 +20,10 @@ export const LinkService = {
                 title: 'Contact',
                 slug: 'contact'
             },
+            {
+                title: 'Booking',
+                slug: 'booking'
+            },
             // {
             //     title: 'Sandbox',
             //     slug: '/sandbox'
@@ -35,7 +39,7 @@ export const LinkService = {
 
     getNavLinks(): NavItem[] {
         return [
-            {
+           /* {
                 title: 'Events',
                 slug: '/events'
             },
@@ -54,13 +58,8 @@ export const LinkService = {
             {
                 title: 'Sandbox',
                 slug: '/sandbox'
-            },
-            //    {     title: 'Flowbite 1',
-            //         slug: '/flowbite'
-            //     },
-            //  {   title: 'Flowbite V2',
-            //     slug: '/flowbite-v2'
-            // }
+            }*/
+
         ]
     },
 

@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 
 import Button from '~/components/content/buttons/Button.vue'
+import {LinkService} from "~/service/NavService.ts";
+import {scrollToId} from "~/utils/scroll-utils.ts";
 
-import {ref} from 'vue'
-import {LinkService} from "~/service/NavService";
-import {scrollToId} from "~/utils/scroll-utils";
+import {useMobileMenuStore} from '~/store/mobileMenu.ts';
+
+const mobileMenuStore = useMobileMenuStore();
 
 const props = defineProps({
   hideNav: Boolean,
@@ -13,8 +15,6 @@ const props = defineProps({
 
 const navLinks = props.hideNav ? [] : props.isLandingNav ? LinkService.getLandingNavLinks() : LinkService.getNavLinks();
 
-
-const isOpen = ref(false)
 
 // const scrollToId = (id: string) => {
 //
@@ -29,11 +29,12 @@ const isOpen = ref(false)
 // }
 
 
+const socialLinks = LinkService.getSocialLinks();
+
 
 onMounted(() => {
   console.log('mount header')
 })
-
 
 
 // TODO: Underline current section based on scroll position
@@ -54,12 +55,18 @@ onMounted(() => {
       class="py-6 px-6 mx-0 lg:px-20 flex justify-center fixed mb-4 shadow-md w-full top-0 left-0 bg-white z-20">
     <nav class="max-w-[1000px] mx-auto sm:mx-4 w-full flex items-center justify-between">
       <NuxtLink class="flex items-center" @click="scrollToId('hero')" title="Home">
-        <NuxtImg
+<!--        <NuxtImg
             class="mr-0 lg:mr-2 max-w-[75px] w-full"
             src="/images/logo/atc-logo-full-transparent.png"
             alt="Acquired Taste Comedy Logo"
             format="webp"
-            
+            provider="static"
+
+        />-->
+        <img
+            class="mr-0 lg:mr-2 max-w-[75px] w-full"
+            src="/images/logo/atc-logo-full-transparent.png"
+            alt="Acquired Taste Comedy Logo"
         />
       </NuxtLink>
 
@@ -70,15 +77,15 @@ onMounted(() => {
               v-if="props.hideNav"
               :show-arrow="false"/>
 
-      <button @click="isOpen = !isOpen" type="button" class="block lg:hidden focus:outline-none"
+      <button @click="mobileMenuStore.toggleMobileMenu()" type="button" class="block lg:hidden focus:outline-none"
               :class="props.hideNav ? 'hidden' : ''">
-        <i class="text-4xl pi" :class="isOpen ? 'pi-times': 'pi-bars'"></i>
+        <i class="text-4xl pi" :class="mobileMenuStore.isOpen ? 'pi-times': 'pi-bars'"></i>
       </button>
 
       <div
           v-if="!props.hideNav"
           class="items-center surface-0 grow justify-between lg:flex absolute lg:static shadow-md lg:shadow-none right-0 px-12 lg:px-0 z-20 bg-white top-full"
-          :class="isOpen ? '' : 'hidden'">
+          :class="mobileMenuStore.isOpen ? '' : 'hidden'">
         <div class="flex justify-between w-full items-center flex-col lg:flex-row">
           <ul class="list-none p-0 m-0 flex items-center select-none flex-col lg:flex-row cursor-pointer sm:last:pb-0y">
             <li v-for="link in navLinks">
@@ -101,6 +108,23 @@ onMounted(() => {
             </li>
 
           </ul>
+          <div class="lg:hidden xl:hidden md:flex xs:flex sm:flex items-center justify-center space-x-4 gap-2 text-primary  border-t surface-border pt-4">
+
+
+            <a v-for="link in socialLinks"
+               :href="link.slug"
+               target="_blank"
+               class="p-button-rounded border-0 font-light leading-tight">
+              <!-- <Button
+                  class="button"
+                  text
+                  rounded
+                  :title="link.title"
+              > -->
+              <i class="icon pi" :class="link.icon"></i>
+              <!-- </Button> -->
+            </a>
+          </div>
           <div class="flex justify-between lg:block border-t lg:border-t-0 surface-border py-4 lg:py-0 mt-4 lg:mt-0">
 
             <Button :is-blank=true

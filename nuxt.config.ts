@@ -1,40 +1,68 @@
 import {defineNuxtConfig} from 'nuxt/config'
+import viteTsConfigPaths from 'vite-tsconfig-paths';
+// import { resolve } from 'path';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+    /*  alias: {
+          "~": "./src", // Ensure ~ points to src/
+          "#shared": "./shared",
+          "~": resolve(__dirname, 'src'),
+          "#shared": resolve(__dirname, 'shared')
+      },
+  */
     app: {
         pageTransition: {name: 'page', mode: 'out-in'},
     },
+
     devtools: {enabled: true},
+
     modules: [
         "@nuxt/image",
-        // TODO: why cannt we remove `nuxt-primevue` as a dependency?
-        //  "nuxt-primevue",
-        // TODO: configure eslint & prettier
-        // REF: https://dev.to/nikitadmitr/configure-eslint-prettier-for-nuxt-3-45f7
-        // "@nuxtjs/eslint-module"
         "@nuxtjs/tailwindcss",
+        '@pinia/nuxt',
         "@nuxt/eslint"
     ],
-    // primevue: {
-    //     // cssLayerOrder: "tailwind-base, primevue, tailwind-utilities, primeflex",
-    //     cssLayerOrder: "tailwind-base, primevue, tailwind-utilities",
-    //     components: {
-    //         exclude: ["Editor", "Chart"]
-    //     },
-    //     ripple: true
-    // },
 
     css: [
-
-        "primeicons/primeicons.css",
-        // "assets/scss/primevue-sass-theme-3.50.0/themes/atc-theme/theme.scss",
-        // "primevue/resources/themes/lara-light-purple/theme.css"
+        '../node_modules/flowbite-vue/dist/index.css'
     ],
+
     image: {
         provider: process.env.VERCEL_ENV ? 'vercel' : 'ipx',
+        ipx: {
+            // dir: 'public',
+        },
+        vercel: {
+            baseURL: '' // Ensure it uses the root path
+        },
+        // domains: ['atc-staging.vercel.app'] // Allow your domain
     },
 
+    // Add nitro.preset here
+    nitro: {
+        preset: 'vercel', // Targets Vercel Serverless Functions
+        prerender: {
+            crawlLinks: true, // Optional: Prerender pages
+            routes: ['/', '/events', '/links'] // Prerender homepage
+        },
+        routeRules: {
+            '/api/**': {isr: false, runtime: 'nodejs'}, // Ensure APIs are dynamic
+            // '/**': { // Static pages
+            //     isr: false // Optional: Incremental Static Regeneration
+            // }
+        },
+        // serverAssets: [{ baseName: 'assets', dir: './assets' }], // Ensure server-side assets are included
+        output: {
+            dir: '.output',
+            publicDir: '.output/public',
+            serverDir: '.output/server' // Explicitly set server output
+        },
+        publicAssets: [
+            {dir: 'src/public/images', baseURL: '/images'}, // Maps src/public/images/ to /images/
+            {dir: 'src/assets/images', baseURL: '/assets/images'} // Maps src/assets/images/ to /assets/images/
+        ]
+    },
 
     runtimeConfig: {
         private: {
@@ -45,12 +73,15 @@ export default defineNuxtConfig({
             MAILCHIMP_SERVER_PREFIX: process.env.MAILCHIMP_SERVER_PREFIX,
             MAILCHIMP_AUDIENCE_ID: process.env.MAILCHIMP_AUDIENCE_ID,
         },
-        public:{
+        public: {
             GTAG_ID: process.env.GTAG_ID
         }
     },
+
     srcDir: 'src/',
-    ssr: true
+    ssr: true,
+    target: 'static',
+
     // vue: {
     //     compilerOptions: {
     //         // TODO
@@ -61,5 +92,17 @@ export default defineNuxtConfig({
     // alias:{
     //     '~':'./src'
     // }
+    typescript: {
+        shim: true, // Disable shims to enforce strict TS
+    },
+    vite: {
+        plugins: [
+            viteTsConfigPaths({
+                root: '.',
+                loose: true
+            })
+        ]
+    },
 
+    compatibilityDate: "2025-03-20"
 })

@@ -1,9 +1,24 @@
 {
   // https://nuxt.com/docs/guide/concepts/typescript
   "extends": "./.nuxt/tsconfig.json",
-
   "compilerOptions": {
-    "sourceRoot": "./src"
-  // "moduleResolution": "Node"
-}
+    "sourceRoot": "./src",
+    "module": "ESNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2020",
+    "allowImportingTsExtensions": true,
+    // Enable .ts imports
+    "noEmit": true,
+    // Required with allowImportingTsExtensions
+    "baseUrl": ".",
+    "paths": {
+      "~/*": [
+        "src/*"
+      ],
+      "#shared/*": [
+        "shared/*"
+      ]
+    }
+    // "moduleResolution": "Node"
+  }
 }

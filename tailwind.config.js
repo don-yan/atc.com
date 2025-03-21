@@ -10,6 +10,7 @@ module.exports = {
         './src/plugins/**/*.{js,ts}',
 
         './nuxt.config.{js,ts}',
+        './node_modules/flowbite-vue/**/*.{js,jsx,ts,tsx,vue}',
         "./node_modules/flowbite/**/*.{js,ts}"
 
     ],
@@ -29,7 +30,13 @@ module.exports = {
                 '800': '#b10303',
                 '900': '#920a0a',
                 '950': '#500000'
-            }
+            },
+            primary: '#44474D',
+            secondary: '#9CA5B1',
+            darkgray: '#555555',
+            lightgray: '#999999',
+            lightblue: '#CCEBF8',
+            paleblue: '#F5F8FD',
 
         },
 
@@ -59,19 +66,19 @@ module.exports = {
 
             /*
             // Default Values
-            
+
             'sm': '640px',
             // => @media (min-width: 640px) { ... }
-      
+
             'md': '768px',
             // => @media (min-width: 768px) { ... }
-      
+
             'lg': '1024px',
             // => @media (min-width: 1024px) { ... }
-      
+
             'xl': '1280px',
             // => @media (min-width: 1280px) { ... }
-      
+
             '2xl': '1536px',
             // => @media (min-width: 1536px) { ... }
             */

@@ -4,10 +4,10 @@
  * Reference: https://developers.tickettailor.com/
  */
 
-import {getEvents} from "../shared/api/ticketTailor";
+import {getEvents} from "../shared/api/ticketTailor.ts";
 
 export const config = {
-    runtime: 'edge',
+    // runtime: 'edge',
 };
 
 
@@ -17,7 +17,10 @@ export async function GET(request: Request) {
     let TT_KEY = process.env.TICKET_TAILOR_KEY || '';
 
     let responseData = await getEvents(TT_KEY)
+
     console.log('new response')
+
+    console.log('top level event handler')
 
     return new Response(JSON.stringify(responseData));
 

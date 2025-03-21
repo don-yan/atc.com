@@ -34,15 +34,19 @@ export default defineNuxtConfig({
             dir: 'public',
         },
     },
+
     // Add nitro.preset here
     nitro: {
         preset: 'vercel', // Targets Vercel Serverless Functions
         prerender: {
             crawlLinks: true, // Optional: Prerender pages
-            routes: ['/'] // Prerender homepage
+            routes: ['/', '/landing2'] // Prerender homepage
         },
         routeRules: {
-            '/api/**': {isr: false} // Ensure APIs are dynamic
+            '/api/**': {isr: false}, // Ensure APIs are dynamic
+            '/**': { // Static pages
+                isr: true // Optional: Incremental Static Regeneration
+            }
         },
         // serverAssets: [{ baseName: 'assets', dir: './assets' }], // Ensure server-side assets are included
         output: {
@@ -68,6 +72,7 @@ export default defineNuxtConfig({
 
     srcDir: 'src/',
     ssr: true,
+    target: 'static',
 
     // vue: {
     //     compilerOptions: {

@@ -7,7 +7,7 @@
 import {getEvents} from "../shared/api/ticketTailor.ts";
 
 export const config = {
-    runtime: 'edge',
+    // runtime: 'edge',
 };
 
 

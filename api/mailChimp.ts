@@ -7,7 +7,7 @@
 import {createContact} from "../shared/api/mailChimp.ts";
 
 export const config = {
-    runtime: 'edge',
+    // runtime: 'edge',
 };
 
 

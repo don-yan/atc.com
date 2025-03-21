@@ -31,7 +31,7 @@ export default defineNuxtConfig({
     image: {
         provider: process.env.VERCEL_ENV ? 'vercel' : 'ipx',
         ipx: {
-            dir: 'public',
+            // dir: 'public',
         },
     },
 
@@ -40,13 +40,13 @@ export default defineNuxtConfig({
         preset: 'vercel', // Targets Vercel Serverless Functions
         prerender: {
             crawlLinks: true, // Optional: Prerender pages
-            routes: ['/', '/landing2'] // Prerender homepage
+            routes: ['/', '/events'] // Prerender homepage
         },
         routeRules: {
             '/api/**': {isr: false}, // Ensure APIs are dynamic
-            '/**': { // Static pages
-                isr: false // Optional: Incremental Static Regeneration
-            }
+            // '/**': { // Static pages
+            //     isr: false // Optional: Incremental Static Regeneration
+            // }
         },
         // serverAssets: [{ baseName: 'assets', dir: './assets' }], // Ensure server-side assets are included
         output: {

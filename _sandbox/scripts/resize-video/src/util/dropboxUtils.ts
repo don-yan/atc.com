@@ -6,7 +6,7 @@ import {pipeline} from 'stream/promises';
 import {Transform, Readable} from 'stream';
 import {appConfig, customFetch} from '../videoProcessor';
 import * as readline from 'readline';
- import {progressManager} from './progressManager';
+import {progressManager} from './progressManager';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -23,12 +23,13 @@ interface DropboxFile extends files.FileMetadata {
 class ProgressLogger extends Transform {
     private totalBytes: number;
     private bytesTransferred: number = 0;
-    // private fileId: string;
+    private fileId: string;
 
     private startTime: Date;
     private firstWrite: boolean = true;
     private operation: string;
     private fileName: string;
+    private lastLoggedPercent: number = -1;
 
     constructor(totalBytes: number, fileName: string, operation: 'download' | 'upload') {
         super();
@@ -37,11 +38,18 @@ class ProgressLogger extends Transform {
         this.operation = operation;
         this.fileName = fileName;
         this.startTime = new Date();
-        // this.fileId = `${operation}-${fileName}`; // Unique ID per file and operation
-        // progressManager.register(this.fileId, `${operation} started for ${fileName}, total size: ${this.totalBytes} bytes`);
+        this.fileId = `${operation}-${fileName}`; // Unique ID per file and operation
+        progressManager.register(this.fileId, `${operation} started for ${fileName}, total size: ${this.totalBytes} bytes`);
     }
 
-    private lastLoggedPercent: number = -1;
+    _final(callback: (error?: Error | null) => void) {
+        const elapsedTime = ((new Date().getTime() - this.startTime.getTime()) / 1000).toFixed(2); // Seconds
+        const message = `[${this.operation} ${path.basename(this.fileName)}] Completed: 100% (${this.totalBytes}/${this.totalBytes} bytes) Duration: ${elapsedTime}s`;
+        // process.stdout.write(`\r${message.padEnd(80)}\n`); // Final update, move to new line
+        progressManager.update(this.fileId, message);
+        setTimeout(() => progressManager.unregister(this.fileId), 1000); // Delay removal for visibility
+        callback();
+    }
 
     _transform(chunk: Buffer, encoding: string, callback: (error?: Error | null, data?: Buffer) => void) {
         this.bytesTransferred += chunk.length;
@@ -49,25 +57,16 @@ class ProgressLogger extends Transform {
         if (percent > this.lastLoggedPercent) {
             const elapsedTime = ((new Date().getTime() - this.startTime.getTime()) / 1000).toFixed(2);
             const message = `[${this.operation} ${path.basename(this.fileName)}] Progress: ${percent.toFixed(2)}% (${this.bytesTransferred}/${this.totalBytes} bytes) Duration: ${elapsedTime}s`;
-            if (this.firstWrite) {
+            /*if (this.firstWrite) {
                 process.stdout.write(`${message}\n`); // Start on a new line
                 this.firstWrite = false;
             } else {
                 process.stdout.write(`\r${message.padEnd(80)}`); // Update in place
-            }
-            // progressManager.update(this.fileId, message);
+            }*/
+            progressManager.update(this.fileId, message);
             this.lastLoggedPercent = percent;
         }
         callback(null, chunk);
-    }
-
-    _final(callback: (error?: Error | null) => void) {
-        const elapsedTime = ((new Date().getTime() - this.startTime.getTime()) / 1000).toFixed(2); // Seconds
-        const message = `[${this.operation} ${path.basename(this.fileName)}] Completed: 100% (${this.totalBytes}/${this.totalBytes} bytes) Duration: ${elapsedTime}s`;
-        process.stdout.write(`\r${message.padEnd(80)}\n`); // Final update, move to new line
-        // progressManager.update(this.fileId, message);
-        // setTimeout(() => progressManager.unregister(this.fileId), 1000); // Delay removal for visibility
-        callback();
     }
 }
 
@@ -153,7 +152,7 @@ export async function refreshAccessToken(): Promise<string> {
     return data.access_token;
 }
 
-export async function downloadFile(accessToken:string, file: DropboxFile): Promise<string> {
+export async function downloadFile(accessToken: string, file: DropboxFile): Promise<string> {
     const localPath = path.join('./tmp', file.name);
     const totalSize = file.size;
 

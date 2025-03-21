@@ -47,7 +47,7 @@ export async function processVideo({
                                        useH265 = false
                                    }: ProcessVideoOptions): Promise<void> {
     let startTime: Date;
-    // const fileId = `process-${path.basename(inputPath)}`;
+    const fileId = `process-${path.basename(inputPath)}`;
     let firstProgress = true;
 
     const outputDir = path.dirname(outputPath);
@@ -109,25 +109,25 @@ export async function processVideo({
                 console.log(`Started processing ${path.basename(inputPath)}`);
                 console.log('FFMPEG command:', commandLine);
                 startTime = new Date();
-                // progressManager.register(fileId, `Processing ${path.basename(inputPath)}: 0.00% done`);
+                progressManager.register(fileId, `Processing ${path.basename(inputPath)}: 0.00% done`);
             })
             .on('progress', (progress) => {
-                const message = `[process ${path.basename(inputPath)}] Progress: ${progress.percent.toFixed(2)}% done`;
-                if (firstProgress) {
-                    process.stdout.write(`${message}\n`);
-                    firstProgress = false;
-                } else {
-                    process.stdout.write(`\r${message.padEnd(80)}`);
-                }
-                // progressManager.update(fileId, message);
+                const message = `[process ${path.basename(inputPath)}] Progress: ${progress.percent?.toFixed(2)}% done`;
+                // if (firstProgress) {
+                //     process.stdout.write(`${message}\n`);
+                //     firstProgress = false;
+                // } else {
+                //     process.stdout.write(`\r${message.padEnd(80)}`);
+                // }
+                progressManager.update(fileId, message);
             })
             .on('end', () => {
                 const endTime = new Date();
                 const totalTimeSec = ((endTime.getTime() - startTime.getTime()) / 1000).toFixed(2);
                 const message = `Finished processing ${path.basename(inputPath)} in ${totalTimeSec} seconds`;
-                // progressManager.update(fileId, message);
-                // setTimeout(() => progressManager.unregister(fileId), 1000); // Delay removal
-                  process.stdout.write(`\r${message.padEnd(80)}\n`);
+                progressManager.update(fileId, message);
+                setTimeout(() => progressManager.unregister(fileId), 1000); // Delay removal
+                // process.stdout.write(`\r${message.padEnd(80)}\n`);
                 if (replaceOriginal) {
                     fs.unlinkSync(inputPath);
                     fs.renameSync(outputPath, inputPath);
@@ -136,7 +136,7 @@ export async function processVideo({
             })
             .on('error', (err, stdout, stderr) => {
                 console.error(`FFMPEG error: [${path.basename(inputPath)}]\n`, err.message);
-                // progressManager.unregister(fileId);
+                progressManager.unregister(fileId);
                 reject(err);
             });
 

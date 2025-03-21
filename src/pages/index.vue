@@ -179,10 +179,25 @@ function trackClick(link: Link) {
 
     <PageSection id="contact" title="Contact">
       <template #description>
-        Contact us with any inquiries.
+<!--        Contact us with any inquiries.-->
+        Become a TasteBud!
       </template>
       <template #content>
-        <EmailSignupForm/>
+<!-- TODO: fix vercel server function (precompile all TS)-->
+<!--        <EmailSignupForm/>-->
+
+          <div class="flex flex-col gap-2 text-center items-center">
+          <p class="inline_">Join our mailing list!</p>
+
+          <br/>
+
+          <Button :is-blank=true
+                  href="https://mailchi.mp/c77ba9dd35e3/acquired-taste-comedy"
+                  text="Email Signup"
+                  class="inline_ "
+                  :show-arrow="false"/>
+        </div>
+
       </template>
     </PageSection>
 

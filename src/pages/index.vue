@@ -29,10 +29,10 @@ onMounted(() => {
 })
 
 type Link = {
-  id:number,
-  title:string,
-  description:string,
-  url:string
+  id: number,
+  title: string,
+  description: string,
+  url: string
 }
 const links = ref<Link[]>([
   /*{
@@ -56,11 +56,11 @@ const links = ref<Link[]>([
 ]);
 
 
-function trackClick(link:Link) {
-      console.log(`Clicked: ${link.title}`);
-       // $gtag.pageview({ page_path: '/about' })
-      // Add your analytics tracking here (e.g., gtag, custom event)
-    }
+function trackClick(link: Link) {
+  console.log(`Clicked: ${link.title}`);
+  // $gtag.pageview({ page_path: '/about' })
+  // Add your analytics tracking here (e.g., gtag, custom event)
+}
 
 </script>
 <template>
@@ -84,7 +84,7 @@ function trackClick(link:Link) {
         <div class="flex flex-col justify-center text-center col-span-2">
           <h1 class="mb-4 text-xl font-extrabold tracking-tight leading-none text-black md:text-3xl lg:text-4xl dark:text-white">
             Standup Comedy
-            <span class="block xs:inline">in Cambridge & beyond!</span>
+            <strong class="block xs:inline">in Cambridge <br/><em>& beyond!</em></strong>
           </h1>
           <p class="mb-8 text-lg font-normal text-gray-900 lg:text-xl dark:text-gray-400">
             With a growing collection of extraordinary venues, rotating lineups of hilarious comics & surprise musical
@@ -104,40 +104,40 @@ function trackClick(link:Link) {
       </div>
     </section>
 
-     <PageSection id="links" title="Links" style="display:none;">
+    <PageSection id="links" title="Links" style="display:none;">
       <template #description>
         Links
       </template>
       <template #content>
-       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <a
-            v-for="link in links"
-            :key="link.id"
-            :href="link.url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="block"
-            @click="trackClick(link)"
+              v-for="link in links"
+              :key="link.id"
+              :href="link.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block"
+              @click="trackClick(link)"
           >
             <div
-              class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex items-center space-x-4"
+                class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex items-center space-x-4"
             >
               <!-- Icon (Flowbite/Tailwind) -->
               <div
-                class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center"
+                  class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center"
               >
                 <svg
-                  class="w-6 h-6 text-blue-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6 text-blue-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
                   ></path>
                 </svg>
               </div>
@@ -158,9 +158,9 @@ function trackClick(link:Link) {
 
     <PageSection id="events" title="Events" description=" See what all of the fuss is about.">
       <template #content>
-<!--        <client-only>-->
-          <EventsList id="events" title="Events"/>
-<!--        </client-only>-->
+        <!--        <client-only>-->
+        <EventsList id="events" title="Events"/>
+        <!--        </client-only>-->
       </template>
     </PageSection>
 
@@ -191,17 +191,18 @@ function trackClick(link:Link) {
         Interested in performing?
       </template>
       <template #content>
-        <div class="flex gap-2">
-          <p class="inline">Fill out the following form to get on a show!</p>
+        <div class="flex flex-col gap-2 text-center items-center">
+          <p class="inline_">Fill out the following form to get on a show!</p>
 
+          <br/>
 
           <Button :is-blank=true
                   href="https://docs.google.com/forms/d/e/1FAIpQLSeac72xR7rzwFd7mW0QcKrnt-vpKfmh2vPxMGIK9r70UtwHcA/viewform?pli=1"
                   text="Comics Signup"
-                  class="inline"
+                  class="inline_ "
                   :show-arrow="false"/>
-
         </div>
+
       </template>
     </PageSection>
 

@@ -5,7 +5,11 @@ import StructureHeader from '~/components/structure/Header.vue'
 
 import StructureFooter from '~/components/structure/Footer.vue'
 
+
+
 import {ref} from 'vue'
+
+
 
 // We'll hold our dev-only component (if available) in a reactive ref.
 const DevOnlyComponent = ref<typeof import('*.vue').default | null>(null)

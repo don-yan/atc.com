@@ -15,7 +15,13 @@ const socialLinks = LinkService.getSocialLinks();
 </script>
 <template>
   <div class="container flex flex-col mx-auto">
+    <!-- TODO: make divider a separate component s-->
+      <div class="h-1 bg-gray-200 rounded overflow-hidden">
+        <!--            <div class="w-24 h-full bg-red-500"></div>-->
+        <div class="w-full h-full bg-red-500"></div>
+      </div>
     <div class="flex flex-col items-center w-full my-20">
+
       <span class="mb-8 sm:mb-3">
         <img src="/images/logo/atc-logo-abbreviated-transparent.png" alt="Acquired Taste Comedy Logo" height="50"
              class="lg:mr-2  max-h-12"/>

@@ -45,7 +45,7 @@ export default defineNuxtConfig({
         routeRules: {
             '/api/**': {isr: false}, // Ensure APIs are dynamic
             '/**': { // Static pages
-                isr: true // Optional: Incremental Static Regeneration
+                isr: false // Optional: Incremental Static Regeneration
             }
         },
         // serverAssets: [{ baseName: 'assets', dir: './assets' }], // Ensure server-side assets are included

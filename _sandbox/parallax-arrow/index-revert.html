@@ -48,8 +48,8 @@
         }
 
         .layer3, .text-layer {
-            transform: translate(-50%, -40%);
-            z-index: 4;
+            transform: translate(-50%, -60%);
+        //transform: translate(-50%, -40%); z-index: 4;
             width: 60%;
             height: auto;
         }
@@ -84,7 +84,8 @@
                 document.querySelector('.layer0').style.transform = `translate(-50%, calc(-80% - ${scrollTop * 0.15}px))`;
                 document.querySelector('.layer1').style.transform = `translate(-50%, calc(-70% - ${scrollTop * 0.2}px))`;
                 document.querySelector('.layer2').style.transform = `translate(-50%, calc(-60% - ${scrollTop * 0.25}px))`;
-                document.querySelector('.text-layer').style.transform = `translate(-50%, calc(-40% - ${scrollTop * 0.35}px))`;
+                document.querySelector('.text-layer').style.transform = `translate(-50%, calc(-60% - ${scrollTop * 0.25}px))`;
+                // document.querySelector('.text-layer').style.transform = `translate(-50%, calc(-40% - ${scrollTop * 0.35}px))`;
             } else {
 
                 // document.querySelector('.layer0').style.transform = `translate(-50%, -50%)`;

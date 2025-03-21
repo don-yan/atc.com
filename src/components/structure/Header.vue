@@ -60,6 +60,7 @@ onMounted(() => {
             src="/images/logo/atc-logo-full-transparent.png"
             alt="Acquired Taste Comedy Logo"
             format="webp"
+            
 
         />
       </NuxtLink>

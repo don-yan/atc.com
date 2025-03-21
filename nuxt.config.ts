@@ -57,7 +57,11 @@ export default defineNuxtConfig({
             dir: '.output',
             publicDir: '.output/public',
             serverDir: '.output/server' // Explicitly set server output
-        }
+        },
+        publicAssets: [
+            {dir: 'src/public/images', baseURL: '/images'}, // Maps src/public/images/ to /images/
+            {dir: 'src/assets/images', baseURL: '/assets/images'} // Maps src/assets/images/ to /assets/images/
+        ]
     },
 
     runtimeConfig: {

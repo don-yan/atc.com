@@ -11,7 +11,16 @@
   ],
   "outputDirectory": ".output/public",
   "routes": [
+    {
+      "src": "/public/(.*)",
+      "dest": "/$1"
+    },
     { "src": "/api/(.*)", "dest": "/api/$1" },
     { "src": "/(.*)", "dest": "/$1" }
-  ]
+  ],
+  "functions": {
+    "api/**/*": {
+      "runtime": "nodejs18.x"
+    }
+  }
 }

@@ -156,7 +156,7 @@ function trackClick(link: Link) {
     </PageSection>
 
 
-    <PageSection id="events" title="Events" description=" See what all of the fuss is about.">
+    <PageSection id="events" title="Events" description="Come join the fun!">
       <template #content>
         <!--        <client-only>-->
         <EventsList id="events" title="Events"/>

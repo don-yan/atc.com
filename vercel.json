@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "nuxt.config.ts",
+      "use": "@vercel/node",
+      "config": {
+        "command": "npm run build"
+      }
+    }
+  ],
+  "outputDirectory": ".output/public",
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/(.*)", "dest": "/$1" } 
+  ]
+}

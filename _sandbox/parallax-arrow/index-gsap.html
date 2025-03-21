@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parallax Scrolling Effect with GSAP</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: Arial, sans-serif;
+        }
+
+        .parallax-container {
+            position: relative;
+            width: 80%;
+            margin:0 auto;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .parallax-layer {
+            position: absolute;
+            width: 60%;
+            height: auto;
+        }
+
+        .layer0 {
+            z-index: 1;
+        }
+
+        .layer1 {
+            z-index: 2;
+        }
+
+        .layer2 {
+            z-index: 3;
+        }
+
+        .layer3, .text-layer {
+            z-index: 4;
+            width: 60%;
+            height: auto;
+        }
+
+        .buffer-div {
+            background: #666;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="buffer-div"></div>
+    <div class="parallax-container">
+        <img src="assets/images/atc-arrow-layers/0-arrow - simple populate - bottom layer.png" class="parallax-layer layer0">
+        <img src="assets/images/atc-arrow-layers/1-arrow - simple populate - middle layer.png" class="parallax-layer layer1">
+        <img src="assets/images/atc-arrow-layers/2-arrow - simple populate - top layer - arrow only.png" class="parallax-layer layer2">
+        <img src="assets/images/atc-arrow-layers/3-arrow - filled text only.png" class="parallax-layer text-layer layer3">
+    </div>
+    <div class="buffer-div"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Set initial positions
+        gsap.set(".layer0", { xPercent: -50, yPercent: -80 }); // Lowest
+        gsap.set(".layer1", { xPercent: -50, yPercent: -70 });
+        gsap.set(".layer2", { xPercent: -50, yPercent: -60 });
+        gsap.set(".text-layer", { xPercent: -50, yPercent: -40 }); // Highest
+
+        // Animate each layer to converge at yPercent: -50
+        gsap.to(".layer0", {
+            yPercent: -50, // Moves upward from -80% to -50%
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".parallax-container",
+                start: "top bottom", // Start when the container enters the viewport
+                end: "+=277", // End after scrolling 277px
+                scrub: true,
+                markers: false
+            }
+        });
+
+        gsap.to(".layer1", {
+            yPercent: -50, // Moves upward from -70% to -50%
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".parallax-container",
+                start: "top bottom",
+                end: "+=277",
+                scrub: true
+            }
+        });
+
+        gsap.to(".layer2", {
+            yPercent: -50, // Moves upward from -60% to -50%
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".parallax-container",
+                start: "top bottom",
+                end: "+=277",
+                scrub: true
+            }
+        });
+
+        gsap.to(".text-layer", {
+            yPercent: -50, // Moves downward from -40% to -50%
+            y: 20, // Offset to adjust text position
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".parallax-container",
+                start: "top bottom",
+                end: "+=277",
+                scrub: true
+            }
+        });
+    </script>
+</body>
+</html>
